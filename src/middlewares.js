@@ -1,0 +1,129 @@
+import moment from "moment-timezone";
+import multer from "multer";
+import multerS3 from "multer-s3";
+import aws from "aws-sdk";
+import routes from "./routes";
+
+const s3 = new aws.S3({
+  accessKeyId: process.env.AWS_KEY,
+  secretAccessKey: process.env.AWS_PRIVATE_KEY,
+  region: "ap-northeast-2",
+});
+
+const multerSamplePic = multer({
+  storage: multerS3({
+    s3,
+    acl: "public-read",
+    bucket: "bongbong/test", // FIXME: S3 버킷 생성 후 버킷명/폴더명 맞춰주기
+    key(req, file, cb) {
+      cb(null, Date.now() + file.originalname);
+    },
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+  }),
+});
+
+// 한 개의 input(type="file")일 경우
+export const uploadSamplePic = multerSamplePic.single("thumbnail");
+// 여러 input(type="file")일 경우
+// export const uploadSamplePic = multerSamplePic.fields([{ name: "thumbnail1" }, { name: "thumbnail2" }]);
+
+export const localsMiddleware = (req, res, next) => {
+  // FIXME: 홈페이지 이름 수정 必
+  res.locals.siteName = "Gooooooods";
+  res.locals.routes = routes;
+  res.locals.loggedUser = req.user || null;
+  res.locals.currentYear = new Date().getFullYear().toString();
+  res.locals.currentUrl = req.url;
+  res.locals.addComma = (number) => {
+    const regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return number.toString().replace(regexp, ",");
+  };
+  res.locals.replaceAll = (str, searchStr, replaceStr) => str.split(searchStr).join(replaceStr);
+  // 날짜 형식 변환
+  res.locals.dateFormatYMD = (date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD");
+  res.locals.dateFormatYMDHm = (date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD HH:mm");
+  res.locals.dateFormatYMDHms = (date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD HH:mm:ss");
+  // 배열 Random 섞기
+  res.locals.shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  };
+  // 랜덤 이미지 URL
+  res.locals.randomImg = "https://source.unsplash.com/random";
+  // 이미지 파일 경로
+  res.locals.imgPath = "/images";
+  // 캐시 삭제 방지용 Date Query
+  res.locals.versionDateQuery = new Date().getTime();
+  next();
+};
+
+// --- 접근 권한 설정 ---
+// 비회원만 접근 가능
+export const onlyPublic = (req, res, next) => {
+  try {
+    if (req.user) {
+      res.send(
+        `<script>alert("잘못된 접근입니다."); \
+        location.href="${routes.home}"</script>`
+      );
+    } else {
+      next();
+    }
+  } catch (err) {
+    console.log(err);
+    res.send(
+      `<script>alert("알 수 없는 오류가 발생하였습니다."); \
+      location.href="${routes.home}"</script>`
+    );
+  }
+};
+// 회원만 접근 가능
+export const onlyUser = (req, res, next) => {
+  try {
+    if (req.user) {
+      next();
+    } else {
+      res.send(
+        `<script>alert("잘못된 접근입니다."); \
+        location.href="${routes.home}"</script>`
+      );
+    }
+  } catch (err) {
+    console.log(err);
+    res.send(
+      `<script>alert("알 수 없는 오류가 발생하였습니다."); \
+      location.href="${routes.home}"</script>`
+    );
+  }
+};
+// 관리자만 접근 가능
+export const onlyAdmin = (req, res, next) => {
+  try {
+    if (req.user) {
+      if (req.user.role === "master" || req.user.role === "admin") {
+        next();
+      } else {
+        res.send(
+          `<script>alert("관리자 권한이 필요합니다."); \
+          location.href="${routes.home}"</script>`
+        );
+      }
+    } else {
+      res.send(
+        `<script>alert("관리자 로그인이 필요합니다."); \
+        location.href="${routes.admin}"</script>`
+      );
+    }
+  } catch (err) {
+    console.log(err);
+    res.send(
+      `<script>alert("알 수 없는 오류가 발생하였습니다."); \
+      location.href="${routes.home}"</script>`
+    );
+  }
+};

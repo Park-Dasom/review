@@ -1,0 +1,21 @@
+PORT="연결포트"
+
+MONGO_URL_PROD="mongoDB 연결 링크"
+COOKIE_SECRET="쿠키 암호화 키 Random Key Gen으로 발급받은 Random Key"
+AWS_ACCESS_KEY_ID="AWS IAM USERS ACCESS KEY ID"
+AWS_SECRET_ACCESS_KEY="AWS IAM USERS SECRET ACCESS KEY"
+
+SENDGRID_API_KEY="메일 전송 서비스 SEND GRID API KEY"
+
+KAKAO_APIKEY="https://developers.kakao.com에서 추출한 REST API KEY 값"
+
+NAVER_CLIENT_ID="https://developers.naver.com/ REST API CLIENT ID 값"
+NAVER_CLIENT_SECRET="https://developers.naver.com/ REST API CLIENT SECRET 값"
+
+GOOGLE_CLIENT_ID="https://console.cloud.google.com/apis OAUTH CLIENT ID 값"
+GOOGLE_CLIENT_SECRET="https://console.cloud.google.com/apis OAUTH CLIENT SECRET 값"
+
+FACEBOOK_APP_ID="https://developers.facebook.com/ APP ID 값"
+FACEBOOK_APP_SECRET="https://developers.facebook.com/ APP SECRET 값"
+
+PRODUCTION=true

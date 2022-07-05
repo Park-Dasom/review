@@ -40,7 +40,7 @@ app.use(
 );
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(morgan("dev"));
-/*app.use(
+app.use(
   session({
     secret: process.env.COOKIE_SECRET,
     resave: false,
@@ -49,9 +49,9 @@ app.use(morgan("dev"));
     cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 },
   })
 );
-*/
-//app.use(passport.initialize());
-//app.use(passport.session());
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(localsMiddleware);
 

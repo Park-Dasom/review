@@ -6,17 +6,50 @@ const init = () => {
   $(() => {
     // 코드 작성
     $("img.heart__regular").each((i, elem) => {
-      $("img.heart__regular").on("click", function () {
-        const choiceItem = $(this).parents(".marchandise__icon").attr("data-id");
+      $(elem).on("click", () => {
+        const choiceID = $(elem).parents(".marchandise__icon").attr("data-id");
+        let status
+        // 비활성화 === 좋아요 전
+if(!$(elem).hasClass("clicked")){
+  status = "unlike"
+  $.ajax({
+    url: "/api/check-heart",
+    type: "POST",
+    data: { choiceID, status },
+    success: (result) => {
+      $(elem).attr("src", "/images/public/heart-solid.svg");
+      $(elem).addClass("clicked");
+      console.log("hi");
+    },
+    error: (err) => {
+      alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
+    }
+  });
+}else{
+status = "like"
+}
+        // 활성화 === 좋아요인 상태
+        
+       
+      });
+    });
+
+    $(".star__regular").each((i, elem) => {
+      $(elem).on("click", () => {
+        const ratingItem = $(this).val();
         $.ajax({
-          url: "/api/check-heart",
+          url: "/api/rating",
           type: "POST",
-          data: { choiceItem },
+          data: { ratingItem },
           success: (result) => {
-            if (result.msg === "Choice is changed") {
+            if (result.status === "success") {
               // do it your code.
-              // $(elem).toggleClass("clicked");
-              // $(elem).toggle("src", "/images/public/heart-solid.svg");
+              $(this).attr("src", "/images/public/star-solid.svg");
+              $(this).addClass("solid");
+              $(this).prevAll().addClass("solid");
+              $(this).prevAll().attr("src", "/images/public/star-solid.svg");
+              $(this).nextAll().removeClass("solid");
+              $(this).nextAll().attr("src", "/images/public/star-regular.svg");
             }
           },
           error: (err) => {
@@ -25,7 +58,6 @@ const init = () => {
         });
       });
     });
-
     // 추천해요! 활성화 버튼
     $("img.heart__regular").each((i, elem) => {
       $(elem).on("click", () => {

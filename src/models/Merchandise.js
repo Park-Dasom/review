@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const MerchandiseSchema = new Schema({
   thumbnail: String,
   description: String,
-  choice: { type: Boolean, default: false },
+  choice: [{ type: Boolean, default: false }],
   rate: { type: Number, default: 0 },
   createdAt: { type: Date, default: new Date() },
   updatedAt: Date,

@@ -2,15 +2,12 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const MerchandiseSchema = new Schema({
-  thumbnail: String,
-  description: String,
+const ChoiceSchema = new Schema({
   choice: { type: Boolean, default: false },
-  rate: { type: Number, default: 0 },
   createdAt: { type: Date, default: new Date() },
   updatedAt: Date,
 });
 
-const model = mongoose.model("Merchandise", MerchandiseSchema);
+const model = mongoose.model("Choice", ChoiceSchema);
 
 export default model;

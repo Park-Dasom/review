@@ -19,7 +19,8 @@ const ADMIN_CHANGE_PW = "/change-pw";
 const ADMIN_USER = "/user";
 // ADMIN SAMPLE(CRUD용)
 const ADMIN_SAMPLE = "/sample";
-const ADMIN_MERCHANDISE = "/merchandise";
+// API
+const API = "/api";
 
 const routes = {
   // Global
@@ -43,7 +44,8 @@ const routes = {
   adminUser: ADMIN_USER,
   // ADMIN SAMPLE(CRUD용)
   adminSample: ADMIN_SAMPLE,
-  adminMerchandise: ADMIN_MERCHANDISE,
+  // API
+  api: API,
 };
 
 export default routes;

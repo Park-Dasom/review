@@ -6,6 +6,38 @@ const init = () => {
   $(() => {
     // 코드 작성
     // 추천해요! 활성화 버튼
+    /*$("img.heart__regular").each((i, elem) => {
+      $(elem).on("click", () => {
+        $.ajax({
+          url: "/api/check-heart",
+          type: "POST",
+          data,
+          success: (result) => {
+            if (result.status === "success") {
+              // do it your code.
+              $(elem).toggleClass("clicked");
+              $(elem).attr("src", "/images/public/heart-solid.svg");
+            }
+          },
+          error: (err) => {
+            alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
+          },
+        });
+      });
+    });
+    $.ajax({
+      url: "/api/check-heart",
+      type: "POST",
+      success: (result) => {
+        if (result.status === "success") {
+          // do it your code.
+        }
+      },
+      error: (err) => {
+        alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
+      },
+    });*/
+
     $("img.heart__regular").each((i, elem) => {
       $(elem).on("click", () => {
         if ($(elem).hasClass("clicked")) {

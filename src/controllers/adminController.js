@@ -32,23 +32,21 @@ export const postAdminLogin = (req, res, next) => {
           `<script>alert("로그인 정보가 잘못되었습니다.");\
           location.href="${routes.admin}"</script>`
         );
-      } else {
-        if (user.role === "general") {
-          return res.send(
-            `<script>alert("마스터 관리자에게 승인 요청이 필요합니다.");\
+      } else if (user.role === "general") {
+        return res.send(
+          `<script>alert("마스터 관리자에게 승인 요청이 필요합니다.");\
               location.href="${routes.admin}"</script>`
-          );
-        } else {
-          req.logIn(user, (e) => {
-            if (err) {
-              return next(e);
-            }
-            return res.send(
-              `<script>alert("로그인 되었습니다.");\
+        );
+      } else {
+        req.logIn(user, (e) => {
+          if (err) {
+            return next(e);
+          }
+          return res.send(
+            `<script>alert("로그인 되었습니다.");\
               location.href="${routes.admin}${routes.adminUser}"</script>`
-            );
-          });
-        }
+          );
+        });
       }
     })(req, res, next);
   } catch (err) {
@@ -249,38 +247,34 @@ export const adminUserDelete = async (req, res) => {
   }
 };
 
-// 관리자 샘플 관리
-export const adminSample = async (req, res) => {
+// 관리자 상품 관리
+export const adminMerchandise = async (req, res) => {
   try {
     const {
       query: { searchKey, searchValue, limit },
     } = req;
 
-    let findQuery = {};
+    const findQuery = {};
 
     // 검색 기능이 있을 경우
     const searchArr = [
-      { code: "0", title: "데이터1", value: "data1" },
-      { code: "1", title: "데이터2", value: "data2" },
-      { code: "2", title: "데이터3", value: "data3" },
-      { code: "3", title: "데이터4", value: "data4" },
-      { code: "5", title: "데이터5", value: "data5" },
+      { code: "0", title: "상품명", value: "name" },
     ];
     if (searchKey && searchValue) {
       findQuery[`${searchArr[parseInt(searchKey, 10)].value}`] = { $regex: searchValue, $options: "i" };
     }
 
     // pagination 데이터
-    const [adminItems, totalCount] = await Promise.all([Sample.find(findQuery).sort({ createdAt: -1 }).limit(limit).skip(req.skip).exec(), Sample.countDocuments(findQuery)]);
+    const [adminItems, totalCount] = await Promise.all([Merchandise.find(findQuery).sort({ createdAt: -1 }).limit(limit).skip(req.skip).exec(), Merchandise.countDocuments(findQuery)]);
     const pageCount = Math.ceil(totalCount / limit);
     const pages = paginate.getArrayPages(req)(10, pageCount, req.query.page);
 
     // 엑셀 다운로드용 전체 데이터
-    const excelData = await Sample.find(findQuery).sort({ createdAt: -1 });
+    const excelData = await Merchandise.find(findQuery).sort({ createdAt: -1 });
 
-    res.render("admin/adminSample", {
-      adminNameKo: "샘플 데이터",
-      adminLink: routes.adminSample,
+    res.render("admin/adminMerchandise", {
+      adminNameKo: "상품 데이터",
+      adminLink: routes.adminMerchandise,
       limit,
       searchArr,
       searchKey,
@@ -299,11 +293,11 @@ export const adminSample = async (req, res) => {
     );
   }
 };
-export const getCreateSample = (_, res) => {
+export const getCreateMerchandise = (_, res) => {
   try {
-    res.render("admin/adminSampleForm", {
-      adminNameKo: "샘플 데이터",
-      adminLink: routes.adminSample,
+    res.render("admin/adminMerchandiseForm", {
+      adminNameKo: "상품 데이터",
+      adminLink: routes.adminMerchandise,
       updateBool: false,
       formType: "등록",
     });
@@ -315,18 +309,18 @@ export const getCreateSample = (_, res) => {
     );
   }
 };
-export const postCreateSample = async (req, res) => {
+export const postCreateMerchandise = async (req, res) => {
   try {
     const { body, file } = req;
 
     body.thumbnail = file ? file.location : null;
     body.createdAt = moment(new Date()).tz("Asia/Seoul");
     body.updatedAt = moment(new Date()).tz("Asia/Seoul");
-    await Sample.create(body);
+    await Merchandise.create(body);
 
     res.send(`\
-      <script>alert("샘플이 등록되었습니다.");\
-      location.href="${routes.admin}${routes.adminSample}";</script>\
+      <script>alert("상품이 등록되었습니다.");\
+      location.href="${routes.admin}${routes.adminMerchandise}";</script>\
     `);
   } catch (err) {
     console.log(err);
@@ -336,15 +330,15 @@ export const postCreateSample = async (req, res) => {
     );
   }
 };
-export const getSampleDetail = async (req, res) => {
+export const getMerchandiseDetail = async (req, res) => {
   try {
     const {
-      params: { sampleID },
+      params: { merchandiseID },
     } = req;
-    const adminItem = await Sample.findById(sampleID);
-    res.render("admin/adminSampleDetail", {
-      adminNameKo: "샘플 데이터",
-      adminLink: routes.adminSample,
+    const adminItem = await Merchandise.findById(merchandiseID);
+    res.render("admin/adminMerchandiseDetail", {
+      adminNameKo: "상품 데이터",
+      adminLink: routes.adminMerchandise,
       adminItem,
     });
   } catch (err) {
@@ -355,15 +349,15 @@ export const getSampleDetail = async (req, res) => {
     );
   }
 };
-export const getUpdateSample = async (req, res) => {
+export const getUpdateMerchandise = async (req, res) => {
   try {
     const {
-      params: { sampleID },
+      params: { merchandiseID },
     } = req;
-    const adminItem = await Sample.findById(sampleID);
-    res.render("admin/adminSampleForm", {
-      adminNameKo: "샘플 데이터",
-      adminLink: routes.adminSample,
+    const adminItem = await Merchandise.findById(merchandiseID);
+    res.render("admin/adminMerchandiseForm", {
+      adminNameKo: "상품 데이터",
+      adminLink: routes.adminMerchandise,
       updateBool: true,
       formType: "수정",
       adminItem,
@@ -376,20 +370,20 @@ export const getUpdateSample = async (req, res) => {
     );
   }
 };
-export const postUpdateSample = async (req, res) => {
+export const postUpdateMerchandise = async (req, res) => {
   try {
     const {
-      params: { sampleID },
+      params: { merchandiseID },
       body,
       file,
     } = req;
-    const samples = await Sample.findById(sampleID);
-    body.thumbnail = file ? file.location : samples.thumbnail;
+    const merchandises = await Sample.findById(merchandiseID);
+    body.thumbnail = file ? file.location : merchandises.thumbnail;
     body.updatedAt = moment(new Date()).tz("Asia/Seoul");
-    await Sample.findByIdAndUpdate(sampleID, body);
+    await Merchandise.findByIdAndUpdate(merchandiseID, body);
     res.send(
-      `<script>alert("샘플이 수정되었습니다.");\
-      location.href="${routes.admin}${routes.adminSample}"</script>`
+      `<script>alert("상품이 수정되었습니다.");\
+      location.href="${routes.admin}${routes.adminMerchandise}"</script>`
     );
   } catch (err) {
     console.log(err);
@@ -399,15 +393,15 @@ export const postUpdateSample = async (req, res) => {
     );
   }
 };
-export const getDeleteSample = async (req, res) => {
+export const getDeleteMerchandise = async (req, res) => {
   try {
     const {
-      params: { sampleID },
+      params: { merchandiseID },
     } = req;
-    await Sample.findByIdAndDelete(sampleID);
+    await Merchandise.findByIdAndDelete(merchandiseID);
     res.send(
-      `<script>alert("샘플이 삭제되었습니다.");\
-      location.href="${routes.admin}${routes.adminSample}"</script>`
+      `<script>alert("상품이 삭제되었습니다.");\
+      location.href="${routes.admin}${routes.adminMerchandise}"</script>`
     );
   } catch (err) {
     console.log(err);

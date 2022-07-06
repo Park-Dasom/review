@@ -12,15 +12,15 @@ import {
   adminUser,
   adminUserApprove,
   adminUserDelete,
-  adminSample,
-  getCreateSample,
-  postCreateSample,
-  getSampleDetail,
-  getUpdateSample,
-  postUpdateSample,
-  getDeleteSample,
+  adminMerchandise,
+  getCreateMerchandise,
+  postCreateMerchandise,
+  getMerchandiseDetail,
+  getUpdateMerchandise,
+  postUpdateMerchandise,
+  getDeleteMerchandise,
 } from "../controllers/adminController";
-import { onlyAdmin, uploadSamplePic } from "../middlewares";
+import { onlyAdmin, uploadMerchandisePic } from "../middlewares";
 
 const adminRouter = express.Router();
 
@@ -44,13 +44,13 @@ adminRouter.get(routes.adminUser, onlyAdmin, paginate.middleware(20, 50), adminU
 adminRouter.get(`${routes.adminUser}/approve/:userID`, onlyAdmin, adminUserApprove);
 adminRouter.get(`${routes.adminUser}/delete/:userID`, onlyAdmin, adminUserDelete);
 
-// 관리자 샘플 관리
-adminRouter.get(routes.adminSample, onlyAdmin, paginate.middleware(20, 50), adminSample);
-adminRouter.get(`${routes.adminSample}/create`, onlyAdmin, getCreateSample);
-adminRouter.post(`${routes.adminSample}/create`, onlyAdmin, uploadSamplePic, postCreateSample);
-adminRouter.get(`${routes.adminSample}/detail/:sampleID`, onlyAdmin, getSampleDetail);
-adminRouter.get(`${routes.adminSample}/update/:sampleID`, onlyAdmin, getUpdateSample);
-adminRouter.post(`${routes.adminSample}/update/:sampleID`, onlyAdmin, uploadSamplePic, postUpdateSample);
-adminRouter.get(`${routes.adminSample}/delete/:sampleID`, onlyAdmin, getDeleteSample);
+// 관리자 상품 관리
+adminRouter.get(routes.adminMerchandise, onlyAdmin, paginate.middleware(20, 50), adminMerchandise);
+adminRouter.get(`${routes.adminMerchandise}/create`, onlyAdmin, getCreateMerchandise);
+adminRouter.post(`${routes.adminMerchandise}/create`, onlyAdmin, uploadMerchandisePic, postCreateMerchandise);
+adminRouter.get(`${routes.adminMerchandise}/detail/:merchandiseID`, onlyAdmin, getMerchandiseDetail);
+adminRouter.get(`${routes.adminMerchandise}/update/:merchandiseID`, onlyAdmin, getUpdateMerchandise);
+adminRouter.post(`${routes.adminMerchandise}/update/:merchandiseID`, onlyAdmin, uploadMerchandisePic, postUpdateMerchandise);
+adminRouter.get(`${routes.adminMerchandise}/delete/:merchandiseID`, onlyAdmin, getDeleteMerchandise);
 
 export default adminRouter;

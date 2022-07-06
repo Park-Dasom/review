@@ -8,29 +8,24 @@ const init = () => {
     $("img.heart__regular").each((i, elem) => {
       $(elem).on("click", () => {
         const choiceID = $(elem).parents(".marchandise__icon").attr("data-id");
-        let status
-        // 비활성화 === 좋아요 전
-if(!$(elem).hasClass("clicked")){
-  status = "unlike"
-  $.ajax({
-    url: "/api/check-heart",
-    type: "POST",
-    data: { choiceID, status },
-    success: (result) => {
-      $(elem).attr("src", "/images/public/heart-solid.svg");
-      $(elem).addClass("clicked");
-      console.log("hi");
-    },
-    error: (err) => {
-      alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
-    }
-  });
-}else{
-status = "like"
-}
-        // 활성화 === 좋아요인 상태
-        
-       
+        $.ajax({
+          url: "/api/check-heart",
+          type: "POST",
+          data: { choiceID },
+          success: (result) => {
+            const msg = result.msg;
+            if (msg === "fill heart") {
+              // 좋아요 활성화
+              $(elem).attr("src", "/images/public/heart-solid.svg");
+            } else {
+              // 좋아요 취소
+              $(elem).attr("src", "/images/public/heart-regular.svg");
+            }
+          },
+          error: (err) => {
+            alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
+          },
+        });
       });
     });
 

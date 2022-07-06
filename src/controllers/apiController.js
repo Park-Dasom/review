@@ -5,23 +5,24 @@ import Choice from "../models/Choice";
 export const postChoice = async (req, res) => {
   try {
     const { body } = req;
-    console.log(body.choiceItem);
-    const choices = await Choice.find({choiceID: body.choiceItem});
-    if(choices.length === 0){
+
+    const choices = await Choice.find({ choiceID: body.choiceID });
+
+    if (choices.length === 0) {
       await Choice.create({
-        choiceID: body.choiceItem,
+        choiceID: body.choiceID,
         choice: true,
       });
-    }else{
-      if(choices.choice){
-         choices.choice = false;
-         await choices.save()
-      }else{
-         choices.choice = true;
+      res.json({ msg: "fill heart" });
+    } else {
+      choices[0].choice = !choices[0].choice;
+      await choices[0].save();
+      if (choices[0].choice) {
+        res.json({ msg: "fill heart" });
+      } else {
+        res.json({ msg: "empty heart" });
       }
     }
-    res.json({ msg: "success" });
-    
   } catch (err) {
     console.log(err);
   }

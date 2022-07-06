@@ -1,9 +1,11 @@
 import routes from "../routes";
+import Choice from "../models/Choice";
 
 // 홈 Home
-export const home = (req, res) => {
+export const home = async (req, res) => {
   try {
-    res.render("home");
+    const choices = await Choice.find();
+    res.render("home", { choices });
   } catch (err) {
     console.log(err);
     res.send(

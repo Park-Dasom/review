@@ -30,34 +30,32 @@ const init = () => {
       });
     });
     // 벌점 버튼 post
-    $(".star__regular").each((i, elem) => {
-      $(elem).on("click", () => {
-        const ratingIndex = $(elem).parents(".marchandise__icon").attr("data-id");
-        const ratingID = $(i+1)[0];
-        console.log(ratingID);
-        $.ajax({
-          url: "/api/rating",
-          type: "POST",
-          data: { ratingID, ratingIndex },
-          success: (result) => {
-            const msg = result.msg;
-            if (msg === "success rating") {
-              // do it your code.
-              console.log("hi");
-              // $(this).attr("src", "/images/public/star-solid.svg");
-              // $(this).addClass("solid");
-              // $(this).prevAll().addClass("solid");
-              // $(this).prevAll().attr("src", "/images/public/star-solid.svg");
-              // $(this).nextAll().removeClass("solid");
-              // $(this).nextAll().attr("src", "/images/public/star-regular.svg");
-            }
-          },
-          error: (err) => {
-            alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
-          },
+    $("li.list__merchandise").each((i, elem) => {
+      $(elem).find("img.star__regular").each((i2, elem2) => {
+        $(elem2).on("click", function () {
+          const choiceID = $(this).parents(".marchandise__icon").attr("data-id");
+          const rate = $(this).index()+1;
+          console.log(choiceID, rate);
+          $.ajax({
+            url: "/api/rating",
+            type: "POST",
+            data: { choiceID, rate },
+            success: (result) => {
+              const msg = result.msg;
+              if (msg === "success rating") {
+                // do it your code.
+                $(this).addClass("solid");
+                $(this).prevAll().addClass("solid");
+              }
+            },
+            error: (err) => {
+              alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
+            },
+          });
         });
       });
     });
+
     // 추천해요! 활성화 버튼
     $("img.heart__regular").each((i, elem) => {
       $(elem).on("click", () => {

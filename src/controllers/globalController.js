@@ -5,6 +5,7 @@ import Choice from "../models/Choice";
 export const home = async (req, res) => {
   try {
     const choices = await Choice.find();
+    console.log(choices);
     res.render("home", { choices });
   } catch (err) {
     console.log(err);

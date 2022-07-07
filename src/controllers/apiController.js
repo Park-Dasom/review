@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import Choice from "../models/Choice";
 
+// 마음에 들어요 데이터 입력
 export const postChoice = async (req, res) => {
   try {
     const { body } = req;
@@ -25,6 +26,7 @@ export const postChoice = async (req, res) => {
   }
 };
 
+// 별점 데이터 입력
 export const postRating = async (req, res) => {
   try {
     const { body } = req;

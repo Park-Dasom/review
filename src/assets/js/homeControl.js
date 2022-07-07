@@ -5,6 +5,7 @@ const homePage = document.getElementById("home__page");
 const init = () => {
   $(() => {
     // 코드 작성
+    // 로그인 
     // 추천 버튼 post
     $("img.heart__regular").each((i, elem) => {
       $(elem).on("click", () => {

@@ -1,0 +1,88 @@
+
+.join__page#join__page {
+  // 회원가입 section
+  section.section__join.layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    margin-bottom: 150px;
+    .section__join-wrap {
+      border: solid 1px darkgray;
+      border-radius: 10px;
+      margin-top: 50px;
+      padding: 30px;
+      form.join__form {
+        .form__wrap {
+          .form__user-wrap {
+            p.form__user-join {
+              text-align: center;
+              font-size: 30px;
+              font-weight: 700;
+            }
+            .form__user-label {
+              margin-top: 20px;
+              label.user__label {}
+            
+              .form__user-input {
+                margin-top: 5px;
+                border: solid 1px goldenrod;
+                border-radius: 5px;
+                height: 30px;
+                width: 300px;
+                input.user__input {}
+                }
+              }
+            }
+          p.form__user-msg {
+            margin-top: 5px;
+            display: none;
+          }
+          }
+          
+          .form__pw-wrap,
+          .form__pwcheck-wrap {
+            .form__pw-label,
+            .form__pwcheck-label {
+              margin-top: 20px;
+              label.pw__label {
+                
+              }
+            }
+            .form__pw-input,
+            .form__pwcheck-input {
+              margin-top: 5px;
+              input.pw__input,
+              input.pwcheck__input{
+                border: solid 1px goldenrod;
+                border-radius: 5px;
+                height: 30px;
+                width: 300px;
+              }
+            }
+            p.form__pw-msg {
+              margin-top: 5px;
+              display: none;
+            }
+          }
+        }
+        .form__btn {
+          margin-top: 15px;
+          button.btn__submit-form {
+            height: 50px;
+            width: 100px;
+            background-color: goldenrod;
+            color: white;
+            border-radius: 10px;
+            font-size: 15px;
+            }
+        }
+        .form__join {
+          margin-top: 10px;
+          margin-left: 3px;
+          a.form__join-anchor {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }

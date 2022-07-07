@@ -3,7 +3,7 @@ extends ../layouts/adminMain
 block content
   body.vertical-layout.vertical-menu-modern.navbar-floating.footer-static(data-open='click' data-menu='vertical-menu-modern' data-col='')
     main.admin__main
-      .admin__page#admin__sample-page
+      .admin__page#admin__user-page
         include adminSidebar
         //- BEGIN: Content
         .app-content.content
@@ -42,11 +42,9 @@ block content
                     .card-body
                       p.card-text 내용이 보이지 않을 시 좌우로 스크롤 해보세요
                     .table-responsive
-                      //- FIXME: 각 칼럼 width 적절히 조정 후 합계로 min-width 설정 必
                       table.table.mb-0(style="min-width: 800px;")
                         thead
                           tr
-                            //- FIXME: 데이터 동기화 必
                             th(scope='col' style="width: 80px;") 번호
                             th(scope='col' style="width: 120px;") 삭제
                             th(scope='col' style="width: 200px;") 아이디

@@ -5,6 +5,7 @@ const homePage = document.getElementById("home__page");
 const init = () => {
   $(() => {
     // 코드 작성
+    // 추천 버튼 post
     $("img.heart__regular").each((i, elem) => {
       $(elem).on("click", () => {
         const choiceID = $(elem).parents(".marchandise__icon").attr("data-id");
@@ -28,23 +29,27 @@ const init = () => {
         });
       });
     });
-
+    // 벌점 버튼 post
     $(".star__regular").each((i, elem) => {
       $(elem).on("click", () => {
-        const ratingItem = $(this).val();
+        const ratingIndex = $(elem).parents(".marchandise__icon").attr("data-id");
+        const ratingID = $(i+1)[0];
+        console.log(ratingID);
         $.ajax({
           url: "/api/rating",
           type: "POST",
-          data: { ratingItem },
+          data: { ratingID, ratingIndex },
           success: (result) => {
-            if (result.status === "success") {
+            const msg = result.msg;
+            if (msg === "success rating") {
               // do it your code.
-              $(this).attr("src", "/images/public/star-solid.svg");
-              $(this).addClass("solid");
-              $(this).prevAll().addClass("solid");
-              $(this).prevAll().attr("src", "/images/public/star-solid.svg");
-              $(this).nextAll().removeClass("solid");
-              $(this).nextAll().attr("src", "/images/public/star-regular.svg");
+              console.log("hi");
+              // $(this).attr("src", "/images/public/star-solid.svg");
+              // $(this).addClass("solid");
+              // $(this).prevAll().addClass("solid");
+              // $(this).prevAll().attr("src", "/images/public/star-solid.svg");
+              // $(this).nextAll().removeClass("solid");
+              // $(this).nextAll().attr("src", "/images/public/star-regular.svg");
             }
           },
           error: (err) => {

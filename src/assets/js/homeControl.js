@@ -31,6 +31,7 @@ const init = () => {
     });
     // 벌점 버튼 post
     $("li.list__merchandise").each((i, elem) => {
+<<<<<<< Updated upstream
       $(elem).find("img.star__regular").each((i2, elem2) => {
         $(elem2).on("click", function () {
           const choiceID = $(this).parents(".marchandise__icon").attr("data-id");
@@ -51,9 +52,31 @@ const init = () => {
             error: (err) => {
               alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
             },
+=======
+      $(elem)
+        .find("img.star__regular")
+        .each((i2, elem2) => {
+          $(elem2).on("click", function () {
+            const choiceID = $(this).parents(".marchandise__icon").attr("data-id");
+            const rate = $(this).index() + 1;
+
+            $.ajax({
+              url: "/api/rating",
+              type: "POST",
+              data: { choiceID, rate },
+              success: (result) => {
+                const msg = result.msg;
+                if (msg === "success rating") {
+                  // 별점 수정 성공
+                }
+              },
+              error: (err) => {
+                alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
+              },
+            });
+>>>>>>> Stashed changes
           });
         });
-      });
     });
 
     // 추천해요! 활성화 버튼

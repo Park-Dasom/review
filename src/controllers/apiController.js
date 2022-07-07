@@ -30,26 +30,11 @@ export const postChoice = async (req, res) => {
 export const postRating = async (req, res) => {
   try {
     const { body } = req;
-<<<<<<< Updated upstream
     console.log(body.choiceID, body.rate);
     await Choice.findOneAndUpdate(
       { choiceID: body.choiceID },
       { rate: body.rate }
     );
-=======
-
-    const choices = await Choice.findOne({ choiceID: body.choiceID });
-
-    if (!choices) {
-      // Choice 생성
-      await Choice.create(body);
-    } else {
-      // 별점 업데이트
-      choices.rate = body.rate;
-      choices.save();
-    }
-
->>>>>>> Stashed changes
     res.json({ msg: "success rating" });
   } catch (err) {
     console.log(err);

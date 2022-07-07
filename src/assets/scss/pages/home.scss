@@ -1,7 +1,7 @@
 .active {
   height: 25px;
   width: 25px;
-  display:block;
+  display: block;
 }
 
 .home__page#home__page {
@@ -9,7 +9,7 @@
   section.section__login.layout {
     display: flex;
     align-items: center;
-    justify-content: center;  
+    justify-content: center;
     margin-bottom: 150px;
     .section__login-wrap {
       border: solid 1px darkgray;
@@ -26,68 +26,67 @@
             }
             .form__user-label {
               margin-top: 20px;
-              label.user__label {}
-            
+              label.user__label {
+              }
+
               .form__user-input {
                 margin-top: 5px;
                 border: solid 1px goldenrod;
                 border-radius: 5px;
                 height: 30px;
                 width: 300px;
-                input.user__input {}
+                input.user__input {
                 }
               }
             }
+          }
           p.form__user-msg {
             margin-top: 5px;
             display: none;
           }
-          }
-          
-          .form__pw-wrap {
-            .form__pw-label {
-              margin-top: 20px;
-              label.pw__label {
-                
-              }
-            }
-            .form__pw-input {
-              margin-top: 5px;
-              input.pw__input{
-                border: solid 1px goldenrod;
-                border-radius: 5px;
-                height: 30px;
-                width: 300px;
-              }
-            }
-            p.form__pw-msg {
-              margin-top: 5px;
-              display: none;
+        }
+
+        .form__pw-wrap {
+          .form__pw-label {
+            margin-top: 20px;
+            label.pw__label {
             }
           }
-        }
-        .form__btn {
-          margin-top: 15px;
-          button.btn__submit-form {
-            height: 50px;
-            width: 100px;
-            background-color: goldenrod;
-            color: white;
-            border-radius: 10px;
-            font-size: 15px;
+          .form__pw-input {
+            margin-top: 5px;
+            input.pw__input {
+              border: solid 1px goldenrod;
+              border-radius: 5px;
+              height: 30px;
+              width: 300px;
             }
-        }
-        .form__join {
-          margin-top: 10px;
-          margin-left: 3px;
-          a.form__join-anchor {
-            cursor: pointer;
+          }
+          p.form__pw-msg {
+            margin-top: 5px;
+            display: none;
           }
         }
       }
+      .form__btn {
+        margin-top: 15px;
+        button.btn__submit-form {
+          height: 50px;
+          width: 100px;
+          background-color: goldenrod;
+          color: white;
+          border-radius: 10px;
+          font-size: 15px;
+        }
+      }
+      .form__join {
+        margin-top: 10px;
+        margin-left: 3px;
+        a.form__join-anchor {
+          cursor: pointer;
+        }
+      }
     }
-  
-  
+  }
 
   // // 상품 section
   // section.list__section {
@@ -95,7 +94,7 @@
   //   align-items: center;
   //   justify-content: center;
   //   margin-bottom: 150px;
-  //   .list__item { 
+  //   .list__item {
   //     width: 545px;
   //     ul.list__items {
   //       li.list__merchandise {
@@ -150,7 +149,7 @@
   //               }
   //             }
   //           }
-          
+
   //         }
   //         span.marchandise__description {
   //           width: 80%;
@@ -162,9 +161,7 @@
   //       }
   //     }
   //   }
-  }
-
-
+}
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {

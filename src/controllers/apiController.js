@@ -31,15 +31,17 @@ export const postRating = async (req, res) => {
     const { body } = req;
     console.log(body.ratingIndex, body.ratingID);
     const rating = await Rating.find();
-    console.log(rating[0]);
+    const ratings = await Rating.findOne();
     if (rating.length === 0 || rating[0].ratingIndex !== body.ratingIndex) {
       await Rating.create({
         ratingIndex: body.ratingIndex,
         ratingID: body.ratingID,
       });
       res.json({ msg: "success rating" });
-    } else if (rating[0].ratingIndex === body.ratingIndex && rating[0].ratingID !== body.ratingID) {
-      await Rating.findOneAndUpdate({ratingIndex: rating[0].ratingIndex},
+      console.log(rating);
+      console.log(ratings);
+    } else if (ratings.ratingIndex === body.ratingIndex && ratings.ratingID !== body.ratingID) {
+      await Rating.findOneAndUpdate({ratingIndex: ratings.ratingIndex},
         {ratingID: body.ratingID});
       // rating[0].rating = !rating[0].rating;
       // await rating[0].save();

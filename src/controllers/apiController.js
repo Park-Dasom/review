@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import Choice from "../models/Choice";
+import User from "../models/User";
 
 // 마음에 들어요 데이터 입력
 export const postChoice = async (req, res) => {
@@ -30,12 +31,24 @@ export const postChoice = async (req, res) => {
 export const postRating = async (req, res) => {
   try {
     const { body } = req;
-    console.log(body.choiceID, body.rate);
     await Choice.findOneAndUpdate(
       { choiceID: body.choiceID },
       { rate: body.rate }
     );
     res.json({ msg: "success rating" });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 회원가입 이메일 증복 확인
+export const checkEmail = async (req, res) => {
+  try {
+    const { body } = req;
+    const userEmail = await User.findOne({ userID: body.userEmail });
+    if (!userEmail) {
+      res.json({ msg: "no data" });
+    } 
   } catch (err) {
     console.log(err);
   }

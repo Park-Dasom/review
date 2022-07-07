@@ -35,17 +35,6 @@ block content
               .marchandise__icon(data-id="1")
                 each item in choices 
                   if item.choiceID === "1"
-<<<<<<< Updated upstream
-                    .icon__heart  
-                      span 마음에 들어요!
-                      img.heart__regular(src=`${imgPath}/public/heart-${item.choice ? "solid" : "regular"}.svg`)
-                    .icon__stars
-                      img.star__regular(class= (item.rate >= 1 ? "solid" : ""))(src=`${imgPath}/public/star-${item.rate >= 1 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class= (item.rate >= 2 ? "solid" : ""))(src=`${imgPath}/public/star-${item.rate >= 2 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class= (item.rate >= 3 ? "solid" : ""))(src=`${imgPath}/public/star-${item.rate >= 3 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class= (item.rate >= 4 ? "solid" : ""))(src=`${imgPath}/public/star-${item.rate >= 4 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class= (item.rate >= 5 ? "solid" : ""))(src=`${imgPath}/public/star-${item.rate >= 5 ? "solid" : "regular"}.svg`)
-=======
                     .icon__heart
                       span 마음에 들어요!
                       img.heart__regular(src=`${imgPath}/public/heart-${item.choice ? "solid" : "regular"}.svg`)
@@ -55,7 +44,6 @@ block content
                       img.star__regular(class=`${item.rate >= 3 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rate >= 3 ? "solid" : "regular"}.svg`)
                       img.star__regular(class=`${item.rate >= 4 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rate >= 4 ? "solid" : "regular"}.svg`)
                       img.star__regular(class=`${item.rate >= 5 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rate >= 5 ? "solid" : "regular"}.svg`)
->>>>>>> Stashed changes
           li.list__merchandise
             .marchandise__wrap
               img.marchendise__img(src=`${imgPath}/public/garakbaqui.jpeg`)

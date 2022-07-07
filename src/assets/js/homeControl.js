@@ -5,7 +5,7 @@ const homePage = document.getElementById("home__page");
 const init = () => {
   $(() => {
     // 코드 작성
-    // 로그인 
+    // 로그인
     // 추천 버튼 post
     $("img.heart__regular").each((i, elem) => {
       $(elem).on("click", () => {
@@ -32,28 +32,6 @@ const init = () => {
     });
     // 벌점 버튼 post
     $("li.list__merchandise").each((i, elem) => {
-<<<<<<< Updated upstream
-      $(elem).find("img.star__regular").each((i2, elem2) => {
-        $(elem2).on("click", function () {
-          const choiceID = $(this).parents(".marchandise__icon").attr("data-id");
-          const rate = $(this).index()+1;
-          console.log(choiceID, rate);
-          $.ajax({
-            url: "/api/rating",
-            type: "POST",
-            data: { choiceID, rate },
-            success: (result) => {
-              const msg = result.msg;
-              if (msg === "success rating") {
-                // do it your code.
-                $(this).addClass("solid");
-                $(this).prevAll().addClass("solid");
-              }
-            },
-            error: (err) => {
-              alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
-            },
-=======
       $(elem)
         .find("img.star__regular")
         .each((i2, elem2) => {
@@ -75,7 +53,6 @@ const init = () => {
                 alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
               },
             });
->>>>>>> Stashed changes
           });
         });
     });

@@ -1,5 +1,4 @@
 import $ from "jquery";
-import routes from "../../routes";
 
 const joinPage = document.getElementById("join__page");
 
@@ -14,13 +13,31 @@ const init = () => {
         alert("이메일을 입력해주세요.");
         return false;
       }
-      // email 형식 오류 시 alert
+
       if (!emailReg.test(userEmail)) {
         alert("이메일 형식이 올바르지 않습니다.");
         return false;
       }
+
+      // if (userEmail) {
+      //   $.ajax({
+      //     url: "/api/user-id/check",
+      //     type: "POST",
+      //     data: { userEmail },
+      //     async: false,
+      //     success: (result) => {
+      //       if (result.msg === "exsiting user") {
+      //         alert("이미 사용중인 이메일입니다.");
+      //       }
+      //     },
+      //     error: (err) => {
+      //       alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
+      //     },
+      //   });
+      // }
+
       // 이름 공란 시 alert
-      const userName = $("input.user__input").val();
+      const userName = $("input.userName__input").val();
       if (userName === "") {
         alert("사용하실 이름을 입력해주세요.");
         return false;
@@ -65,42 +82,27 @@ const init = () => {
         alert("비밀번호와 비밀번호 확인란의 값이 일치하지 않습니다.");
         return false;
       }
-      // // email 중복 사용 시 alert
-      // $.ajax({
-      //   url: "/api/user-id/check",
-      //   type: "POST",
-      //   data: { userEmail },
-      //   success: (result) => {
-      //     if (result.msg === "no data") {
-      //       // ID 중복 없음
-      //     } else {
-      //       alert("이미 사용중인 이메일입니다.");
-      //     }
-      //   },
-      //   error: (err) => {
-      //     alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
-      //   },
-      // });
-
-      $.ajax({
-        url: "api/join/post-join",
-        type: "POST",
-        data: { userEmail, userName, password, passwordCheck },
-        success: (result) => {
-          const msg = result.msg;
-          if (msg === "existing user") {
-            alert("이미 존재하는 아이디입니다.");
-            return false;
-          }
-          if (msg === "join success") {
-            alert("회원가입을 성공적으로 완료하였습니다.");
-            document.location.replace(`${routes.home}`);
-          }
-        },
-        error: (err) => {
-          alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
-        },
-      });
+      // email 중복 체크, 아닐 경우 회원가입
+      if (userEmail && userName && password && passwordCheck) {
+        $.ajax({
+          url: "/api/user-id/check",
+          type: "POST",
+          async: false,
+          data: { userEmail, userName, password, passwordCheck },
+          success: (result) => {
+            if (result.msg === "exsiting user") {
+              alert("이미 사용중인 이메일입니다.");
+              window.location.href = `/`;
+            } else if (result.msg === "join success") {
+              alert("회원가입을 성공적으로 완료하였습니다.");
+              window.location.href = `/`;
+            }
+          },
+          error: (err) => {
+            alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
+          },
+        });
+      }
     });
   });
 };

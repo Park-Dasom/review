@@ -5,162 +5,78 @@
 }
 
 .home__page#home__page {
-  // 로그인 section
-  section.section__login.layout {
+  section.list__section {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 150px;
-    .section__login-wrap {
-      border: solid 1px darkgray;
-      border-radius: 10px;
-      margin-top: 50px;
-      padding: 30px;
-      form.login__form {
-        .form__wrap {
-          .form__user-wrap {
-            p.form__user-login {
-              text-align: center;
-              font-size: 30px;
-              font-weight: 700;
-            }
-            .form__user-label {
-              margin-top: 20px;
-              label.user__label {
-              }
+    .list__item {
+      width: 545px;
+      ul.list__items {
+        li.list__merchandise {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          .marchandise__wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 60px;
+            width: 545px;
 
-              .form__user-input {
-                margin-top: 5px;
-                border: solid 1px goldenrod;
-                border-radius: 5px;
-                height: 30px;
-                width: 300px;
-                input.user__input {
+            img.marchendise__img {
+              display: block;
+              height: 150px;
+              width: 200px;
+              margin-right: 20px;
+              border-radius: 10px;
+            }
+            span.merchandise__title {
+              display: block;
+              margin-right: 20px;
+            }
+            .marchandise__icon {
+              display: block;
+              .icon__heart {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                img.heart__regular {
+                  margin-left: 5px;
+                  height: 25px;
+                  width: 25px;
+                  cursor: pointer;
+                }
+              }
+              .icon__stars {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                img.star__solid {
+                  height: 25px;
+                  width: 25px;
+                  display: none;
+                }
+                img.star__regular {
+                  height: 25px;
+                  width: 25px;
+                  cursor: pointer;
                 }
               }
             }
-          }
-          p.form__user-msg {
-            margin-top: 5px;
-            display: none;
-          }
-        }
 
-        .form__pw-wrap {
-          .form__pw-label {
-            margin-top: 20px;
-            label.pw__label {
-            }
           }
-          .form__pw-input {
-            margin-top: 5px;
-            input.pw__input {
-              border: solid 1px goldenrod;
-              border-radius: 5px;
-              height: 30px;
-              width: 300px;
-            }
+          span.marchandise__description {
+            width: 80%;
+            text-align: center;
+            margin-top: 40px;
+            line-height: 2;
           }
-          p.form__pw-msg {
-            margin-top: 5px;
-            display: none;
           }
-        }
-      }
-      .form__btn {
-        margin-top: 15px;
-        button.btn__submit-form {
-          height: 50px;
-          width: 100px;
-          background-color: goldenrod;
-          color: white;
-          border-radius: 10px;
-          font-size: 15px;
-        }
-      }
-      .form__join {
-        margin-top: 10px;
-        margin-left: 3px;
-        a.form__join-anchor {
-          cursor: pointer;
         }
       }
     }
-  }
-
-  // // 상품 section
-  // section.list__section {
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
-  //   margin-bottom: 150px;
-  //   .list__item {
-  //     width: 545px;
-  //     ul.list__items {
-  //       li.list__merchandise {
-  //         display: flex;
-  //         flex-direction: column;
-  //         align-items: center;
-  //         justify-content: center;
-  //         .marchandise__wrap {
-  //           display: flex;
-  //           align-items: center;
-  //           justify-content: space-between;
-  //           margin-top: 60px;
-  //           width: 545px;
-
-  //           img.marchendise__img {
-  //             display: block;
-  //             height: 150px;
-  //             width: 200px;
-  //             margin-right: 20px;
-  //             border-radius: 10px;
-  //           }
-  //           span.merchandise__title {
-  //             display: block;
-  //             margin-right: 20px;
-  //           }
-  //           .marchandise__icon {
-  //             display: block;
-  //             .icon__heart {
-  //               display: flex;
-  //               align-items: center;
-  //               justify-content: center;
-  //               img.heart__regular {
-  //                 margin-left: 5px;
-  //                 height: 25px;
-  //                 width: 25px;
-  //                 cursor: pointer;
-  //               }
-  //             }
-  //             .icon__stars {
-  //               display: flex;
-  //               align-items: center;
-  //               justify-content: center;
-  //               img.star__solid {
-  //                 height: 25px;
-  //                 width: 25px;
-  //                 display: none;
-  //               }
-  //               img.star__regular {
-  //                 height: 25px;
-  //                 width: 25px;
-  //                 cursor: pointer;
-  //               }
-  //             }
-  //           }
-
-  //         }
-  //         span.marchandise__description {
-  //           width: 80%;
-  //           text-align: center;
-  //           margin-top: 40px;
-  //           line-height: 2;
-  //         }
-  //         }
-  //       }
-  //     }
-  //   }
 }
 
 // Small devices (landscape phones, 576px and up)

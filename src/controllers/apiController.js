@@ -45,31 +45,31 @@ export const postRating = async (req, res) => {
 export const checkEmail = async (req, res) => {
   try {
     const { body } = req;
-    const userEmails = await User.findOne({ userEmail: body.userEmail });
+    const userEmails = await User.findOne({ userID: body.userEmail });
     if (!userEmails) {
-      res.json({ msg: "no data" });
+      res.json({ msg: "join success" });
+      await User.create({
+        userID: body.userEmail,
+        userName: body.userName,
+      });
+    } else {
+      res.json({ msg: "exsiting user" });
     }
   } catch (err) {
     console.log(err);
   }
 };
 
-// joinControl.js 에 오류가 없을 시 join 값들을 DB에 입력
-// 이미 같은 email 유저가 존재할 시 가입 불가
-export const postJoin = async (req, res) => {
-  try {
-    const { body } = req;
-    const user = await User.findOne({ userEmail: body.userEmail });
-    if (user) {
-      res.json({ msg: "existing user" });
-    } else {
-      await User.create({
-        userEmail: body.userEmail,
-        userName: body.userName,
-      });
-      res.json({ msg: "join success" });
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
+// // joinControl.js 에 오류가 없을 시 join 값들을 DB에 입력
+// export const postJoin = async (req, res) => {
+//   try {
+//     const { body } = req;
+//     await User.create({
+//       userID: body.userEmail,
+//       userName: body.userName,
+//     });
+//     res.json({ msg: "join success" });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };

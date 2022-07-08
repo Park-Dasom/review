@@ -12,11 +12,11 @@ block content
               .form__user-label
                 label.user__label 아이디
                 .form__userID-input
-                  input.userID__input(name=`userID` type="text" required placeholder="사용하실 아이디를 입력해주세요." ) 
+                  input.userID__input(name=`userEmail` type="text" required placeholder="사용하실 아이디를 입력해주세요." ) 
               .form__username-label
                 label.username__label 이름
-                .form__username-input
-                  input.user__input(name=`userID` type="text" required placeholder="사용하실 이름을 입력해주세요." ) 
+                .form__userName-input
+                  input.userName__input(name=`userName` type="text" required placeholder="사용하실 이름을 입력해주세요." ) 
               p.form__user-msg 아이디가 올바르지 않습니다.
             .form__pw-wrap 
               .form__pw-label 
@@ -26,7 +26,7 @@ block content
               .form__pwcheck-label 
                 label.pwcheck__label 비밀번호 확인
                 .form__pwcheck-input 
-                  input.pwcheckw__input(name=`password` type="password" autocomplete="off" required placeholder="위와 같은 비밀번호를 입력해주세요.")
+                  input.pwcheckw__input(name=`passwordCheck` type="password" autocomplete="off" required placeholder="위와 같은 비밀번호를 입력해주세요.")
               p.form__pw-msg 비밀번호가 맞지 않습니다.
             .form__btn 
               button.btn__submit-form 회원가입

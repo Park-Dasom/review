@@ -31,10 +31,7 @@ export const postChoice = async (req, res) => {
 export const postRating = async (req, res) => {
   try {
     const { body } = req;
-    await Choice.findOneAndUpdate(
-      { choiceID: body.choiceID },
-      { rate: body.rate }
-    );
+    await Choice.findOneAndUpdate({ choiceID: body.choiceID }, { rate: body.rate });
     res.json({ msg: "success rating" });
   } catch (err) {
     console.log(err);
@@ -42,34 +39,12 @@ export const postRating = async (req, res) => {
 };
 
 // 회원가입 이메일 증복 확인
-export const checkEmail = async (req, res) => {
+export const postIdDoubleCheck = async (req, res) => {
   try {
     const { body } = req;
     const userEmails = await User.findOne({ userID: body.userEmail });
-    if (!userEmails) {
-      res.json({ msg: "join success" });
-      await User.create({
-        userID: body.userEmail,
-        userName: body.userName,
-      });
-    } else {
-      res.json({ msg: "exsiting user" });
-    }
+    res.json({ userEmails });
   } catch (err) {
     console.log(err);
   }
 };
-
-// // joinControl.js 에 오류가 없을 시 join 값들을 DB에 입력
-// export const postJoin = async (req, res) => {
-//   try {
-//     const { body } = req;
-//     await User.create({
-//       userID: body.userEmail,
-//       userName: body.userName,
-//     });
-//     res.json({ msg: "join success" });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };

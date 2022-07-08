@@ -5,28 +5,28 @@ block content
     //- 회원가입 section-form
     section.section__join.layout
       .section__join-wrap
-        form.join__form(action=`${routes.home}` method="POST")
+        form.join__form(action=`${routes.user}${routes.join}` method="POST")
           .form__wrap
             .form__user-wrap
               p.form__user-join JOIN
               .form__user-label
                 label.user__label 아이디
                 .form__userID-input
-                  input.userID__input(name=`userEmail` type="text" required placeholder="사용하실 아이디를 입력해주세요." ) 
+                  input.userID__input(type="text" name=`userEmail` placeholder="사용하실 아이디를 입력해주세요.")
               .form__username-label
                 label.username__label 이름
                 .form__userName-input
-                  input.userName__input(name=`userName` type="text" required placeholder="사용하실 이름을 입력해주세요." ) 
+                  input.userName__input(name=`userName` type="text" required placeholder="사용하실 이름을 입력해주세요." )
               p.form__user-msg 아이디가 올바르지 않습니다.
-            .form__pw-wrap 
-              .form__pw-label 
+            .form__pw-wrap
+              .form__pw-label
                 label.pw__label 비밀번호
-                .form__pw-input 
+                .form__pw-input
                   input.pw__input(name=`password` type="password" autocomplete="off" required placeholder="사용하실 비밀번호를 입력해주세요.")
-              .form__pwcheck-label 
+              .form__pwcheck-label
                 label.pwcheck__label 비밀번호 확인
-                .form__pwcheck-input 
+                .form__pwcheck-input
                   input.pwcheckw__input(name=`passwordCheck` type="password" autocomplete="off" required placeholder="위와 같은 비밀번호를 입력해주세요.")
               p.form__pw-msg 비밀번호가 맞지 않습니다.
-            .form__btn 
+            .form__btn
               button.btn__submit-form 회원가입

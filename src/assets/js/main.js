@@ -2,6 +2,7 @@ import "../scss/styles.scss";
 
 import "./headerControl";
 import "./homeControl";
+import "./joinControl";
 
 // 관리자
 import "./adminSidebarControl";

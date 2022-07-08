@@ -38,7 +38,6 @@ const init = () => {
           $(elem2).on("click", function () {
             const choiceID = $(this).parents(".marchandise__icon").attr("data-id");
             const rate = $(this).index() + 1;
-
             $.ajax({
               url: "/api/rating",
               type: "POST",

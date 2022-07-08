@@ -4,9 +4,8 @@ import passportLocalMongoose from "passport-local-mongoose";
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
-  userID: String,
-  username: String,
-  role: String,
+  userEmail: String,
+  userName: String,
   createdAt: { type: Date, default: new Date() },
   updatedAt: Date,
 });

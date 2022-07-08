@@ -10,6 +10,6 @@ apiRouter.post("/rating", postRating);
 // 회원가입 이메일 중복 확인
 apiRouter.post("/user-id/check", checkEmail);
 // post join
-apiRouter.post("/join/post-join", postJoin);
+//apiRouter.post("/join/post-join", postJoin);
 
 export default apiRouter;

@@ -3,7 +3,7 @@ import passport from "passport";
 import User from "../models/User";
 import routes from "../routes";
 
-// 회원가입 getJoin
+// 회원가입 Join
 export const getJoin = (req, res) => {
   try {
     res.render("join");
@@ -15,8 +15,7 @@ export const getJoin = (req, res) => {
     );
   }
 };
-// 회원가입 postJoin
-export const postJoin = async (req, res) => {
+export const postJoin = async (req, res, next) => {
   try {
     const { body } = req;
     console.log(body);
@@ -24,10 +23,7 @@ export const postJoin = async (req, res) => {
     body.updatedAt = moment(new Date()).tz("Asia/Seoul");
     const user = await User(body);
     await User.register(user, body.password);
-    res.send(
-      `<script>alert("회원가입이 완료되었습니다.\\r\\n");\
-      location.href="${routes.home}"</script>`
-    );
+    next();
   } catch (err) {
     console.log(err);
     res.send(
@@ -37,7 +33,7 @@ export const postJoin = async (req, res) => {
   }
 };
 
-// 로그인 getLogin
+// 로그인 Login
 export const getLogin = (req, res) => {
   try {
     res.render("login");
@@ -48,7 +44,6 @@ export const getLogin = (req, res) => {
     );
   }
 };
-// 로그인 postLogin
 export const postLogin = (req, res, next) => {
   try {
     passport.authenticate("local", (err, user, _) => {
@@ -80,6 +75,10 @@ export const postLogin = (req, res, next) => {
   }
 };
 
+// 자동로그인 autoLogin
+export const autoLogin = passport.authenticate("local", { successRedirect: `${routes.home}`, failureRedirect: `${routes.user}${routes.login}` });
+
+// 로그아웃 Logout
 export const getLogout = (req, res) => {
   try {
     req.logout();

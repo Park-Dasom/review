@@ -1,12 +1,12 @@
 import express from "express";
 import routes from "../routes";
-import { getJoin, postJoin, getLogin, postLogin, getLogout } from "../controllers/userController";
+import { getJoin, postJoin, getLogin, postLogin, getLogout, autoLogin } from "../controllers/userController";
 
 const userRouter = express.Router();
 
 // 회원가입 join
 userRouter.get(routes.join, getJoin);
-userRouter.post(routes.join, postJoin);
+userRouter.post(routes.join, postJoin, autoLogin);
 
 // 로그인 login
 userRouter.get(routes.login, getLogin);

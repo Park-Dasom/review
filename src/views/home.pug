@@ -11,7 +11,7 @@ block content
             a(href=`${routes.user}${routes.login}`) Login
         if loggedUser
           li
-            a(href="") #{loggedUser.name} 의 Profile
+            a=`${loggedUser.name} 의 Profile`
           li 
             a(href=`${routes.user}${routes.logout}`) logout
     section.list__section.layout
@@ -44,8 +44,8 @@ block content
                       span 마음에 들어요!
                       img.heart__regular(src=`${imgPath}/public/heart-${item.choice ? "solid" : "regular"}.svg`)
                     .icon__stars
-                      img.star__regular(class= (item.rate >= 1 ? "solid" : ""))(src=`${imgPath}/public/star-${item.rate >= 1 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class= (item.rate >= 2 ? "solid" : ""))(src=`${imgPath}/public/star-${item.rate >= 2 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class= (item.rate >= 3 ? "solid" : ""))(src=`${imgPath}/public/star-${item.rate >= 3 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class= (item.rate >= 4 ? "solid" : ""))(src=`${imgPath}/public/star-${item.rate >= 4 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class= (item.rate >= 5 ? "solid" : ""))(src=`${imgPath}/public/star-${item.rate >= 5 ? "solid" : "regular"}.svg`)
+                      img.star__regular(class= (item.rate >= 1 ? "solid" : "") src=`${imgPath}/public/star-${item.rate >= 1 ? "solid" : "regular"}.svg`)
+                      img.star__regular(class= (item.rate >= 2 ? "solid" : "") src=`${imgPath}/public/star-${item.rate >= 2 ? "solid" : "regular"}.svg`)
+                      img.star__regular(class= (item.rate >= 3 ? "solid" : "") src=`${imgPath}/public/star-${item.rate >= 3 ? "solid" : "regular"}.svg`)
+                      img.star__regular(class= (item.rate >= 4 ? "solid" : "") src=`${imgPath}/public/star-${item.rate >= 4 ? "solid" : "regular"}.svg`)
+                      img.star__regular(class= (item.rate >= 5 ? "solid" : "") src=`${imgPath}/public/star-${item.rate >= 5 ? "solid" : "regular"}.svg`)

@@ -42,8 +42,27 @@ export const postRating = async (req, res) => {
 export const postIdDoubleCheck = async (req, res) => {
   try {
     const { body } = req;
-    const userEmails = await User.findOne({ userID: body.userEmail });
-    res.json({ userEmails });
+    const userEmails = await User.findOne({ userID: body.userID });
+    if (userEmails) {
+      res.json({ msg: "user exist" });
+    } else {
+      res.json({ msg: "create user" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 로그인 아이디, 비밀번호 확인
+export const postJoinCheck = async (req, res) => {
+  try {
+    const { body } = req;
+    const userID = body.userID;
+    const password = body.password;
+    const user = await User.findOne({ userID, password });
+    if (!user) {
+      res.json({ msg: "unknown user" });
+    }
   } catch (err) {
     console.log(err);
   }

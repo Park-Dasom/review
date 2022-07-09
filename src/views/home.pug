@@ -4,10 +4,16 @@ block content
   .home__page#home__page
     section 
       ul 
-        li 
-          a(href="/join") Join 
-        li 
-          a(href="/login") Login
+        if !loggedUser
+          li 
+            a(href=`${routes.user}${routes.join}`) Join 
+          li 
+            a(href=`${routes.user}${routes.login}`) Login
+        if loggedUser
+          li
+            a(href="") #{loggedUser.name} 의 Profile
+          li 
+            a(href=`${routes.user}${routes.logout}`) logout
     section.list__section.layout
       .list__item 
         ul.list__items

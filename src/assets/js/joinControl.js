@@ -4,22 +4,22 @@ const joinPage = document.getElementById("join__page");
 
 const init = () => {
   $(() => {
-    $("button.btn__submit-form").on("click", () => {
-      // email (email) 검증
+    $("button.btn__submit-form").on("click", (e) => {
+      e.preventDefault();
       const emailReg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
       const numberReg = /[0-9]/;
       const specReg = /[~!@#$%^&*()_+|<>?:{}]/;
       const engReg = /[a-zA-Z]/;
 
-      const userEmail = $("input.userID__input").val();
+      const userID = $("input.userID__input").val();
       const userName = $("input.userName__input").val();
       const password = $("input.pw__input").val();
       const passwordCheck = $("input.pwcheckw__input").val();
 
-      if (userEmail === "") {
+      if (userID === "") {
         // email 공란 시 alert
         alert("이메일을 입력해주세요.");
-      } else if (!emailReg.test(userEmail)) {
+      } else if (!emailReg.test(userID)) {
         // email 형식 검증
         alert("이메일 형식이 올바르지 않습니다.");
       } else if (userName === "") {
@@ -51,11 +51,12 @@ const init = () => {
         $.ajax({
           url: "/api/id-double-check",
           type: "POST",
-          data: { userEmail },
+          data: { userID },
           success: (result) => {
-            if (result.userEmails) {
+            console.log(result);
+            if (result.msg === "user exist") {
               alert("이미 존재하는 아이디입니다.");
-            } else {
+            } else if (result.msg === "create user") {
               $("form.join__form").trigger("submit");
             }
           },

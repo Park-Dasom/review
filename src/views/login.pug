@@ -5,14 +5,14 @@ block content
     //- 홈 로그인 section-form
     section.section__login.layout
       .section__login-wrap
-        form.login__form(method="POST")
+        form.login__form(action=`${routes.user}${routes.login}` method="POST")
           .form__wrap
             .form__user-wrap
               p.form__user-login LOGIN
-              .form__user-label
-                label.user__label 아이디
+              .form__userID-label
+                label.userID__label 아이디
                 .form__userID-input
-                  input.userID__input(name=`userID`, type="text", required, placeholder="아이디를 입력해주세요.", unique ) 
+                  input.userID__input(name=`userID`, type="text", required, placeholder="아이디를 입력해주세요." ) 
               p.form__user-msg 아이디가 올바르지 않습니다.
             .form__pw-wrap 
               .form__pw-label 
@@ -21,6 +21,6 @@ block content
                   input.pw__input(name=`password`, type="password", autocomplete="off", required, placeholder="비밀번호를 입력해주세요.")
               p.form__pw-msg 비밀번호가 올바르지 않습니다.
             .form__btn 
-              button.btn__submit-form 로그인
+              button.btn__submit 로그인
             .form__join
-              a.form__join-anchor(href=`${routes.join}`) 회원가입 하러가기 &rarr;
+              a.form__join-anchor(href=`${routes.user}${routes.join}`) 회원가입 하러가기 &rarr;

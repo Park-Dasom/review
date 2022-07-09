@@ -11,24 +11,24 @@
       padding: 30px;
       form.login__form {
         .form__wrap {
-          .form__user-wrap {
+          .form__userID-wrap {
             p.form__user-login {
               text-align: center;
               font-size: 30px;
               font-weight: 700;
             }
-            .form__user-label {
+            .form__userID-label {
               margin-top: 20px;
               label.user__label {
               }
 
-              .form__user-input {
+              .form__userID-input {
                 margin-top: 5px;
                 border: solid 1px goldenrod;
                 border-radius: 5px;
                 height: 30px;
                 width: 300px;
-                input.user__input {
+                input.userID__input {
                 }
               }
             }
@@ -62,7 +62,7 @@
       }
       .form__btn {
         margin-top: 15px;
-        button.btn__submit-form {
+        button.btn__submit {
           height: 50px;
           width: 100px;
           background-color: goldenrod;

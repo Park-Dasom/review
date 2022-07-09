@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   userID: String,
-  userName: String,
+  name: String,
   createdAt: { type: Date, default: new Date() },
   updatedAt: Date,
 });

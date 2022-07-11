@@ -97,6 +97,30 @@ const init = () => {
         });
       });
     });
+
+    // 댓글 내용 post
+    $("button.wrtting__button").on("click", (e) => {
+      const text = $("textarea.writting__textarea").val();
+      e.preventDefault();
+      if (text === "") {
+        alert("댓글을 입력해주세요.");
+      } else {
+        $.ajax({
+          url: "/api/comment",
+          type: "POST",
+          data: { text },
+          success: (result) => {
+            if (result.msg === "comment update") {
+              $("button.wrtting__button").trigger("submit");
+              window.location.reload();
+            }
+          },
+          error: (err) => {
+            alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
+          },
+        });
+      }
+    });
   });
 };
 

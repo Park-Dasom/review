@@ -1,5 +1,5 @@
 import express from "express";
-import { postChoice, postRating, postIdDoubleCheck, postJoinCheck } from "../controllers/apiController";
+import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postComment } from "../controllers/apiController";
 
 const apiRouter = express.Router();
 // choice true / fase
@@ -13,5 +13,8 @@ apiRouter.post("/id-double-check", postIdDoubleCheck);
 
 // 로그인 아이디, 비밀번호 확인
 apiRouter.post("/join-check", postJoinCheck);
+
+// 댓글 post
+apiRouter.post("/comment", postComment);
 
 export default apiRouter;

@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import Choice from "../models/Choice";
 import User from "../models/User";
+import Comment from "../models/Comment";
 
 // 마음에 들어요 데이터 입력
 export const postChoice = async (req, res) => {
@@ -63,6 +64,28 @@ export const postJoinCheck = async (req, res) => {
     if (!user) {
       res.json({ msg: "unknown user" });
     }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 댓글 post
+export const postComment = async (req, res) => {
+  try {
+    const { body } = req;
+    const { text } = body;
+    const { userID } = req.user;
+    const { name } = req.user;
+    const id = req.user._id;
+    const comment = await Comment.create({
+      userID,
+      name,
+      comments: text,
+    });
+    const user = await User.findById(id);
+    user.comments.push(comment._id);
+    user.save();
+    res.json({ msg: "comment update" });
   } catch (err) {
     console.log(err);
   }

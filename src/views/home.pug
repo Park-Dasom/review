@@ -2,17 +2,17 @@ extends layouts/main
 
 block content
   .home__page#home__page
-    section 
-      ul 
+    section.login__section.layout
+      ul.login__item
         if !loggedUser
-          li 
+          li.login__items-join
             a(href=`${routes.user}${routes.join}`) Join 
-          li 
+          li.login__items-login
             a(href=`${routes.user}${routes.login}`) Login
         if loggedUser
-          li
+          li.login__items-profile
             a=`${loggedUser.name} 의 Profile`
-          li 
+          li.login__items-logout
             a(href=`${routes.user}${routes.logout}`) logout
     section.list__section.layout
       .list__item 
@@ -49,3 +49,16 @@ block content
                       img.star__regular(class= (item.rate >= 3 ? "solid" : "") src=`${imgPath}/public/star-${item.rate >= 3 ? "solid" : "regular"}.svg`)
                       img.star__regular(class= (item.rate >= 4 ? "solid" : "") src=`${imgPath}/public/star-${item.rate >= 4 ? "solid" : "regular"}.svg`)
                       img.star__regular(class= (item.rate >= 5 ? "solid" : "") src=`${imgPath}/public/star-${item.rate >= 5 ? "solid" : "regular"}.svg`)
+    section.comment__section.layout
+      ul.comment__item 
+        each item in comments
+          li.comment__items
+            p 작성자 ID : #{item.userID}
+            p 작성자 이름 : #{item.name}
+            p 작성 일자 : #{item.createdAt}
+            br
+            p=item.comments
+      .comment__writting-wrap 
+        form(method="post") 
+          textarea.writting__textarea(name="comment", cols="30", rows="10")
+          button.wrtting__button(type="submit") comment

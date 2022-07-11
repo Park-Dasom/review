@@ -6,6 +6,7 @@ const { Schema } = mongoose;
 const UserSchema = new Schema({
   userID: String,
   name: String,
+  comments: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Comment" }],
   createdAt: { type: Date, default: new Date() },
   updatedAt: Date,
 });

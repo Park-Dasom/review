@@ -77,6 +77,7 @@ export const postComment = async (req, res) => {
     const { userID } = req.user;
     const { name } = req.user;
     const id = req.user._id;
+
     const comment = await Comment.create({
       userID,
       name,

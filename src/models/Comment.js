@@ -1,11 +1,9 @@
-import moment from "moment";
 import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
 const CommentSchema = new Schema({
-  userID: String,
-  name: String,
+  userID: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
   comments: String,
   createdAt: { type: Date, default: new Date() },
 });

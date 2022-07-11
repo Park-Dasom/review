@@ -12,6 +12,8 @@ block content
         if loggedUser
           li.login__items-profile
             a=`${loggedUser.name} 의 Profile`
+          li.login__items-changePW 
+            a(href=`${routes.user}${routes.changePW}`) 비밀번호 변경
           li.login__items-logout
             a(href=`${routes.user}${routes.logout}`) logout
     section.list__section.layout
@@ -53,12 +55,17 @@ block content
       ul.comment__item 
         each item in comments
           li.comment__items
-            p 작성자 ID : #{item.userID}
-            p 작성자 이름 : #{item.name}
-            p 작성 일자 : #{item.createdAt}
-            br
-            p=item.comments
-      .comment__writting-wrap 
-        form(method="post") 
-          textarea.writting__textarea(type="text" name="comment")
-          button.wrtting__button(type="submit") comment
+            p.comment__userID 작성자 ID : #{item.userID.userID}
+            p.comment__name 작성자 이름 : #{item.userID.name}
+            p.comment__createdAt 작성 일자 : #{dateFormatYMDHm(item.createdAt)}
+            p.comment__comments=item.comments
+            if loggedUser && String(loggedUser._id) === String(item.userID._id)
+              button.comment__delBtn(data-userID=item._id) ❌
+              br
+            else 
+              br
+        if loggedUser
+          .comment__writting-wrap 
+            form(method="post") 
+              textarea.writting__textarea(type="text" name="comment", placeholder="댓글을 입력하세요.")
+              button.wrtting__button(type="submit") comment

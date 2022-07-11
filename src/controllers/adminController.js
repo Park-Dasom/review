@@ -4,6 +4,7 @@ import moment from "moment-timezone";
 import routes from "../routes";
 import User from "../models/User";
 import Sample from "../models/Sample";
+import Merchandise from "../models/Merchandise";
 
 // 관리자 로그인
 export const getAdminLogin = (req, res) => {
@@ -78,6 +79,7 @@ export const postAdminRegister = async (req, res) => {
   try {
     const { body } = req;
     body.role = "general";
+    body.name = "일반관리자";
     if (body.password !== body.password2) {
       res.send(
         `<script>\
@@ -254,12 +256,10 @@ export const adminMerchandise = async (req, res) => {
       query: { searchKey, searchValue, limit },
     } = req;
 
-    const findQuery = {};
+    let findQuery = {};
 
     // 검색 기능이 있을 경우
-    const searchArr = [
-      { code: "0", title: "상품명", value: "name" },
-    ];
+    const searchArr = [{ code: "0", title: "이름", value: "title" }];
     if (searchKey && searchValue) {
       findQuery[`${searchArr[parseInt(searchKey, 10)].value}`] = { $regex: searchValue, $options: "i" };
     }
@@ -289,7 +289,7 @@ export const adminMerchandise = async (req, res) => {
     console.log(err);
     res.send(
       `<script>alert("오류가 발생했습니다:\\r\\n${err}");\
-      location.href="${routes.home}"</script>`
+      location.href="${routes.admin}"</script>`
     );
   }
 };
@@ -313,7 +313,7 @@ export const postCreateMerchandise = async (req, res) => {
   try {
     const { body, file } = req;
 
-    body.thumbnail = file ? file.location : null;
+    body.picture = file ? file.location : null;
     body.createdAt = moment(new Date()).tz("Asia/Seoul");
     body.updatedAt = moment(new Date()).tz("Asia/Seoul");
     await Merchandise.create(body);
@@ -377,8 +377,8 @@ export const postUpdateMerchandise = async (req, res) => {
       body,
       file,
     } = req;
-    const merchandises = await Sample.findById(merchandiseID);
-    body.thumbnail = file ? file.location : merchandises.thumbnail;
+    const merchandises = await Merchandise.findById(merchandiseID);
+    body.picture = file ? file.location : merchandises.picture;
     body.updatedAt = moment(new Date()).tz("Asia/Seoul");
     await Merchandise.findByIdAndUpdate(merchandiseID, body);
     res.send(

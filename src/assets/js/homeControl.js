@@ -98,7 +98,7 @@ const init = () => {
       });
     });
 
-    // 댓글 내용 post
+    // 댓글 create post
     $("button.wrtting__button").on("click", (e) => {
       const text = $("textarea.writting__textarea").val();
       e.preventDefault();
@@ -106,7 +106,7 @@ const init = () => {
         alert("댓글을 입력해주세요.");
       } else {
         $.ajax({
-          url: "/api/comment",
+          url: "/api/creat-comment",
           type: "POST",
           data: { text },
           success: (result) => {
@@ -120,6 +120,26 @@ const init = () => {
           },
         });
       }
+    });
+
+    // 댓글 delete post
+    $("button.comment__delBtn").on("click", (e) => {
+      e.preventDefault();
+      const userID = $("button.comment__delBtn").attr("data-userID");
+      $.ajax({
+        url: "/api/delete-comment",
+        type: "DELETE",
+        data: { userID },
+        success: (result) => {
+          if (result.msg === "comment delete") {
+            $("button.comment__delBtn").trigger("submit");
+            window.location.reload();
+          }
+        },
+        error: (err) => {
+          alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
+        },
+      });
     });
   });
 };

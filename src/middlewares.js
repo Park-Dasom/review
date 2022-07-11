@@ -14,7 +14,7 @@ const multerSamplePic = multer({
   storage: multerS3({
     s3,
     acl: "public-read",
-    bucket: "review/test", // FIXME: S3 버킷 생성 후 버킷명/폴더명 맞춰주기
+    bucket: "review/admin", // FIXME: S3 버킷 생성 후 버킷명/폴더명 맞춰주기
     key(req, file, cb) {
       cb(null, Date.now() + file.originalname);
     },
@@ -23,7 +23,7 @@ const multerSamplePic = multer({
 });
 
 // 한 개의 input(type="file")일 경우
-export const uploadMerchandisePic = multerSamplePic.single("thumbnail");
+export const uploadMerchandisePic = multerSamplePic.single("picture");
 // 여러 input(type="file")일 경우
 // export const uploadSamplePic = multerSamplePic.fields([{ name: "thumbnail1" }, { name: "thumbnail2" }]);
 

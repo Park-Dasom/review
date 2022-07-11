@@ -18,6 +18,7 @@ const ADMIN_LOGOUT = "/logout";
 const ADMIN_CHANGE_PW = "/change-pw";
 const ADMIN_USER = "/user";
 // ADMIN SAMPLE(CRUD용)
+const ADMIN_MERCHANDISE = "/merchandise";
 const ADMIN_SAMPLE = "/sample";
 // API
 const API = "/api";
@@ -43,6 +44,7 @@ const routes = {
   adminChangePW: ADMIN_CHANGE_PW,
   adminUser: ADMIN_USER,
   // ADMIN SAMPLE(CRUD용)
+  adminMerchandise: ADMIN_MERCHANDISE,
   adminSample: ADMIN_SAMPLE,
   // API
   api: API,

@@ -7,6 +7,7 @@ import Comment from "../models/Comment";
 export const postChoice = async (req, res) => {
   try {
     const { body } = req;
+    console.log(body);
     const choices = await Choice.find({ choiceID: body.choiceID });
     if (choices.length === 0) {
       await Choice.create({
@@ -69,24 +70,31 @@ export const postJoinCheck = async (req, res) => {
   }
 };
 
-// 댓글 post
-export const postComment = async (req, res) => {
+// 댓글 creat post
+export const postCreatComment = async (req, res) => {
   try {
     const { body } = req;
-    const { text } = body;
-    const { userID } = req.user;
-    const { name } = req.user;
-    const id = req.user._id;
-
-    const comment = await Comment.create({
-      userID,
-      name,
-      comments: text,
-    });
-    const user = await User.findById(id);
-    user.comments.push(comment._id);
+    const { text } = req.body;
+    body.userID = req.user._id;
+    body.comments = text;
+    const comment = await Comment.create(body);
+    const user = await User.findById(req.user._id);
+    user.commentID.push(comment._id);
     user.save();
     res.json({ msg: "comment update" });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 댓글 delete post
+export const postDeleteComment = async (req, res) => {
+  try {
+    const { body } = req;
+    console.log(body);
+    const commentID = body.userID;
+    await Comment.findByIdAndRemove(commentID);
+    res.json({ msg: "comment delete" });
   } catch (err) {
     console.log(err);
   }

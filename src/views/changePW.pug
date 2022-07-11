@@ -1,0 +1,12 @@
+extends layouts/main
+
+block content
+  .changePW__page#changePW__page
+    section.changePW__wrap 
+      h1.changePW__title Change Password
+      form.changePW__form(method="post")
+        input.changePW__newPW(type="password", name="newPassword", placeholder="새로운 비밀번호를 입력하세요.")
+        br
+        input.changePW__newPWConfirm(type="password", name="newPasswordConfirm", placeholder="새로운 비밀번호를 다시 한 번 입력하세요.")
+        br
+        button(type="submit").changePW__button 확인

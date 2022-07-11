@@ -1,6 +1,6 @@
 import express from "express";
 import routes from "../routes";
-import { getJoin, postJoin, getLogin, postLogin, getLogout, autoLogin } from "../controllers/userController";
+import { getJoin, postJoin, getLogin, postLogin, getLogout, autoLogin, getChangePassword, postChangePassword } from "../controllers/userController";
 
 const userRouter = express.Router();
 
@@ -14,4 +14,9 @@ userRouter.post(routes.login, postLogin);
 
 // 로그아웃 logout
 userRouter.get(routes.logout, getLogout);
+
+// 비밀번호 password
+userRouter.get(routes.changePW, getChangePassword);
+userRouter.post(routes.changePW, postChangePassword);
+
 export default userRouter;

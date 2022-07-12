@@ -19,7 +19,7 @@ block content
                       .card-header
                         h1.card-header-title=`${adminNameKo} ${formType}`
                       .card-body
-                        form.needs-validation(enctype="multipart/form-data" novalidate method="POST")
+                        form.needs-validation(novalidate method="POST")
                           .form-group
                             label.form-label(for='#title') 이름
                             input#title.form-control(type='text' name="title" value=`${updateBool ? adminItem.title : ""}` placeholder="이름을 입력하세요" required)

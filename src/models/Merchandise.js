@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const MerchandiseSchema = new Schema({
-  picture: String,
   title: String,
   choice: [{ type: Boolean, default: false }],
   rate: [{ type: Number, default: 0 }],

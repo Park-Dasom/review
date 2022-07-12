@@ -18,7 +18,6 @@ block content
                   form.needs-validation(method="GET")
                     .input-group
                       select#basicSelect.form-control(name="searchKey")
-                        //- FIXME: 사용할 데이터 이름과 model에 사용된 key값을 value로 지정 [모든 검색은 키워드 검색, String만 가능, Number처리 필요할 경우 Controller에서 따로 작업 必]
                         each option in searchArr
                           if option.code === searchKey
                             option(value=option.code selected)=option.title
@@ -37,20 +36,14 @@ block content
                     thead
                       tr
                         th 번호
-                        th 사진
                         th 이름
-                        th 선택한 사람 수
-                        th 평균 별점
                         th 생성일
                         th 수정일
                     tbody
                       each item, index in excelData
                         tr
                           td=index + 1
-                          td=item.picture
                           td=item.title
-                          td=item.choice.length
-                          td=item.rate
                           td=dateFormatYMDHm(item.createdAt)
                           td=dateFormatYMDHm(item.updatedAt)
                 //- END: Excel Download Button

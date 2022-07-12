@@ -141,6 +141,25 @@ const init = () => {
         },
       });
     });
+
+    $("li.login__items-delUser").on("click", (e) => {
+      e.preventDefault();
+      const userID = $("li.login__items-delUser").attr("data-user");
+      $.ajax({
+        url: "/api/user-delete",
+        type: "DELETE",
+        data: { userID },
+        success: (result) => {
+          if (result.msg === "user delete") {
+            $("li.login__items-delUser").trigger("submit");
+            window.location.reload();
+          }
+        },
+        error: (err) => {
+          alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
+        },
+      });
+    });
   });
 };
 

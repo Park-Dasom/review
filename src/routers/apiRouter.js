@@ -1,5 +1,5 @@
 import express from "express";
-import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment } from "../controllers/apiController";
+import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postDeleteUser } from "../controllers/apiController";
 
 const apiRouter = express.Router();
 // choice true / fase
@@ -17,5 +17,8 @@ apiRouter.post("/join-check", postJoinCheck);
 // 댓글 post
 apiRouter.post("/creat-comment", postCreatComment);
 apiRouter.delete("/delete-comment", postDeleteComment);
+
+// 회원 탈퇴
+apiRouter.delete("/user-delete", postDeleteUser);
 
 export default apiRouter;

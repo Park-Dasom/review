@@ -8,6 +8,7 @@ const UserSchema = new Schema({
   name: String,
   role: { type: String, default: "general" },
   commentID: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Comment" }],
+  merchandiseID: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Merchandise" }],
   createdAt: { type: Date, default: new Date() },
   updatedAt: Date,
 });

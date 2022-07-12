@@ -99,3 +99,13 @@ export const postDeleteComment = async (req, res) => {
     console.log(err);
   }
 };
+
+export const postDeleteUser = async (req, res) => {
+  try {
+    const { body } = req;
+    console.log(body);
+    const user = await User.findByIdAndRemove(body);
+  } catch (err) {
+    console.log(err);
+  }
+};

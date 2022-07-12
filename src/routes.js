@@ -9,6 +9,7 @@ const LOGOUT = "/logout";
 const FIND_ID = "/find-id";
 const FORGOT_PW = "/forgot-pw";
 const CHANGE_PW = "/change-pw";
+const DELETE = "/delete";
 
 // Admin
 const ADMIN = "/admin";
@@ -35,6 +36,7 @@ const routes = {
   findID: FIND_ID,
   forgotPW: FORGOT_PW,
   changePW: CHANGE_PW,
+  delete: DELETE,
 
   // Admin
   admin: ADMIN,

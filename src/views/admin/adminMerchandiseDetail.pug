@@ -35,17 +35,8 @@ block content
                         .card-body
                           ul.card-body__items
                             li.card-body__item
-                              h4.mb-50 사진
-                              img.card-img-top(src=adminItem.picture)
-                            li.card-body__item
                               h4.mb-50 이름
                               p.card-text=adminItem.title
-                            li.card-body__item
-                              h4.mb-50 선택한 사람 수
-                              p.card-text=adminItem.choice.length
-                            li.card-body__item
-                              h4.mb-50 평균 별점
-                              p.card-text=adminItem.rate
                             li.card-body__item
                               h4.mb-50 생성일
                               p.card-text=dateFormatYMDHms(adminItem.createdAt)

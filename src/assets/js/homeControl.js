@@ -35,12 +35,12 @@ const init = () => {
         .find("img.star__regular")
         .each((i2, elem2) => {
           $(elem2).on("click", function () {
-            const choiceID = $(this).parents(".marchandise__icon").attr("data-id");
+            const rateID = $(this).parents(".marchandise__icon").attr("data-id");
             const rate = $(this).index() + 1;
             $.ajax({
               url: "/api/rating",
               type: "POST",
-              data: { choiceID, rate },
+              data: { rateID, rate },
               success: (result) => {
                 const msg = result.msg;
                 if (msg === "success rating") {
@@ -133,25 +133,6 @@ const init = () => {
         success: (result) => {
           if (result.msg === "comment delete") {
             $("button.comment__delBtn").trigger("submit");
-            window.location.reload();
-          }
-        },
-        error: (err) => {
-          alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
-        },
-      });
-    });
-
-    $("li.login__items-delUser").on("click", (e) => {
-      e.preventDefault();
-      const userID = $("li.login__items-delUser").attr("data-user");
-      $.ajax({
-        url: "/api/user-delete",
-        type: "DELETE",
-        data: { userID },
-        success: (result) => {
-          if (result.msg === "user delete") {
-            $("li.login__items-delUser").trigger("submit");
             window.location.reload();
           }
         },

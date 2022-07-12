@@ -16,43 +16,25 @@ block content
             a(href=`${routes.user}${routes.changePW}`) 비밀번호 변경
           li.login__items-logout
             a(href=`${routes.user}${routes.logout}`) 로그아웃
-          li.login__items-delUser(data-user=loggedUser._id)
+          li.login__items-delUser
             a(href=`${routes.user}${routes.delete}`) 회원탈퇴  
     section.list__section.layout
       .list__item 
         ul.list__items
           li.list__merchandise
             .marchandise__wrap
-              img.marchendise__img(src=`${imgPath}/public/plate.png`)
-              span.merchandise__title 넉넉한 빗살무늬 토기 
-              .marchandise__icon(data-id="1")
-                each item in choices 
-                  if item.choiceID === "1"
-                    .icon__heart
-                      span 마음에 들어요!
-                      img.heart__regular(src=`${imgPath}/public/heart-${item.choice ? "solid" : "regular"}.svg`)
-                    .icon__stars
-                      img.star__regular(class=`${item.rate >= 1 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rate >= 1 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class=`${item.rate >= 2 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rate >= 2 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class=`${item.rate >= 3 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rate >= 3 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class=`${item.rate >= 4 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rate >= 4 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class=`${item.rate >= 5 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rate >= 5 ? "solid" : "regular"}.svg`)
-          li.list__merchandise
-            .marchandise__wrap
-              img.marchendise__img(src=`${imgPath}/public/garakbaqui.jpeg`)
-              span.merchandise__title 기워 입어요 가락바퀴
-              .marchandise__icon(data-id="2")
-                each item in choices 
-                  if item.choiceID === "2"
-                    .icon__heart  
-                      span 마음에 들어요!
-                      img.heart__regular(src=`${imgPath}/public/heart-${item.choice ? "solid" : "regular"}.svg`)
-                    .icon__stars
-                      img.star__regular(class= (item.rate >= 1 ? "solid" : "") src=`${imgPath}/public/star-${item.rate >= 1 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class= (item.rate >= 2 ? "solid" : "") src=`${imgPath}/public/star-${item.rate >= 2 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class= (item.rate >= 3 ? "solid" : "") src=`${imgPath}/public/star-${item.rate >= 3 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class= (item.rate >= 4 ? "solid" : "") src=`${imgPath}/public/star-${item.rate >= 4 ? "solid" : "regular"}.svg`)
-                      img.star__regular(class= (item.rate >= 5 ? "solid" : "") src=`${imgPath}/public/star-${item.rate >= 5 ? "solid" : "regular"}.svg`)
+              each item in merchandises
+                .merchandise__title=item.title
+                .marchandise__icon(data-id=item._id)
+                  .icon__heart
+                    span 마음에 들어요!
+                    img.heart__regular(src=`${imgPath}/public/heart-${item.choice ? "solid" : "regular"}.svg`)
+                  .icon__stars
+                    img.star__regular(class=`${item.rate >= 1 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rate >= 1 ? "solid" : "regular"}.svg`)
+                    img.star__regular(class=`${item.rate >= 2 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rate >= 2 ? "solid" : "regular"}.svg`)
+                    img.star__regular(class=`${item.rate >= 3 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rate >= 3 ? "solid" : "regular"}.svg`)
+                    img.star__regular(class=`${item.rate >= 4 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rate >= 4 ? "solid" : "regular"}.svg`)
+                    img.star__regular(class=`${item.rate >= 5 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rate >= 5 ? "solid" : "regular"}.svg`)
     section.comment__section.layout
       ul.comment__item 
         each item in comments

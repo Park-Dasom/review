@@ -2,6 +2,7 @@ import moment from "moment-timezone";
 import passport from "passport";
 import User from "../models/User";
 import routes from "../routes";
+import Comment from "../models/Comment";
 
 // 회원가입 Join
 export const getJoin = (req, res) => {
@@ -133,6 +134,24 @@ export const postChangePassword = async (req, res) => {
         );
       });
     }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 회원탈퇴
+export const deleteUser = async (req, res) => {
+  try {
+    const id = req.user._id;
+    const user = await User.findById(id);
+    if (user.commentID) {
+      user.commentID.forEach(async (element) => await Comment.findByIdAndDelete(element));
+    }
+    await User.findByIdAndDelete(id);
+    req.logout();
+    req.session.destroy();
+    res.send(`<script>alert("회원탈퇴가 처리되었습니다.");\
+    location.href="${routes.home}"</script>`);
   } catch (err) {
     console.log(err);
   }

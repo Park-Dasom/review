@@ -1,8 +1,8 @@
-.active {
-  height: 25px;
-  width: 25px;
-  display: block;
-}
+// .active {
+//   height: 25px;
+//   width: 25px;
+//   display: block;
+// }
 
 .home__page#home__page {
   section.list__section {
@@ -11,7 +11,6 @@
     justify-content: center;
     margin-bottom: 150px;
     .list__item {
-      width: 545px;
       ul.list__items {
         li.list__merchandise {
           display: flex;
@@ -23,18 +22,10 @@
             align-items: center;
             justify-content: space-between;
             margin-top: 60px;
-            width: 545px;
-
-            img.marchendise__img {
-              display: block;
-              height: 150px;
-              width: 200px;
-              margin-right: 20px;
-              border-radius: 10px;
-            }
-            span.merchandise__title {
+            .merchandise__title {
               display: block;
               margin-right: 20px;
+              margin-left: 30px;
             }
             .marchandise__icon {
               display: block;
@@ -65,7 +56,6 @@
                 }
               }
             }
-
           }
           span.marchandise__description {
             width: 80%;
@@ -73,10 +63,10 @@
             margin-top: 40px;
             line-height: 2;
           }
-          }
         }
       }
     }
+  }
 }
 
 // Small devices (landscape phones, 576px and up)

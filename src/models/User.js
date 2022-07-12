@@ -7,6 +7,8 @@ const UserSchema = new Schema({
   userID: String,
   name: String,
   role: { type: String, default: "general" },
+  // choice: { type: Boolean, default: false },
+  // rate: { type: Number, default: 0 },
   commentID: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Comment" }],
   merchandiseID: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Merchandise" }],
   createdAt: { type: Date, default: new Date() },

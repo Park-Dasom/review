@@ -21,18 +21,6 @@ block content
                       .card-body
                         form.needs-validation(enctype="multipart/form-data" novalidate method="POST")
                           .form-group
-                            label.form-label 상품 이미지
-                              span.form-label-emphasis &nbsp;&nbsp;[규격: 200*150]
-                            if updateBool
-                              h6.text-primary 기존 이미지를 유지하려면 미선택
-                                a.text__primary-link(href=adminItem.picture target="_blank") [기존 이미지 보기]
-                            .custom-file
-                              if updateBool
-                                input#picture.form-control.custom-file-input(type='file' name="picture" accept="image/*")
-                              else
-                                input#picture.form-control.custom-file-input(type='file' name="picture" accept="image/*" required)
-                              label.custom-file-label(for='customFile') 파일을 선택하세요
-                          .form-group
                             label.form-label(for='#title') 이름
                             input#title.form-control(type='text' name="title" value=`${updateBool ? adminItem.title : ""}` placeholder="이름을 입력하세요" required)
                             .invalid-feedback 이 영역은 필수값입니다.

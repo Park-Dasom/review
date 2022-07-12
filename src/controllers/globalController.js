@@ -1,13 +1,17 @@
 import routes from "../routes";
 import Choice from "../models/Choice";
 import Comment from "../models/Comment";
+import Merchandise from "../models/Merchandise";
+import Rate from "../models/Rate";
+import User from "../models/User";
 
 // 홈 Home
 export const home = async (req, res) => {
   try {
-    const choices = await Choice.find();
     const comments = await Comment.find().populate("userID");
-    res.render("home", { choices, comments });
+    const merchandises = await Merchandise.find().populate("choice").populate("rate");
+    // const users = await User.find().populate("choice").populate("rate");
+    res.render("home", { comments, merchandises });
   } catch (err) {
     console.log(err);
     res.send(

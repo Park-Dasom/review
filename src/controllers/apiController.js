@@ -2,23 +2,27 @@
 import Choice from "../models/Choice";
 import User from "../models/User";
 import Comment from "../models/Comment";
+import Rate from "../models/Rate";
+import Merchandise from "../models/Merchandise";
 
 // 마음에 들어요 데이터 입력
 export const postChoice = async (req, res) => {
   try {
     const { body } = req;
-    console.log(body);
-    const choices = await Choice.find({ choiceID: body.choiceID });
-    if (choices.length === 0) {
+    const choices = await Choice.findOne({ choiceID: body.choiceID });
+    console.log(choices, body.choiceID);
+    if (!choices) {
       await Choice.create({
         choiceID: body.choiceID,
         choice: true,
       });
+      await Merchandise.findByIdAndUpdate(body.choiceID, { choice: choices.choice });
       res.json({ msg: "fill heart" });
     } else {
-      choices[0].choice = !choices[0].choice;
-      await choices[0].save();
-      if (choices[0].choice) {
+      choices.choice = !choices.choice;
+      await choices.save();
+      await Merchandise.findByIdAndUpdate(body.choiceID, { choice: choices.choice });
+      if (choices.choice) {
         res.json({ msg: "fill heart" });
       } else {
         res.json({ msg: "empty heart" });
@@ -33,8 +37,24 @@ export const postChoice = async (req, res) => {
 export const postRating = async (req, res) => {
   try {
     const { body } = req;
-    await Choice.findOneAndUpdate({ choiceID: body.choiceID }, { rate: body.rate });
-    res.json({ msg: "success rating" });
+    const rates = await Rate.findOne({ rateID: body.rateID });
+    const merchandises = await Merchandise.findById(body.rateID);
+    const users = await User.findById(body.rateID);
+    if (!rates) {
+      await Rate.create({
+        rateID: body.rateID,
+        rate: body.rate,
+      });
+      await Merchandise.findByIdAndUpdate(body.rateID, { rate: body.rate });
+      // await User.findByIdAndUpdate(body.rateID, { rate: body.rate });
+      res.json({ msg: "success rating" });
+    } else {
+      await Merchandise.findByIdAndUpdate(body.rateID, { rate: body.rate });
+      // await User.findByIdAndUpdate(body.rateID, { rate: body.rate });
+      // await Rate.findOneAndUpdate({ rate: merchandises.rate });
+
+      res.json({ msg: "success rating" });
+    }
   } catch (err) {
     console.log(err);
   }
@@ -95,16 +115,6 @@ export const postDeleteComment = async (req, res) => {
     const commentID = body.userID;
     await Comment.findByIdAndRemove(commentID);
     res.json({ msg: "comment delete" });
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const postDeleteUser = async (req, res) => {
-  try {
-    const { body } = req;
-    console.log(body);
-    const user = await User.findByIdAndRemove(body);
   } catch (err) {
     console.log(err);
   }

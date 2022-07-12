@@ -1,6 +1,6 @@
 import express from "express";
 import routes from "../routes";
-import { getJoin, postJoin, getLogin, postLogin, getLogout, autoLogin, getChangePassword, postChangePassword } from "../controllers/userController";
+import { getJoin, postJoin, getLogin, postLogin, getLogout, autoLogin, getChangePassword, postChangePassword, deleteUser } from "../controllers/userController";
 
 const userRouter = express.Router();
 
@@ -18,5 +18,8 @@ userRouter.get(routes.logout, getLogout);
 // 비밀번호 password
 userRouter.get(routes.changePW, getChangePassword);
 userRouter.post(routes.changePW, postChangePassword);
+
+// 회원탈퇴
+userRouter.get(routes.delete, deleteUser);
 
 export default userRouter;

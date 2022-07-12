@@ -9,9 +9,9 @@ import User from "../models/User";
 export const home = async (req, res) => {
   try {
     const comments = await Comment.find().populate("userID");
-    const merchandises = await Merchandise.find().populate("choice").populate("rate");
-    // const users = await User.find().populate("choice").populate("rate");
-    res.render("home", { comments, merchandises });
+    const merchandises = await Merchandise.find().populate("choiceID").populate("rateID");
+    const users = await User.find().populate("choiceID").populate("rateID");
+    res.render("home", { comments, merchandises, users });
   } catch (err) {
     console.log(err);
     res.send(

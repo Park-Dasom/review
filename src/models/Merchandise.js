@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const MerchandiseSchema = new Schema({
-  title: String,
-  choice: { type: Boolean, default: false },
-  rate: { type: Number, default: 0 },
+  title: String, // 상품의 이름
+  choiceID: { type: mongoose.SchemaTypes.ObjectId, ref: "Choice" }, // 해당 상품에 좋아요 ID
+  rateID: { type: mongoose.SchemaTypes.ObjectId, ref: "Rate" },
   createdAt: { type: Date, default: new Date() },
   updatedAt: Date,
 });

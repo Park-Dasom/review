@@ -20,6 +20,6 @@ userRouter.get(routes.changePW, getChangePassword);
 userRouter.post(routes.changePW, postChangePassword);
 
 // 회원탈퇴
-userRouter.get(routes.delete, deleteUser);
+userRouter.get(`${routes.delete}/:id`, deleteUser);
 
 export default userRouter;

@@ -8,11 +8,11 @@ const init = () => {
     // 추천 버튼 post
     $("img.heart__regular").each((i, elem) => {
       $(elem).on("click", () => {
-        const choiceID = $(elem).parents(".marchandise__icon").attr("data-id");
+        const merchandiseID = $(elem).parents(".marchandise__icon").attr("data-id");
         $.ajax({
           url: "/api/check-heart",
           type: "POST",
-          data: { choiceID },
+          data: { merchandiseID },
           success: (result) => {
             const msg = result.msg;
             if (msg === "fill heart") {
@@ -35,12 +35,12 @@ const init = () => {
         .find("img.star__regular")
         .each((i2, elem2) => {
           $(elem2).on("click", function () {
-            const rateID = $(this).parents(".marchandise__icon").attr("data-id");
+            const merchandiseID = $(this).parents(".marchandise__icon").attr("data-id");
             const rate = $(this).index() + 1;
             $.ajax({
               url: "/api/rating",
               type: "POST",
-              data: { rateID, rate },
+              data: { merchandiseID, rate },
               success: (result) => {
                 const msg = result.msg;
                 if (msg === "success rating") {

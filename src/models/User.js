@@ -4,15 +4,14 @@ import passportLocalMongoose from "passport-local-mongoose";
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
-  userID: String,
-  name: String,
-  role: { type: String, default: "general" },
-  // choice: { type: Boolean, default: false },
-  // rate: { type: Number, default: 0 },
-  commentID: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Comment" }],
-  merchandiseID: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Merchandise" }],
-  createdAt: { type: Date, default: new Date() },
-  updatedAt: Date,
+  userID: String, // 회원가입, 로그인 시 필요한 아이디
+  name: String, // 회원의 이름
+  role: { type: String, default: "normal" }, // 회원등급
+  choiceID: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Choice" }], // 상품의 좋아요 ID
+  rateID: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Rate" }], // 상품의 별점 ID
+  commentID: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Comment" }], // 작성한 댓글 ID
+  createdAt: { type: Date, default: new Date() }, // 유저 생설 일자
+  updatedAt: Date, // 유저 내용 수정 일자
 });
 
 UserSchema.plugin(passportLocalMongoose, { usernameField: "userID" });

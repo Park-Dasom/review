@@ -9,19 +9,20 @@ import Merchandise from "../models/Merchandise";
 export const postChoice = async (req, res) => {
   try {
     const { body } = req;
-    const choices = await Choice.findOne({ choiceID: body.choiceID });
-    console.log(choices, body.choiceID);
+    const id = req.user._id;
+    const choices = await Choice.findOne({ merchandiseID: body.merchandiseID });
     if (!choices) {
-      await Choice.create({
-        choiceID: body.choiceID,
+      const choice = await Choice.create({
+        merchandiseID: body.merchandiseID,
+        userID: id,
         choice: true,
       });
-      await Merchandise.findByIdAndUpdate(body.choiceID, { choice: choices.choice });
+      await User.findByIdAndUpdate(id, { choiceID: choice._id });
+      await Merchandise.findByIdAndUpdate(body.merchandiseID, { choiceID: choice._id });
       res.json({ msg: "fill heart" });
     } else {
       choices.choice = !choices.choice;
       await choices.save();
-      await Merchandise.findByIdAndUpdate(body.choiceID, { choice: choices.choice });
       if (choices.choice) {
         res.json({ msg: "fill heart" });
       } else {
@@ -37,22 +38,19 @@ export const postChoice = async (req, res) => {
 export const postRating = async (req, res) => {
   try {
     const { body } = req;
-    const rates = await Rate.findOne({ rateID: body.rateID });
-    const merchandises = await Merchandise.findById(body.rateID);
-    const users = await User.findById(body.rateID);
+    const id = req.user._id;
+    const rates = await Rate.findOne({ merchandiseID: body.merchandiseID });
     if (!rates) {
-      await Rate.create({
-        rateID: body.rateID,
+      const rate = await Rate.create({
+        merchandiseID: body.merchandiseID,
+        userID: req.user._id,
         rate: body.rate,
       });
-      await Merchandise.findByIdAndUpdate(body.rateID, { rate: body.rate });
-      // await User.findByIdAndUpdate(body.rateID, { rate: body.rate });
+      await User.findByIdAndUpdate(id, { rateID: rate._id });
+      await Merchandise.findByIdAndUpdate(body.merchandiseID, { rateID: rate._id });
       res.json({ msg: "success rating" });
     } else {
-      await Merchandise.findByIdAndUpdate(body.rateID, { rate: body.rate });
-      // await User.findByIdAndUpdate(body.rateID, { rate: body.rate });
-      // await Rate.findOneAndUpdate({ rate: merchandises.rate });
-
+      await Rate.findOneAndUpdate({ merchandiseID: body.merchandiseID }, { rate: body.rate });
       res.json({ msg: "success rating" });
     }
   } catch (err) {

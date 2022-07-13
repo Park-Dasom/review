@@ -8,25 +8,29 @@ import Merchandise from "../models/Merchandise";
 // 마음에 들어요 데이터 입력
 export const postChoice = async (req, res) => {
   try {
-    const { body } = req;
-    const id = req.user._id;
-    const choices = await Choice.findOne({ merchandiseID: body.merchandiseID });
-    if (!choices) {
-      const choice = await Choice.create({
-        merchandiseID: body.merchandiseID,
-        userID: id,
-        choice: true,
-      });
-      await User.findByIdAndUpdate(id, { choiceID: choice._id });
-      await Merchandise.findByIdAndUpdate(body.merchandiseID, { choiceID: choice._id });
-      res.json({ msg: "fill heart" });
+    const {
+      body: { merchandiseID },
+    } = req;
+    if (!req.user) {
+      res.json({ msg: "not login" });
     } else {
-      choices.choice = !choices.choice;
-      await choices.save();
-      if (choices.choice) {
+      const userID = req.user._id;
+      const user = await User.findById(userID);
+      const merchandises = await Merchandise.findById(merchandiseID);
+      const choices = await Choice.findOne({ merchandiseID });
+      if (!choices || choices.userID !== userID) {
+        const choice = await Choice.create({
+          merchandiseID,
+          userID,
+          choice: true,
+        });
+        user.choiceID.push(choice._id);
+        merchandises.choiceID.push(choice._id);
+        user.save();
         res.json({ msg: "fill heart" });
-      } else {
-        res.json({ msg: "empty heart" });
+      } else if (choices.merchandiseID === merchandiseID) {
+        choices.choice = false;
+        choices.save();
       }
     }
   } catch (err) {

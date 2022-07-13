@@ -1,4 +1,5 @@
 import $ from "jquery";
+import routes from "../../routes";
 
 const homePage = document.getElementById("home__page");
 
@@ -15,7 +16,10 @@ const init = () => {
           data: { merchandiseID },
           success: (result) => {
             const msg = result.msg;
-            if (msg === "fill heart") {
+            if (msg === "not login") {
+              alert(`로그인이 필요한 영역입니다.`);
+              window.location.href = `${routes.user}${routes.login}`;
+            } else if (msg === "fill heart") {
               // 좋아요 활성화
               $(elem).attr("src", "/images/public/heart-solid.svg");
             } else {

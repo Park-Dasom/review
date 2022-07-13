@@ -28,7 +28,10 @@ block content
                 .marchandise__icon(data-id=item._id)
                     .icon__heart
                       span 마음에 들어요!
-                      img.heart__regular(src=`${imgPath}/public/heart-${item.choice ? "solid" : "regular"}.svg`)
+                      if item.choiceID.length === 0 || !item.choiceID.choice
+                        img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
+                      else if item.choiceID.choice
+                        img.heart__regular(src=`${imgPath}/public/heart-solid.svg`)
                     //- .icon__stars
                     //-   img.star__regular(class=`${item.rateID.rate >= 1 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rateID.rate >= 1 ? "solid" : "regular"}.svg`)
                     //-   img.star__regular(class=`${item.rateID.rate >= 2 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rateID.rate >= 2 ? "solid" : "regular"}.svg`)

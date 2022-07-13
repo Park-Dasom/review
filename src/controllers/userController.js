@@ -4,7 +4,8 @@ import User from "../models/User";
 import routes from "../routes";
 import Comment from "../models/Comment";
 import Choice from "../models/Choice";
-import Rate from "../models/Choice";
+import Rate from "../models/Rate";
+import Merchandise from "../models/Merchandise";
 
 // 회원가입 Join
 export const getJoin = (req, res) => {
@@ -21,7 +22,6 @@ export const getJoin = (req, res) => {
 export const postJoin = async (req, res, next) => {
   try {
     const { body } = req;
-    console.log(body);
     body.role = "normal";
     body.createdAt = moment(new Date()).tz("Asia/Seoul");
     body.updatedAt = moment(new Date()).tz("Asia/Seoul");
@@ -114,17 +114,17 @@ export const getChangePassword = (req, res) => {
 };
 export const postChangePassword = async (req, res) => {
   try {
-    const { newPassword } = req.body;
-    const { newPasswordConfirm } = req.body;
-    console.log(newPassword, newPasswordConfirm);
+    const {
+      body: { newPassword, newPasswordConfirm },
+    } = req;
     if (newPassword !== newPasswordConfirm) {
       res.send(`<script>\
       alert("비밀번호가 일치하지 않습니다.\\r\\n다시 한 번 확인해 주세요.");\
       history.go(-1);\
     </script>`);
     } else {
-      const id = req.user._id;
-      const user = await User.findById(id);
+      const userID = req.user._id;
+      const user = await User.findById(userID);
       await user.setPassword(newPassword);
       await user.save();
       req.logout();
@@ -144,13 +144,19 @@ export const postChangePassword = async (req, res) => {
 // 회원탈퇴
 export const deleteUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await User.findById(id);
+    const userID = req.params.id;
+    const user = await User.findById(userID).populate([
+      { path: "choiceID", model: "Choice" },
+      { path: "rateID", model: "Rate" },
+    ]);
+    // const { choiceID } = user;
+    // const { rateID } = user;
     if (user) {
-      await User.findByIdAndDelete(id);
-      await Comment.deleteMany({ userID: id });
-      await Choice.updateMany({}, { $pull: { userID: id } });
-      await Rate.updateMany({}, { $pull: { userID: id } });
+      await User.findByIdAndDelete(userID);
+      await Comment.deleteMany({ userID });
+      await Choice.deleteMany({ userID });
+      await Rate.deleteMany({ userID });
+      // await Merchandise.updateMany({}, { $pull: { choiceID, rateID } });
     }
     req.logout();
     req.session.destroy();

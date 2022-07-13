@@ -28,16 +28,29 @@ block content
                 .marchandise__icon(data-id=item._id)
                     .icon__heart
                       span 마음에 들어요!
-                      if item.choiceID.length === 0 || !item.choiceID.choice
+                      if item.choiceID.length === 0 
                         img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-                      else if item.choiceID.choice
-                        img.heart__regular(src=`${imgPath}/public/heart-solid.svg`)
-                    //- .icon__stars
-                    //-   img.star__regular(class=`${item.rateID.rate >= 1 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rateID.rate >= 1 ? "solid" : "regular"}.svg`)
-                    //-   img.star__regular(class=`${item.rateID.rate >= 2 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rateID.rate >= 2 ? "solid" : "regular"}.svg`)
-                    //-   img.star__regular(class=`${item.rateID.rate >= 3 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rateID.rate >= 3 ? "solid" : "regular"}.svg`)
-                    //-   img.star__regular(class=`${item.rateID.rate >= 4 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rateID.rate >= 4 ? "solid" : "regular"}.svg`)
-                    //-   img.star__regular(class=`${item.rateID.rate >= 5 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rateID.rate >= 5 ? "solid" : "regular"}.svg`)
+                      else 
+                        each item2 in item.choiceID
+                          if item2.userID[0].toString() === loggedUser._id.toString() && item2.choice
+                            img.heart__regular(src=`${imgPath}/public/heart-solid.svg`)
+                          else
+                            img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
+                    .icon__stars
+                      if item.rateID.length === 0 
+                        img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                        img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                        img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                        img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                        img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                      else
+                        each item3 in item.rateID
+                          if item3.userID[0].toString() === loggedUser._id.toString()
+                            img.star__regular(class=`${item3.rate >= 1 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 1 ? "solid" : "regular"}.svg`)
+                            img.star__regular(class=`${item3.rate >= 2 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 2 ? "solid" : "regular"}.svg`)
+                            img.star__regular(class=`${item3.rate >= 3 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 3 ? "solid" : "regular"}.svg`)
+                            img.star__regular(class=`${item3.rate >= 4 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 4 ? "solid" : "regular"}.svg`)
+                            img.star__regular(class=`${item3.rate >= 5 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 5 ? "solid" : "regular"}.svg`)
     section.comment__section.layout
       ul.comment__item 
         each item in comments

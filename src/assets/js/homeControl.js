@@ -22,7 +22,7 @@ const init = () => {
             } else if (msg === "fill heart") {
               // 좋아요 활성화
               $(elem).attr("src", "/images/public/heart-solid.svg");
-            } else {
+            } else if (msg === "empty heart") {
               // 좋아요 취소
               $(elem).attr("src", "/images/public/heart-regular.svg");
             }
@@ -47,7 +47,10 @@ const init = () => {
               data: { merchandiseID, rate },
               success: (result) => {
                 const msg = result.msg;
-                if (msg === "success rating") {
+                if (msg === "not login") {
+                  alert("로그인이 필요한 영역입니다.");
+                  window.location.href = `${routes.user}${routes.login}`;
+                } else if (msg === "success rating") {
                   // do it your code.
                   $(this).addClass("solid");
                   $(this).prevAll().addClass("solid");

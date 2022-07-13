@@ -17,20 +17,26 @@ export const postChoice = async (req, res) => {
       const userID = req.user._id;
       const user = await User.findById(userID);
       const merchandises = await Merchandise.findById(merchandiseID);
-      const choices = await Choice.findOne({ merchandiseID });
-      if (!choices || choices.userID !== userID) {
+      const choices = await Choice.findOne({ merchandiseID, userID });
+      if (!choices) {
         const choice = await Choice.create({
           merchandiseID,
           userID,
           choice: true,
         });
         user.choiceID.push(choice._id);
-        merchandises.choiceID.push(choice._id);
         user.save();
+        merchandises.choiceID.push(choice._id);
+        merchandises.save();
         res.json({ msg: "fill heart" });
-      } else if (choices.merchandiseID === merchandiseID) {
-        choices.choice = false;
+      } else {
+        choices.choice = !choices.choice;
         choices.save();
+        if (!choices.choice) {
+          res.json({ msg: "empty heart" });
+        } else {
+          res.json({ msg: "fill heart" });
+        }
       }
     }
   } catch (err) {
@@ -41,21 +47,31 @@ export const postChoice = async (req, res) => {
 // 별점 데이터 입력
 export const postRating = async (req, res) => {
   try {
-    const { body } = req;
-    const id = req.user._id;
-    const rates = await Rate.findOne({ merchandiseID: body.merchandiseID });
-    if (!rates) {
-      const rate = await Rate.create({
-        merchandiseID: body.merchandiseID,
-        userID: req.user._id,
-        rate: body.rate,
-      });
-      await User.findByIdAndUpdate(id, { rateID: rate._id });
-      await Merchandise.findByIdAndUpdate(body.merchandiseID, { rateID: rate._id });
-      res.json({ msg: "success rating" });
+    const {
+      body: { merchandiseID, rate },
+    } = req;
+    if (!req.user) {
+      res.json({ msg: "not login" });
     } else {
-      await Rate.findOneAndUpdate({ merchandiseID: body.merchandiseID }, { rate: body.rate });
-      res.json({ msg: "success rating" });
+      const userID = req.user._id;
+      const merchandises = await Merchandise.findById(merchandiseID);
+      const users = await User.findById(userID);
+      const rates = await Rate.findOne({ merchandiseID, userID });
+      if (!rates) {
+        const newRate = await Rate.create({
+          merchandiseID,
+          userID,
+          rate,
+        });
+        merchandises.rateID.push(newRate._id);
+        merchandises.save();
+        users.rateID.push(newRate._id);
+        users.save();
+        res.json({ msg: "success rating" });
+      } else {
+        await Rate.findOneAndUpdate({ merchandiseID, userID }, { rate });
+        res.json({ msg: "success rating" });
+      }
     }
   } catch (err) {
     console.log(err);

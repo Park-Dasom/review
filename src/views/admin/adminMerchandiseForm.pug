@@ -19,10 +19,34 @@ block content
                       .card-header
                         h1.card-header-title=`${adminNameKo} ${formType}`
                       .card-body
-                        form.needs-validation(novalidate method="POST")
+                        form.needs-validation(enctype="multipart/form-data" novalidate method="POST")
+                          .form-group
+                            label.form-label 상품 이미지
+                              span.form-label-emphasis &nbsp;&nbsp;[규격: 450*450]
+                            if updateBool
+                              h6.text-primary 기존 이미지를 유지하려면 미선택
+                                a.text__primary-link(href=adminItem.thumbnail target="_blank") [기존 이미지 보기]
+                            .custom-file
+                              if updateBool
+                                input#thumbnail.form-control.custom-file-input(type='file' name="thumbnail" accept="image/*")
+                              else
+                                input#thumbnail.form-control.custom-file-input(type='file' name="thumbnail" accept="image/*" required)
+                              label.custom-file-label(for='customFile') 파일을 선택하세요
                           .form-group
                             label.form-label(for='#title') 이름
                             input#title.form-control(type='text' name="title" value=`${updateBool ? adminItem.title : ""}` placeholder="이름을 입력하세요" required)
+                            .invalid-feedback 이 영역은 필수값입니다.
+                          .form-group
+                            label.form-label(for='#price') 가격(월)
+                            input#price.form-control(type='text' name="price" value=`${updateBool ? adminItem.price : ""}` placeholder="가격을 입력하세요" required)
+                            .invalid-feedback 이 영역은 필수값입니다.
+                          .form-group
+                            label.form-label(for='#discountRate') 할인율(%)
+                            input#discountRate.form-control(type='text' name="discountRate" value=`${updateBool ? adminItem.discountRate : ""}` placeholder="할인율을 입력하세요" required)
+                            .invalid-feedback 이 영역은 필수값입니다.
+                          .form-group
+                            label.form-label(for='#extraDiscount') 추가할인(원)
+                            input#extraDiscount.form-control(type='text' name="extraDiscount" value=`${updateBool ? adminItem.extraDiscount : ""}` placeholder="추가할인가를 입력하세요" required)
                             .invalid-feedback 이 영역은 필수값입니다.
                           .row
                             .col-12

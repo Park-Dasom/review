@@ -34,7 +34,7 @@ const init = () => {
       });
     });
     // 벌점 버튼 post
-    $("li.list__merchandise").each((i, elem) => {
+    $(".marchandise__wrap").each((i, elem) => {
       $(elem)
         .find("img.star__regular")
         .each((i2, elem2) => {
@@ -146,6 +146,14 @@ const init = () => {
         error: (err) => {
           alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
         },
+      });
+    });
+
+    // 상품 정렬 sort
+    $("li.sorting__item").each((i, elem) => {
+      $(elem).on("click", () => {
+        const sortVal = $(elem).attr("data-sort");
+        console.log(sortVal);
       });
     });
   });

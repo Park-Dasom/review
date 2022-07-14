@@ -35,8 +35,20 @@ block content
                         .card-body
                           ul.card-body__items
                             li.card-body__item
+                                h4.mb-50 썸네일
+                                img.card-img-top(src=adminItem.thumbnail)
+                            li.card-body__item
                               h4.mb-50 이름
                               p.card-text=adminItem.title
+                            li.card-body__item
+                              h4.mb-50 가격(원)
+                              p.card-text=adminItem.price
+                            li.card-body__item
+                              h4.mb-50 할인율(%)
+                              p.card-text=adminItem.discountRate
+                            li.card-body__item
+                              h4.mb-50 추가 할인(원)
+                              p.card-text=adminItem.extraDiscount
                             li.card-body__item
                               h4.mb-50 생성일
                               p.card-text=dateFormatYMDHms(adminItem.createdAt)

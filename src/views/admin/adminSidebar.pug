@@ -44,6 +44,10 @@ nav.header-navbar.navbar.navbar-expand-lg.align-items-center.floating-nav.navbar
         a.d-flex.align-items-center(href=`${routes.admin}`)
           i(data-feather='user')
           span.menu-title.text-truncate 관리자 계정 관리
+      li.nav-item#admin__menu-normal-user
+        a.d-flex.align-items-center(href=`${routes.admin}${routes.adminNormalUser}`)
+          i(data-feather='user')
+          span.menu-title.text-truncate 일반회원 계정 관리
       //- 상품 관리
       li.navigation-header
         span 상품 관리

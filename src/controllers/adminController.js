@@ -4,6 +4,9 @@ import moment from "moment-timezone";
 import routes from "../routes";
 import User from "../models/User";
 import Sample from "../models/Sample";
+import Comment from "../models/Comment";
+import Choice from "../models/Choice";
+import Rate from "../models/Rate";
 import Merchandise from "../models/Merchandise";
 
 // 관리자 로그인
@@ -183,12 +186,16 @@ export const postAdminChangePW = async (req, res) => {
 // 관리자 계정 관리
 export const adminUser = async (req, res) => {
   try {
-    const [adminItems, totalCount] = await Promise.all([User.find().sort({ createdAt: -1 }).limit(req.query.limit).skip(req.skip).exec(), User.countDocuments()]);
+    const [adminItems, totalCount] = await Promise.all([
+      User.find({ $or: [{ role: "admin" }, { role: "master" }, { role: "general" }] })
+        .sort({ createdAt: -1 })
+        .limit(req.query.limit)
+        .skip(req.skip)
+        .exec(),
+      User.countDocuments({ $or: [{ role: "admin" }, { role: "master" }, { role: "general" }] }),
+    ]);
     const pageCount = Math.ceil(totalCount / req.query.limit);
     const pages = paginate.getArrayPages(req)(10, pageCount, req.query.page);
-
-    // 엑셀 다운로드용 전체 데이터
-    const excelData = await Sample.find().sort({ createdAt: -1 });
 
     res.render("admin/adminUser", {
       adminNameKo: "관리자 계정",
@@ -198,7 +205,6 @@ export const adminUser = async (req, res) => {
       totalCount,
       pageCount,
       pages,
-      excelData,
     });
   } catch (err) {
     console.log(err);
@@ -245,6 +251,76 @@ export const adminUserDelete = async (req, res) => {
     res.send(
       `<script>alert("오류가 발생했습니다:\\r\\n${err}");\
       location.href="${routes.home}"</script>`
+    );
+  }
+};
+
+// 일반회원 계정 관리
+export const adminNormalUser = async (req, res) => {
+  try {
+    const {
+      query: { searchKey, searchValue, limit },
+    } = req;
+
+    const findQuery = { role: "normal" };
+
+    // 검색 기능이 있을 경우
+    const searchArr = [
+      { code: "0", title: "아이디", value: "userID" },
+      { code: "1", title: "이름", value: "name" },
+    ];
+    if (searchKey && searchValue) {
+      findQuery[`${searchArr[parseInt(searchKey, 10)].value}`] = { $regex: searchValue, $options: "i" };
+    }
+
+    const [adminItems, totalCount] = await Promise.all([User.find(findQuery).sort({ createdAt: -1 }).limit(req.query.limit).skip(req.skip).exec(), User.countDocuments(findQuery)]);
+    const pageCount = Math.ceil(totalCount / req.query.limit);
+    const pages = paginate.getArrayPages(req)(10, pageCount, req.query.page);
+
+    // 엑셀 다운로드용 전체 데이터
+    const excelData = await User.find(findQuery).sort({ createdAt: -1 });
+
+    res.render("admin/adminNormalUser", {
+      adminNameKo: "일반회원 계정",
+      adminLink: routes.adminNormalUser,
+      limit,
+      searchArr,
+      searchKey,
+      searchValue,
+      adminItems,
+      totalCount,
+      pageCount,
+      pages,
+      excelData,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send(
+      `<script>alert("오류가 발생했습니다:\\r\\n${err}");\
+      location.href="${routes.admin}"</script>`
+    );
+  }
+};
+export const adminNormalUserDelete = async (req, res) => {
+  try {
+    const {
+      params: { userID },
+    } = req;
+    await User.findByIdAndDelete(userID);
+    await Comment.deleteMany({ userID });
+    await Choice.deleteMany({ userID });
+    await Rate.deleteMany({ userID });
+    res.send(
+      `<script>\
+        alert("삭제 되었습니다.");\
+        location.href="${routes.admin}${routes.adminNormalUser}"\
+      </script>`
+    );
+  } catch (err) {
+    console.log(err);
+    res.send(
+      `<script>alert("오류가 발생했습니다:\\r\\n${err}");\
+      location.href="${routes.admin}"</script>`
     );
   }
 };
@@ -313,7 +389,7 @@ export const postCreateMerchandise = async (req, res) => {
   try {
     const { body, file } = req;
 
-    body.picture = file ? file.location : null;
+    body.thumbnail = file ? file.location : null;
     body.createdAt = moment(new Date()).tz("Asia/Seoul");
     body.updatedAt = moment(new Date()).tz("Asia/Seoul");
     await Merchandise.create(body);
@@ -378,7 +454,7 @@ export const postUpdateMerchandise = async (req, res) => {
       file,
     } = req;
     const merchandises = await Merchandise.findById(merchandiseID);
-    body.picture = file ? file.location : merchandises.picture;
+    body.thumbnail = file ? file.location : merchandises.picture;
     body.updatedAt = moment(new Date()).tz("Asia/Seoul");
     await Merchandise.findByIdAndUpdate(merchandiseID, body);
     res.send(

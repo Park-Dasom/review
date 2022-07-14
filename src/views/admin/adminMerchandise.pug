@@ -36,14 +36,22 @@ block content
                     thead
                       tr
                         th 번호
+                        th 사진
                         th 이름
+                        th 가격(월)
+                        th 할인율(%)
+                        th 추가할인(원)
                         th 생성일
                         th 수정일
                     tbody
                       each item, index in excelData
                         tr
                           td=index + 1
+                          td=item.thumbnail
                           td=item.title
+                          td=item.price
+                          td=item.discountRate
+                          td=item.extraDiscount
                           td=dateFormatYMDHm(item.createdAt)
                           td=dateFormatYMDHm(item.updatedAt)
                 //- END: Excel Download Button
@@ -63,12 +71,16 @@ block content
                     .card-body
                       p.card-text 내용이 보이지 않을 시 좌우로 스크롤 해보세요
                     .table-responsive
-                      table.table.mb-0(style="min-width: 800px;")
+                      table.table.mb-0(style="min-width: 1600px;")
                         thead
                           tr
                             th(scope='col' style="width: 80px;") 번호
                             th(scope='col' style="width: 120px;") 수정/삭제
+                            th(scope='col' style="width: 200px;") 사진
                             th(scope='col' style="width: 200px;") 이름 [클릭 시 상세보기]
+                            th(scope='col' style="width: 200px;") 가격(원)
+                            th(scope='col' style="width: 200px;") 할인율(%)
+                            th(scope='col' style="width: 200px;") 추가할인(원)
                             th(scope='col' style="width: 200px;") 생성일
                             th(scope='col' style="width: 200px;") 수정일
                         tbody
@@ -85,9 +97,14 @@ block content
                                     svg.feather.feather-trash(xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round')
                                       polyline(points='3 6 5 6 21 6')
                                       path(d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2')
+                              td(scope='col' style="width: 100px;")
+                                img(src=item.thumbnail width="100%")
                               td.ellipsis__td(scope='col' style="width: 200px;")
                                 a.td__link(href=`${routes.admin}${adminLink}/detail/${item._id}`)=item.title
                                   i.external-link__icon(data-feather='external-link')
+                              td.ellipsis__td(scope='col' style="width: 200px;")=item.price
+                              td.ellipsis__td(scope='col' style="width: 200px;")=item.discountRate
+                              td.ellipsis__td(scope='col' style="width: 200px;")=item.extraDiscount
                               td(scope='col' style="width: 200px;")=dateFormatYMDHm(item.createdAt)
                               td(scope='col' style="width: 200px;")=dateFormatYMDHm(item.updatedAt)
               //- END: Basic Tables

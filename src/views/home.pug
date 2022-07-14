@@ -18,39 +18,65 @@ block content
             a(href=`${routes.user}${routes.logout}`) 로그아웃
           li.login__items-delUser
             a(href=`${routes.user}${routes.delete}/${loggedUser._id}`) 회원탈퇴
-    section.list__section.layout
-      .list__item 
-        ul.list__items
+    section.sorting__section.layout 
+      ul.sorting__items 
+        li.sorting__item.active(data-sort="createdAt")
+          span.sorting__createdAt-btn 최신순
+        li.sorting__item(data-sort="lowPrice")
+          span.sorting__lowPrice-btn 낮은가격순
+        li.sorting__item(data-sort="highPrice")
+          span.sorting__highPrice-btn 높은가격순
+        li.sorting__item(data-sort="choice")
+          span.sorting__highRate-btn 좋아요순
+
+    section.merchandise__section.layout
+      .container 
+        .row
           each item in merchandises
-            li.list__merchandise
+            .col-sm
               .marchandise__wrap
-                .merchandise__title=item.title
-                .marchandise__icon(data-id=item._id)
-                    .icon__heart
-                      span 마음에 들어요!
-                      if item.choiceID.length === 0 
-                        img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-                      else 
-                        each item2 in item.choiceID
-                          if item2.userID[0].toString() === loggedUser._id.toString() && item2.choice
-                            img.heart__regular(src=`${imgPath}/public/heart-solid.svg`)
-                          else
-                            img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-                    .icon__stars
-                      if item.rateID.length === 0 
-                        img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                        img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                        img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                        img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                        img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                      else
-                        each item3 in item.rateID
-                          if item3.userID[0].toString() === loggedUser._id.toString()
-                            img.star__regular(class=`${item3.rate >= 1 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 1 ? "solid" : "regular"}.svg`)
-                            img.star__regular(class=`${item3.rate >= 2 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 2 ? "solid" : "regular"}.svg`)
-                            img.star__regular(class=`${item3.rate >= 3 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 3 ? "solid" : "regular"}.svg`)
-                            img.star__regular(class=`${item3.rate >= 4 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 4 ? "solid" : "regular"}.svg`)
-                            img.star__regular(class=`${item3.rate >= 5 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 5 ? "solid" : "regular"}.svg`)
+                .merchandise__thumbnail-wrap
+                  img.merchandise__thumbnail(src=item.thumbnail)
+                .merchandise__description-wrap
+                  .merchandise__title=item.title
+                  .merchandise__price 가격 : #{item.price}원
+                    if item.discountRate
+                      .merchandise__discountRate 할인율 #{item.discountRate} %
+                      .merchandise__discountPrice 할인가 : #{discountPrice(`${item.price}`, `${item.discountRate}`)} 원
+                      .merchandise__extraDiscount 특별 회원 가격 : #{discountPrice(`${item.price}`, `${item.discountRate}`) - `${item.extraDiscount}`} 원
+                  .marchandise__icon(data-id=item._id)
+                      .icon__heart
+                        span 마음에 들어요!
+                        if item.choiceID.length === 0 || !loggedUser
+                          img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
+                        else 
+                          each item2 in item.choiceID
+                            if item2.userID[0].toString() === loggedUser._id.toString() && item2.choice
+                              img.heart__regular(src=`${imgPath}/public/heart-solid.svg`)
+                            else
+                              img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
+                      .icon__stars
+                        if item.rateID.length === 0 || !loggedUser
+                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                        else
+                          each item3 in item.rateID
+                            if item3.userID[0].toString() === loggedUser._id.toString()
+                              img.star__regular(class=`${item3.rate >= 1 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 1 ? "solid" : "regular"}.svg`)
+                              img.star__regular(class=`${item3.rate >= 2 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 2 ? "solid" : "regular"}.svg`)
+                              img.star__regular(class=`${item3.rate >= 3 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 3 ? "solid" : "regular"}.svg`)
+                              img.star__regular(class=`${item3.rate >= 4 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 4 ? "solid" : "regular"}.svg`)
+                              img.star__regular(class=`${item3.rate >= 5 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 5 ? "solid" : "regular"}.svg`)
+                            else 
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+
     section.comment__section.layout
       ul.comment__item 
         each item in comments

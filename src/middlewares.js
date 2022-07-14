@@ -10,11 +10,11 @@ const s3 = new aws.S3({
   region: "ap-northeast-2",
 });
 
-const multerSamplePic = multer({
+const multerMerchandisePic = multer({
   storage: multerS3({
     s3,
     acl: "public-read",
-    bucket: "review/admin", // FIXME: S3 버킷 생성 후 버킷명/폴더명 맞춰주기
+    bucket: "gooooooods/merchandise", // FIXME: S3 버킷 생성 후 버킷명/폴더명 맞춰주기
     key(req, file, cb) {
       cb(null, Date.now() + file.originalname);
     },
@@ -23,7 +23,7 @@ const multerSamplePic = multer({
 });
 
 // 한 개의 input(type="file")일 경우
-export const uploadMerchandisePic = multerSamplePic.single("picture");
+export const uploadMerchandisePic = multerMerchandisePic.single("thumbnail");
 // 여러 input(type="file")일 경우
 // export const uploadSamplePic = multerSamplePic.fields([{ name: "thumbnail1" }, { name: "thumbnail2" }]);
 
@@ -38,6 +38,10 @@ export const localsMiddleware = (req, res, next) => {
     return number.toString().replace(regexp, ",");
   };
   res.locals.replaceAll = (str, searchStr, replaceStr) => str.split(searchStr).join(replaceStr);
+
+  // 할인율 적용 후 가격 (할인가)
+  res.locals.discountPrice = (price, discountRate) => Math.ceil(price * ((100 - discountRate) * 0.01), 1);
+
   // 날짜 형식 변환
   res.locals.dateFormatYMD = (date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD");
   res.locals.dateFormatYMDHm = (date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD HH:mm");

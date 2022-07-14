@@ -9,10 +9,12 @@ import User from "../models/User";
 export const home = async (req, res) => {
   try {
     const comments = await Comment.find().populate("userID");
-    const merchandises = await Merchandise.find().populate([
-      { path: "choiceID", model: "Choice" },
-      { path: "rateID", model: "Rate" },
-    ]);
+    const merchandises = await Merchandise.find()
+      .sort({ createdAt: -1 })
+      .populate([
+        { path: "choiceID", model: "Choice" },
+        { path: "rateID", model: "Rate" },
+      ]);
     const users = await User.find().populate([
       { path: "choiceID", model: "Choice" },
       { path: "rateID", model: "Rate" },

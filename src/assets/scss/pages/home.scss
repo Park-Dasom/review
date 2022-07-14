@@ -5,27 +5,45 @@
 // }
 
 .home__page#home__page {
-  section.list__section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 150px;
-    .list__item {
-      ul.list__items {
-        li.list__merchandise {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
+  section.sorting__section.layout {
+    ul.sorting__items {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+
+      .active {
+        color: cornflowerblue;
+        font-weight: 700;
+      }
+
+      li.sorting__item {
+        margin-left: 15px;
+        cursor: pointer;
+      }
+    }
+  }
+  section.merchandise__section {
+    .container {
+      .row {
+        .col-sm {
           .marchandise__wrap {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: space-between;
             margin-top: 60px;
-            .merchandise__title {
-              display: block;
-              margin-right: 20px;
-              margin-left: 30px;
+            .merchandise__thumbnail-wrap {
+              img.merchandise__thumbnail {
+                height: 210px;
+                width: 210px;
+              }
+            }
+            .merchandise__description-wrap {
+              .merchandise__title {
+                display: block;
+                margin-right: 20px;
+                margin-left: 30px;
+              }
             }
             .marchandise__icon {
               display: block;
@@ -44,11 +62,6 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                img.star__solid {
-                  height: 25px;
-                  width: 25px;
-                  display: none;
-                }
                 img.star__regular {
                   height: 25px;
                   width: 25px;
@@ -56,12 +69,6 @@
                 }
               }
             }
-          }
-          span.marchandise__description {
-            width: 80%;
-            text-align: center;
-            margin-top: 40px;
-            line-height: 2;
           }
         }
       }

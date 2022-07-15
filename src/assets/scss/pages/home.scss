@@ -11,14 +11,12 @@
       align-items: center;
       justify-content: end;
 
-      .active {
-        color: cornflowerblue;
-        font-weight: 700;
-      }
-
       li.sorting__item {
         margin-left: 15px;
         cursor: pointer;
+        a {
+          text-decoration: none;
+        }
       }
     }
   }

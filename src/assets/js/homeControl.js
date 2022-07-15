@@ -5,7 +5,6 @@ const homePage = document.getElementById("home__page");
 
 const init = () => {
   $(() => {
-    // 코드 작성
     // 추천 버튼 post
     $("img.heart__regular").each((i, elem) => {
       $(elem).on("click", () => {
@@ -149,13 +148,12 @@ const init = () => {
       });
     });
 
-    // 상품 정렬 sort
-    $("li.sorting__item").each((i, elem) => {
-      $(elem).on("click", () => {
-        const sortVal = $(elem).attr("data-sort");
-        console.log(sortVal);
-      });
-    });
+    //
+    // if ($(location).attr("href").includes("createdAt")) {
+    //   $("li.sorting__item").each((i, elem) => {
+    //     const a = $(elem).find("a");
+    //   });
+    // }
   });
 };
 

@@ -36,8 +36,8 @@ block content
     section.merchandise__section.layout
       .container 
         .row
-          each item in merchandises
-            .col-sm
+          each item in merchandiseItem
+            .col-sm-3
               .marchandise__wrap
                 .merchandise__thumbnail-wrap
                   img.merchandise__thumbnail(src=item.thumbnail)
@@ -80,8 +80,32 @@ block content
                               img.star__regular(src=`${imgPath}/public/star-regular.svg`)
                               img.star__regular(src=`${imgPath}/public/star-regular.svg`)
                               img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                      //- pagination section
-  
+    //- BEGIN: Pagination
+    section.pagination__sectiion
+      #pagination__flex
+        if merchandiseItem.length !== 0
+          nav(aria-label='Page navigation example')
+            ul.pagination.firstLast1-links.mt-1
+              li.page-item.first
+                a.page-link(href=`?page=1&limit=${limit}` aria-label="First")
+                  i(data-feather='chevrons-left')
+              if paginate.hasPreviousPages
+                li.page-item.prev
+                  a.page-link(paginate.href(true) aria-label="Previous")
+              each page in pages
+                if paginate.page === page.number
+                  li.page-item.active(aria-current='page')
+                    a.page-link(href=page.url)=page.number
+                else
+                  li.page-item
+                    a.page-link(href=page.url)=page.number
+              if paginate.hasNextPages(pageCount)
+                li.page-item.next
+                  a.page-link(href=paginate.href())
+              li.page-item.last
+                a.page-link(href=`?page=${pageCount}&limit=${limit}`)
+                  i(data-feather='chevrons-right')
+    //- END: Pagination
           
     //- 댓글 section
     section.comment__section.layout

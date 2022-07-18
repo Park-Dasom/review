@@ -21,6 +21,8 @@ export const home = async (req, res) => {
       sortQuery = { price: -1 };
     } else if (sort === "lowPrice") {
       sortQuery = { price: 1 };
+    } else if (sort === "highRate") {
+      sortQuery = { rateID: -1 };
     } else if (sort === "choice") {
       sortQuery = { choiceID: -1 };
     }

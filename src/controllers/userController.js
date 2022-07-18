@@ -144,19 +144,16 @@ export const postChangePassword = async (req, res) => {
 // 회원탈퇴
 export const deleteUser = async (req, res) => {
   try {
-    const userID = req.params.id;
-    const user = await User.findById(userID).populate([
-      { path: "choiceID", model: "Choice" },
-      { path: "rateID", model: "Rate" },
-    ]);
-    // const { choiceID } = user;
-    // const { rateID } = user;
+    const { userID } = req.params;
+    const user = await User.findById(userID);
+    const choices = user.choiceID;
+    const rates = user.rateID;
     if (user) {
       await User.findByIdAndDelete(userID);
       await Comment.deleteMany({ userID });
       await Choice.deleteMany({ userID });
       await Rate.deleteMany({ userID });
-      // await Merchandise.updateMany({}, { $pull: { choiceID, rateID } });
+      await Merchandise.updateMany({}, { $pull: { choiceID: { $in: choices }, rateID: { $in: rates } } });
     }
     req.logout();
     req.session.destroy();

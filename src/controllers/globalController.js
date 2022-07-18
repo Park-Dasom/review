@@ -16,20 +16,30 @@ export const home = async (req, res) => {
 
     let sortQuery = { createdAt: -1 };
     if (sort === "title") {
-      sortQuery = { title: -1 };
+      sortQuery = { title: 1 };
     } else if (sort === "highPrice") {
       sortQuery = { price: -1 };
     } else if (sort === "lowPrice") {
       sortQuery = { price: 1 };
     } else if (sort === "choice") {
-      sortQuery = { choice: -1 };
+      sortQuery = { choiceID: -1 };
     }
 
     // pagenation 데이터
-    const [merchandiseItem, totalCount] = await Promise.all([Merchandise.find({}).sort(sortQuery).limit(limit).skip(req.skip).exec(), Merchandise.countDocuments({})]);
+    const [merchandiseItem, totalCount] = await Promise.all([
+      Merchandise.find({})
+        .sort(sortQuery)
+        .populate([
+          { path: "choiceID", model: "Choice" },
+          { path: "rateID", model: "Rate" },
+        ])
+        .limit(limit)
+        .skip(req.skip)
+        .exec(),
+      Merchandise.countDocuments({}),
+    ]);
     const pageCount = Math.ceil(totalCount / limit);
     const pages = paginate.getArrayPages(req)(10, pageCount, req.query.page);
-
     const comments = await Comment.find().populate("userID");
 
     const users = await User.find().populate([

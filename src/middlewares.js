@@ -14,7 +14,7 @@ const multerMerchandisePic = multer({
   storage: multerS3({
     s3,
     acl: "public-read",
-    bucket: "gooooooods/merchandise", // FIXME: S3 버킷 생성 후 버킷명/폴더명 맞춰주기
+    bucket: "gooooooods/merchandise",
     key(req, file, cb) {
       cb(null, Date.now() + file.originalname);
     },

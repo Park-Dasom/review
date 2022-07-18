@@ -148,12 +148,18 @@ const init = () => {
       });
     });
 
-    //
-    // if ($(location).attr("href").includes("createdAt")) {
-    //   $("li.sorting__item").each((i, elem) => {
-    //     const a = $(elem).find("a");
-    //   });
-    // }
+    // 상품 sort 클릭 시 css 적용
+    if (window.location.search === "" || window.location.search === "?sort=createdAt") {
+      $("a.sorting__createdAt-btn").css("color", "cornflowerblue");
+    } else if (window.location.search === "?sort=title") {
+      $("a.sorting__title-btn").css("color", "cornflowerblue");
+    } else if (window.location.search === "?sort=lowPrice") {
+      $("a.sorting__lowPrice-btn").css("color", "cornflowerblue");
+    } else if (window.location.search === "?sort=highPrice") {
+      $("a.sorting__highPrice-btn").css("color", "cornflowerblue");
+    } else if (window.location.search === "?sort=choice") {
+      $("a.sorting__choice-btn").css("color", "cornflowerblue");
+    }
   });
 };
 

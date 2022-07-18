@@ -25,13 +25,13 @@ block content
         li.sorting__item
           a.sorting__createdAt-btn(href="?sort=createdAt") 최신순
         li.sorting__item          
-          a.sorting__lowPrice-btn(href="?sort=title") 이름순
+          a.sorting__title-btn(href="?sort=title") 이름순
         li.sorting__item
           a.sorting__lowPrice-btn(href="?sort=lowPrice") 낮은가격순  
         li.sorting__item
-          a.sorting__lowPrice-btn(href="?sort=highPrice") 높은가격순
+          a.sorting__highPrice-btn(href="?sort=highPrice") 높은가격순
         li.sorting__item
-          a.sorting__highRate-btn(href="?sort=choice") 좋아요순
+          a.sorting__choice-btn(href="?sort=choice") 좋아요순
     //- 상품 내용 정렬 section
     section.merchandise__section.layout
       .container 
@@ -60,7 +60,7 @@ block content
                             else
                               img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
                       .icon__stars
-                        if item.rateID.length === 0 || !loggedUser
+                        if item.rateID.length === 0 || !loggedUser 
                           img.star__regular(src=`${imgPath}/public/star-regular.svg`)
                           img.star__regular(src=`${imgPath}/public/star-regular.svg`)
                           img.star__regular(src=`${imgPath}/public/star-regular.svg`)

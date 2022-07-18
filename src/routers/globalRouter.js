@@ -6,6 +6,6 @@ import { home } from "../controllers/globalController";
 const globalRouter = express.Router();
 
 // 홈 Home
-globalRouter.get(routes.home, paginate.middleware(10, 50), home);
+globalRouter.get(routes.home, paginate.middleware(2, 50), home);
 
 export default globalRouter;

@@ -26,6 +26,7 @@ export const postChoice = async (req, res) => {
         });
         user.choiceID.push(choice._id);
         user.save();
+        merchandises.choiceUserID.push(userID);
         merchandises.choiceID.push(choice._id);
         merchandises.save();
         res.json({ msg: "fill heart" });
@@ -63,6 +64,7 @@ export const postRating = async (req, res) => {
           userID,
           rate,
         });
+        merchandises.rateUserID.push(userID);
         merchandises.rateID.push(newRate._id);
         merchandises.save();
         users.rateID.push(newRate._id);

@@ -11,7 +11,7 @@ export const home = async (req, res) => {
   try {
     // 쿼리 조건에 따라 홈 화면 정렬
     const {
-      query: { sort, limit },
+      query: { sort, page, limit },
     } = req;
 
     let sortQuery = { createdAt: -1 };
@@ -33,7 +33,14 @@ export const home = async (req, res) => {
         .sort(sortQuery)
         .populate([
           { path: "choiceID", model: "Choice" },
-          { path: "choiceUserID", model: "User" },
+          // {
+          //   path: "choiceUserID",
+          //   model: "User",
+          //   populate: {
+          //     path: "userID",
+          //     model: "User",
+          //   },
+          // },
           {
             path: "rateID",
             model: "Rate",
@@ -49,8 +56,13 @@ export const home = async (req, res) => {
       Merchandise.countDocuments({}),
     ]);
     const pageCount = Math.ceil(totalCount / limit);
-    const pages = paginate.getArrayPages(req)(10, pageCount, req.query.page);
+    const pages = paginate.getArrayPages(req)(10, pageCount, page);
     const comments = await Comment.find().populate("userID");
+
+    // merchandiseItem.forEach((x) => {
+    //   if (req.user && x.choiceUserID === req.user._id) {
+    //   }
+    // });
 
     // merchandiseItem.forEach((x) => {
     //   x.rateID.forEach((y) => {
@@ -68,7 +80,7 @@ export const home = async (req, res) => {
       { path: "commentID", model: "Comment" },
     ]);
     const choices = await Choice.find().populate([{ path: "merchandiseID", model: "Merchandise" }]);
-    res.render("home", { comments, users, choices, merchandiseItem, totalCount, pageCount, pages, limit });
+    res.render("home", { comments, users, choices, merchandiseItem, totalCount, pageCount, pages, page, limit });
   } catch (err) {
     console.log(err);
     res.send(

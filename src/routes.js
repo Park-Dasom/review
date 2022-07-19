@@ -10,6 +10,7 @@ const FIND_ID = "/find-id";
 const FORGOT_PW = "/forgot-pw";
 const CHANGE_PW = "/change-pw";
 const DELETE = "/delete";
+const CARTLIST = "/cartlist";
 
 // Admin
 const ADMIN = "/admin";
@@ -39,6 +40,7 @@ const routes = {
   forgotPW: FORGOT_PW,
   changePW: CHANGE_PW,
   delete: DELETE,
+  cartlist: CARTLIST,
 
   // Admin
   admin: ADMIN,

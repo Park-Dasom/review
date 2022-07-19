@@ -1,0 +1,9 @@
+mixin cartMerchandise(item)
+  each item in merchandise
+    .merchandise__thumbnail-wrap
+      img.merchandise__thumbnail(src=item.thumbnail)
+    .merchandise__description-wrap
+      p.merchandise__title 상품명 #{item.title}
+      p.merchandiese__price 가격 #{item.price}
+      p.merchandise__discountPrice 할인 가격 
+      p.merchandise__extraDiscountPrice 특별 회원 가격

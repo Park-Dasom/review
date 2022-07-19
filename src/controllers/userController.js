@@ -163,3 +163,21 @@ export const deleteUser = async (req, res) => {
     console.log(err);
   }
 };
+
+// 장바구나 cartlist
+export const getCartList = async (req, res) => {
+  try {
+    const {
+      params: { userID },
+    } = req;
+    const user = await User.findById(userID);
+    const merchandise = await Merchandise.find({ choiceUserID: userID });
+    res.render("cartList", { user, merchandise });
+  } catch (err) {
+    console.log(err);
+    res.send(
+      `<script>alert("오류가 발생했습니다:\\r\\n${err}");\
+      location.href="${routes.home}"</script>`
+    );
+  }
+};

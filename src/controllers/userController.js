@@ -146,14 +146,14 @@ export const deleteUser = async (req, res) => {
   try {
     const { userID } = req.params;
     const user = await User.findById(userID);
-    // const choices = user.choiceID;
-    // const rates = user.rateID;
+    const choices = user.choiceID;
+    const rates = user.rateID;
     if (user) {
       await User.findByIdAndDelete(userID);
       await Comment.deleteMany({ userID });
       await Choice.deleteMany({ userID });
       await Rate.deleteMany({ userID });
-      await Merchandise.updateMany({}, { $pull: { choiceUserID: { $in: userID }, rateUserID: { $in: userID } } });
+      await Merchandise.updateMany({}, { $pull: { choiceUserID: { $in: userID }, rateUserID: { $in: userID }, choiceID: { $in: choices }, rateID: { $in: rates } } });
     }
     req.logout();
     req.session.destroy();
@@ -164,15 +164,26 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-// 장바구나 cartlist
+// 장바구니 cartList
 export const getCartList = async (req, res) => {
+  try {
+    console.log(req.cookies);
+    return res.send("장바구니");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 좋아요 list
+export const getwishList = async (req, res) => {
   try {
     const {
       params: { userID },
     } = req;
     const user = await User.findById(userID);
-    const merchandise = await Merchandise.find({ choiceUserID: userID });
-    res.render("cartList", { user, merchandise });
+    const merchandise = await Merchandise.find({ choiceUserID: userID }).populate([{ path: "choiceID", model: "Choice" }]);
+    const choices = await Choice.findOne({ userID });
+    res.render("cartList", { user, merchandise, choices });
   } catch (err) {
     console.log(err);
     res.send(

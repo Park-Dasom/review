@@ -14,13 +14,18 @@ block content
           li.login__items-profile
             a=`${loggedUser.name} 의 Profile`
           li.login__cartList 
-            a(href= `${routes.user}/cartlist/${loggedUser._id}`) 장바구니
+            a(href= `${routes.user}/wishiist/${loggedUser._id}`) 좋아요 목록
           li.login__items-changePW 
             a(href=`${routes.user}${routes.changePW}`) 비밀번호 변경
           li.login__items-logout
             a(href=`${routes.user}${routes.logout}`) 로그아웃
           li.login__items-delUser
             a(href=`${routes.user}${routes.delete}/${loggedUser._id}`) 회원탈퇴
+    section.cartList__section.layout 
+      if !loggedUser
+       a(href=`${routes.user}${routes.cartlist}`).carttList__title 장바구니
+      else 
+        a(href=`${routes.user}${routes.cartlist}/${loggedUser._id}`).cartList__title 유저 장바구니
     //- 상품 정렬 링크 section
     section.sorting__section.layout 
       ul.sorting__items 
@@ -42,9 +47,9 @@ block content
         .row
           each item in merchandiseItem
             .col-sm-3
-              .marchandise__wrap
+              a.marchandise__wrap(href=`/${item._id}`)
                 .merchandise__thumbnail-wrap
-                  img.merchandise__thumbnail(src=item.thumbnail)
+                  img.merchandise__thumbnail(src=item.thumbnail href=`${routes.merchandise}/${item._id}`)
                 .merchandise__description-wrap
                   .merchandise__title=item.title
                   .merchandise__price 가격 : #{item.price}원
@@ -55,17 +60,15 @@ block content
                   .marchandise__icon(data-id=item._id)
                       .icon__heart
                         span 마음에 들어요!
-                        if item.choiceUserID.length === 0 || !loggedUser
+                        if item.choiceUserID.length === 0 || !loggedUser 
                           img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-                        //- 유저가 존재 할 때
                         else
-                          each item2 in item.choiceID 
-                            if loggedUser._id.toString() === item2.userID.toString() && item2.choice
-                              img.heart__regular(src=`${imgPath}/public/heart-solid.svg` )
-                            else if loggedUser._id.toString() === item2.userID.toString() && !item2.choice
+                          each item2 in item.choiceUserID
+                            if loggedUser._id.toString() === item2._id.toString() 
+                              img.heart__regular(src=`${imgPath}/public/heart-solid.svg`)
+                            else 
                               img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-                            else if loggedUser._id.toString() !== item2.userID.toString() && item2.choice === null
-                              img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
+                        //- 유저가 존재 할 때
                       .icon__stars
                         if item.rateID.length === 0 || !loggedUser 
                           img.star__regular(src=`${imgPath}/public/star-regular.svg`)

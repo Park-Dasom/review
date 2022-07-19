@@ -1,5 +1,5 @@
 import express from "express";
-import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment } from "../controllers/apiController";
+import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist } from "../controllers/apiController";
 
 const apiRouter = express.Router();
 // choice true / fase

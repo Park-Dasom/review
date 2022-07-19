@@ -4,7 +4,7 @@ import "./headerControl";
 import "./homeControl";
 import "./joinControl";
 import "./loginControl";
-
+import "./merchandiseControl";
 // 관리자
 import "./adminSidebarControl";
 import "./adminExcelDownloadControl";

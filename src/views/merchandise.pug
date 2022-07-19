@@ -1,0 +1,15 @@
+extends layouts/main
+
+block content
+  .merchandise__page#merchandise__page
+    .merchandiseDetail__wrap 
+        .merchandise__thumbnail-wrap
+          img.merchandise__thumbnail(src=merchandise.thumbnail)
+        .merchandise__description-wrap
+          p.merchandise__title 상품명 : #{merchandise.title}
+          p.merchandiese__price 가격 : #{merchandise.price}
+          if merchandise.discountRate
+            p.merchandise__discountPrice 할인 가격 : #{discountPrice(`${merchandise.price}`, `${merchandise.discountRate}`)} 원
+          if merchandise.extraDiscount
+            p.merchandise__extraDiscountPrice 특별 회원 가격 : #{discountPrice(`${merchandise.price}`, `${merchandise.discountRate}`) - `${merchandise.extraDiscount}`} 원
+        .merchandise__cartList-btn 장바구니에 담기

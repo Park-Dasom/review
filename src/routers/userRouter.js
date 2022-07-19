@@ -1,6 +1,6 @@
 import express from "express";
 import routes from "../routes";
-import { getJoin, postJoin, getLogin, postLogin, getLogout, autoLogin, getChangePassword, postChangePassword, deleteUser, getCartList } from "../controllers/userController";
+import { getJoin, postJoin, getLogin, postLogin, getLogout, autoLogin, getChangePassword, postChangePassword, deleteUser, getCartList, getwishList } from "../controllers/userController";
 
 const userRouter = express.Router();
 
@@ -22,7 +22,10 @@ userRouter.post(routes.changePW, postChangePassword);
 // 회원탈퇴
 userRouter.get(`${routes.delete}/:userID`, deleteUser);
 
-// 장바구니 cartlist
-userRouter.get(`${routes.cartlist}/:userID`, getCartList);
+// 장바구니 cartList
+userRouter.get(routes.cartlist, getCartList);
+
+// 좋아요 list
+userRouter.get(`${routes.wishlist}/:userID`, getwishList);
 
 export default userRouter;

@@ -24,7 +24,7 @@ export const home = async (req, res) => {
     } else if (sort === "highRate") {
       sortQuery = { rateID: -1 };
     } else if (sort === "choice") {
-      sortQuery = { choiceID: -1 };
+      sortQuery = { choiceUserID: -1 };
     }
 
     // pagenation 데이터
@@ -82,11 +82,6 @@ export const home = async (req, res) => {
     //   });
     // });
 
-    const users = await User.find().populate([
-      { path: "choiceID", model: "Choice", populate: { path: "merchandiseID", model: "Merchandise" } },
-      { path: "rateID", model: "Rate" },
-      { path: "commentID", model: "Comment" },
-    ]);
     const choices = await Choice.find().populate([{ path: "merchandiseID", model: "Merchandise" }]);
     res.render("home", { comments, users, choices, merchandiseItem, totalCount, pageCount, pages, page, limit });
   } catch (err) {
@@ -95,6 +90,19 @@ export const home = async (req, res) => {
       `<script>alert("오류가 발생했습니다:\\r\\n${err}");\
       location.href="${routes.home}"</script>`
     );
+  }
+};
+
+// 장바구니 cartList
+export const getMerchandise = async (req, res) => {
+  try {
+    const {
+      params: { merchandiseID },
+    } = req;
+    const merchandise = await Merchandise.findById(merchandiseID);
+    return res.render("merchandise", { merchandise });
+  } catch (err) {
+    console.log(err);
   }
 };
 

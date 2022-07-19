@@ -22,22 +22,20 @@ export const postChoice = async (req, res) => {
         const choice = await Choice.create({
           merchandiseID,
           userID,
-          choice: true,
+          status: true,
         });
         user.choiceID.push(choice._id);
         user.save();
         merchandises.choiceUserID.push(userID);
-        merchandises.choiceID.push(choice._id);
         merchandises.save();
         res.json({ msg: "fill heart" });
       } else {
-        choices.choice = !choices.choice;
-        choices.save();
-        if (!choices.choice) {
-          res.json({ msg: "empty heart" });
-        } else {
-          res.json({ msg: "fill heart" });
-        }
+        const choiceID = choices._id;
+        console.log("hi");
+        await Choice.findByIdAndDelete(choiceID);
+        await Merchandise.updateMany({}, { $pull: { choiceUserID: { $in: userID } } });
+        await User.updateMany({}, { $pull: { choiceID: { $in: choiceID } } });
+        res.json({ msg: "empty heart" });
       }
     }
   } catch (err) {
@@ -131,7 +129,6 @@ export const postCreatComment = async (req, res) => {
 export const postDeleteComment = async (req, res) => {
   try {
     const { body } = req;
-    console.log(body);
     const commentID = body.userID;
     await Comment.findByIdAndRemove(commentID);
     res.json({ msg: "comment delete" });

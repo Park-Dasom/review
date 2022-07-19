@@ -58,6 +58,14 @@ export const home = async (req, res) => {
     const pageCount = Math.ceil(totalCount / limit);
     const pages = paginate.getArrayPages(req)(10, pageCount, page);
     const comments = await Comment.find().populate("userID");
+    let users;
+    if (req.user) {
+      users = await User.findById(req.user._id).populate([
+        { path: "choiceID", model: "Choice", populate: [{ path: "merchandiseID", model: "Merchandise" }] },
+        { path: "rateID", model: "Rate" },
+        { path: "commentID", model: "Comment" },
+      ]);
+    }
 
     // merchandiseItem.forEach((x) => {
     //   if (req.user && x.choiceUserID === req.user._id) {

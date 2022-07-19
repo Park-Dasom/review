@@ -57,24 +57,15 @@ block content
                         span 마음에 들어요!
                         if item.choiceUserID.length === 0 || !loggedUser
                           img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-                        each item2 in item.choiceUserID
-                          if loggedUser._id.toString() === item2._id.toString() 
-                            img.heart__regular(src=`${imgPath}/public/heart-solid.svg` )
-                          else 
-                            img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-
-                        //- else 
-                        //-   each item2 in users.choiceID
-                        //-     if loggedUser._id.toString() === item2._id.toString()
-                        //-       img.heart__regular(src=`${imgPath}/public/heart-regular.svg` )
-                        //-       img.heart__regular(src=`${imgPath}/public/heart-solid.svg` )
-                          //- each item2 in item.choiceID 
-                          //-   if loggedUser._id.toString() === item2.userID.toString() && item2.choice
-                          //-     img.heart__regular(src=`${imgPath}/public/heart-solid.svg` )
-                          //-   else if loggedUser._id.toString() === item2.userID.toString() && !item2.choice
-                          //-     img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-                          //-   else if loggedUser._id.toString() !== item2.userID.toString() && !item2.choice
-                          //-     img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
+                        //- 유저가 존재 할 때
+                        else
+                          each item2 in item.choiceID 
+                            if loggedUser._id.toString() === item2.userID.toString() && item2.choice
+                              img.heart__regular(src=`${imgPath}/public/heart-solid.svg` )
+                            else if loggedUser._id.toString() === item2.userID.toString() && !item2.choice
+                              img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
+                            else if loggedUser._id.toString() !== item2.userID.toString() && item2.choice === null
+                              img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
                       .icon__stars
                         if item.rateID.length === 0 || !loggedUser 
                           img.star__regular(src=`${imgPath}/public/star-regular.svg`)

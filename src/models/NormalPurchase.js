@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const NormalPurchaseSchema = new Schema({
-  thumbnail: String,
+  price: Number, // 금액
   data1: String,
   data2: String,
   data3: String,

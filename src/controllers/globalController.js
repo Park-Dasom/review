@@ -43,13 +43,21 @@ export const home = async (req, res) => {
     const pageCount = Math.ceil(totalCount / limit);
     const pages = paginate.getArrayPages(req)(10, pageCount, req.query.page);
     const comments = await Comment.find().populate("userID");
+    let users;
+    if (req.user) {
+      users = await User.findById(req.user._id).populate([
+        { path: "choiceID", model: "Choice", populate: [{ path: "merchandiseID", model: "Merchandise" }] },
+        { path: "rateID", model: "Rate" },
+        { path: "commentID", model: "Comment" },
+      ]);
+    }
 
-    const users = await User.find().populate([
-      { path: "choiceID", model: "Choice" },
-      { path: "rateID", model: "Rate" },
-      { path: "commentID", model: "Comment" },
+    const choices = await Choice.find().populate([
+      { path: "userID", model: "User" },
+      { path: "merchandiseID", model: "Merchandise" },
     ]);
-    res.render("home", { comments, users, merchandiseItem, totalCount, pageCount, pages, limit });
+
+    res.render("home", { comments, users, merchandiseItem, totalCount, pageCount, pages, limit, choices });
   } catch (err) {
     console.log(err);
     res.send(

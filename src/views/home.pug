@@ -47,9 +47,10 @@ block content
         .row
           each item in merchandiseItem
             .col-sm-3
-                  //- a.marchandise__wrap(href=`/${item._id}`)
+              .marchandise__wrap
                 .merchandise__thumbnail-wrap
                   img.merchandise__thumbnail(src=item.thumbnail href=`${routes.merchandise}/${item._id}`)
+                    //- a(href=`${routes.merchandise}/${item._id}`)
                 .merchandise__description-wrap
                   .merchandise__title=item.title
                   .merchandise__price 가격 : #{item.price}원

@@ -47,7 +47,7 @@ block content
         .row
           each item in merchandiseItem
             .col-sm-3
-              a.marchandise__wrap(href=`/${item._id}`)
+                  //- a.marchandise__wrap(href=`/${item._id}`)
                 .merchandise__thumbnail-wrap
                   img.merchandise__thumbnail(src=item.thumbnail href=`${routes.merchandise}/${item._id}`)
                 .merchandise__description-wrap
@@ -66,8 +66,6 @@ block content
                           each item2 in item.choiceUserID
                             if loggedUser._id.toString() === item2._id.toString() 
                               img.heart__regular(src=`${imgPath}/public/heart-solid.svg`)
-                            else 
-                              img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
                         //- 유저가 존재 할 때
                       .icon__stars
                         if item.rateID.length === 0 || !loggedUser 

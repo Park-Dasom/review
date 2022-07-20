@@ -12,4 +12,5 @@ block content
             p.merchandise__discountPrice 할인 가격 : #{discountPrice(`${merchandise.price}`, `${merchandise.discountRate}`)} 원
           if merchandise.extraDiscount
             p.merchandise__extraDiscountPrice 특별 회원 가격 : #{discountPrice(`${merchandise.price}`, `${merchandise.discountRate}`) - `${merchandise.extraDiscount}`} 원
-        .merchandise__cartList-btn 장바구니에 담기
+        .merchandise__cartList-btn(data-merchandiseID=merchandise._id) 장바구니에 담기
+        a(href=`${routes.user}${routes.cartlist}`).carttList__title 장바구니

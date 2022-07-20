@@ -136,3 +136,60 @@ export const postDeleteComment = async (req, res) => {
     console.log(err);
   }
 };
+
+// 비로그인 유저의 장바구니 cartlist post
+let merchandiseArray = [];
+export const postPostCartlist = async (req, res) => {
+  try {
+    const {
+      body: { merchandiseID },
+    } = req;
+    const merchandise = await Merchandise.findById(merchandiseID);
+    merchandiseArray.push(merchandise);
+    res.cookie("merchandiseID", merchandiseArray, {
+      httpOnly: true,
+      secure: true,
+    });
+    res.json({ msg: "cookie sending" });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 비로그인 유저의 장바구니 cartlist delete
+export const postDeleteCartlist = async (req, res) => {
+  try {
+    const {
+      body: { merchandiseID },
+    } = req;
+    const cookie = req.cookies;
+    merchandiseArray = cookie.merchandiseID;
+    merchandiseArray = merchandiseArray.filter((elem) => String(elem._id) !== String(merchandiseID));
+    res.cookie("merchandiseID", merchandiseArray, {
+      httpOnly: true,
+      secure: true,
+    });
+    res.json({ msg: "cookie deleting" });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 비로그인 유저의 장바구니 cartlist 구매 체크 post
+export const postBuyingCheck = async (req, res) => {
+  try {
+    const {
+      body: { merchandiseID },
+    } = req;
+    const merchandise = await Merchandise.findById(merchandiseID);
+    if (merchandise.extraDiscount !== 0) {
+      res.json({ msg: "extraDiscount price" });
+    } else if (merchandise.discountRate !== 0) {
+      res.json({ msg: "discountRate price" });
+    } else if (merchandise.price) {
+      res.json({ msg: "nomal price" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};

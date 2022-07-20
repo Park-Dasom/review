@@ -93,7 +93,7 @@ export const home = async (req, res) => {
   }
 };
 
-// 장바구니 cartList
+// 상품 정보 Detail
 export const getMerchandise = async (req, res) => {
   try {
     const {

@@ -1,5 +1,5 @@
 import express from "express";
-import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist } from "../controllers/apiController";
+import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist, postDeleteCartlist, postBuyingCheck } from "../controllers/apiController";
 
 const apiRouter = express.Router();
 // choice true / fase
@@ -17,5 +17,12 @@ apiRouter.post("/join-check", postJoinCheck);
 // 댓글 post
 apiRouter.post("/creat-comment", postCreatComment);
 apiRouter.delete("/delete-comment", postDeleteComment);
+
+// 비로그인 유저의 장바구니 cartList
+apiRouter.post("/post-cartlist", postPostCartlist);
+apiRouter.post("/delete-cartlist", postDeleteCartlist);
+
+// 비로그인 유저의 장바구니 구매 체크 post
+apiRouter.post("/post-buyingCheck", postBuyingCheck);
 
 export default apiRouter;

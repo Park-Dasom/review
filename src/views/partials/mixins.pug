@@ -1,12 +1,17 @@
 mixin cartMerchandise(item)
-  each item2 in merchandise
-      .merchadiseList
-        .merchandise__thumbnail-wrap
-          img.merchandise__thumbnail(src=item2.thumbnail)
-        .merchandise__description-wrap
-          p.merchandise__title 상품명 : #{item2.title}
-          p.merchandiese__price 가격 : #{item2.price}
-          if item2.discountRate
-            p.merchandise__discountPrice 할인 가격 : #{discountPrice(`${item2.price}`, `${item2.discountRate}`)} 원
-          if item2.extraDiscount
-            p.merchandise__extraDiscountPrice 특별 회원 가격 : #{discountPrice(`${item2.price}`, `${item2.discountRate}`) - `${item2.extraDiscount}`} 원
+  .merchadiseList
+    .merchandise__thumbnail-wrap
+      img.merchandise__thumbnail(src=item.thumbnail)
+    .merchandise__description-wrap
+      span.merchandise__title 상품명 : #{item.title}
+      br
+      span.merchandiese__price-text 가격 : 
+      span.merchandiese__price-price #{item.price}
+        if item.discountRate 
+          br
+          span.merchandise__discountPrice-text 할인 가격 : 
+          span.merchandise__discountPrice-price #{discountPrice(`${item.price}`, `${item.discountRate}`)} 
+        if item.extraDiscount
+          br
+          span.merchandise__extraDiscountPrice-text 특별 회원 가격 : 
+          span.merchandise__extraDiscountPrice-price #{discountPrice(`${item.price}`, `${item.discountRate}`) - `${item.extraDiscount}`}

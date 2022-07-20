@@ -22,7 +22,7 @@ userRouter.post(routes.changePW, postChangePassword);
 // 회원탈퇴
 userRouter.get(`${routes.delete}/:userID`, deleteUser);
 
-// 장바구니 cartList
+// 비로그인 유저의 장바구니 cartList
 userRouter.get(routes.cartlist, getCartList);
 
 // 좋아요 list

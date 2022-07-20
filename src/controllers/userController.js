@@ -164,11 +164,13 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-// 장바구니 cartList
+// 비로그인 유저의 장바구니 cartList
 export const getCartList = async (req, res) => {
   try {
-    console.log(req.cookies);
-    return res.send("장바구니");
+    const {
+      cookies: { merchandiseID },
+    } = req;
+    return res.render("cartlist", { merchandiseID });
   } catch (err) {
     console.log(err);
   }
@@ -183,7 +185,7 @@ export const getwishList = async (req, res) => {
     const user = await User.findById(userID);
     const merchandise = await Merchandise.find({ choiceUserID: userID }).populate([{ path: "choiceID", model: "Choice" }]);
     const choices = await Choice.findOne({ userID });
-    res.render("cartList", { user, merchandise, choices });
+    return res.render("wishList", { user, merchandise, choices });
   } catch (err) {
     console.log(err);
     res.send(

@@ -22,10 +22,7 @@ block content
           li.login__items-delUser
             a(href=`${routes.user}${routes.delete}/${loggedUser._id}`) 회원탈퇴
     section.cartList__section.layout 
-      if !loggedUser
        a(href=`${routes.user}${routes.cartlist}`).carttList__title 장바구니
-      //- else 
-      //-   a(href=`${routes.user}${routes.cartlist}/${loggedUser._id}`).cartList__title 유저 장바구니
     //- 상품 정렬 링크 section
     section.sorting__section.layout 
       ul.sorting__items 
@@ -61,27 +58,51 @@ block content
                   .marchandise__icon(data-id=item._id)
                       .icon__heart
                         span 마음에 들어요!
-                        if item.choiceUserID.length === 0 || !loggedUser 
+                        //- 로그인 유저가 없는 경우
+                        if !loggedUser 
                           img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-                          //- else if String(item.choiceUserID[`"${loggedUser._id}"`]) === String(loggedUser._id)
-                        else if String(item.choiceUserID[`"${loggedUser._id}"`]) !== String(loggedUser._id)
-                          img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-                          img.heart__regular(src=`${imgPath}/public/heart-solid.svg` data-sh=item.choiceUserID data-ss= `"${loggedUser._id.toString()}"`)
-                      .icon__stars
-                        if item.rateID.length === 0 || !loggedUser 
-                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                        //- 로그인 유저가 있는 경우
                         else
-                          each item3 in item.rateID
-                            if item3.userID.toString() === loggedUser._id.toString()
-                              img.star__regular(class=`${item3.rate >= 1 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 1 ? "solid" : "regular"}.svg`)
-                              img.star__regular(class=`${item3.rate >= 2 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 2 ? "solid" : "regular"}.svg`)
-                              img.star__regular(class=`${item3.rate >= 3 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 3 ? "solid" : "regular"}.svg`)
-                              img.star__regular(class=`${item3.rate >= 4 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 4 ? "solid" : "regular"}.svg`)
-                              img.star__regular(class=`${item3.rate >= 5 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 5 ? "solid" : "regular"}.svg`)
+                          //- 상품을 좋아요 누른 유저가 없을 경우
+                          if item.choiceUserID.length === 0 
+                            img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
+                          //- 상품을 좋아요 누른 유저가 한 명 이상 존재하는 경우 
+                          else if item.choiceUserID.length >= 1 
+                            //- 상품을 좋아요 누른 유저들의 array에 현재 로그인 된 유저가 있을 경우
+                            if item.choiceUserID.includes(loggedUser._id.toString())
+                              img.heart__regular(src=`${imgPath}/public/heart-solid.svg`)
+                            else
+                              img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)    
+                      .icon__stars
+                        //- 로그인 유저가 없는 경우
+                        if !loggedUser 
+                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                        //-  로그인 유저가 있지만 별점을 누른 유저가 없는 경우
+                        else
+                          if item.rateUserID.length === 0
+                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                          //- 별점을 누른 유저가 한 명 이상 존재하는 경우
+                          else if item.rateUserID.length >= 1 
+                            img.star__regular(src=`${imgPath}/public/star-solid.svg` data-sh=rates[0])
+                              //- if rates.merchandiseID.includes(item._id.toSring())
+                                img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                                img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                                img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                                img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                                //- 상품에 별점을 누른 유저들의 array에 현재 로그인 된 유저가 있을 경우
+                                //- img.star__regular(class=`${item.rateUserID.rateID.rate >= 1 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rateUserID.rateID.rate >= 1 ? "solid" : "regular"}.svg`)
+                                //- img.star__regular(class=`${item3.rate >= 2 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 2 ? "solid" : "regular"}.svg`)
+                                //- img.star__regular(class=`${item3.rate >= 3 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 3 ? "solid" : "regular"}.svg`)
+                                //- img.star__regular(class=`${item3.rate >= 4 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 4 ? "solid" : "regular"}.svg`)
+                                //- img.star__regular(class=`${item3.rate >= 5 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 5 ? "solid" : "regular"}.svg`)
     //- BEGIN: Pagination
     section.pagination__sectiion
       #pagination__flex

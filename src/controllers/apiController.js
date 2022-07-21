@@ -25,15 +25,16 @@ export const postChoice = async (req, res) => {
           status: true,
         });
         user.choiceID.push(choice._id);
-        user.save();
         merchandises.choiceUserID.push(userID);
+        user.save();
         merchandises.save();
         res.json({ msg: "fill heart" });
       } else {
         const choiceID = choices._id;
+        const userID = req.user._id;
         console.log("hi");
         await Choice.findByIdAndDelete(choiceID);
-        await Merchandise.updateMany({}, { $pull: { choiceUserID: { $in: userID } } });
+        await Merchandise.findByIdAndUpdate(merchandiseID, { $pull: { choiceUserID: { $in: userID } } });
         await User.updateMany({}, { $pull: { choiceID: { $in: choiceID } } });
         res.json({ msg: "empty heart" });
       }
@@ -63,7 +64,6 @@ export const postRating = async (req, res) => {
           rate,
         });
         merchandises.rateUserID.push(userID);
-        merchandises.rateID.push(newRate._id);
         merchandises.save();
         users.rateID.push(newRate._id);
         users.save();

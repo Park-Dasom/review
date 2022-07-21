@@ -33,20 +33,12 @@ export const home = async (req, res) => {
         .sort(sortQuery)
         .populate([
           { path: "choiceID", model: "Choice" },
-          // {
-          //   path: "choiceUserID",
-          //   model: "User",
-          //   populate: {
-          //     path: "userID",
-          //     model: "User",
-          //   },
-          // },
           {
-            path: "rateID",
-            model: "Rate",
+            path: "rateUserID",
+            model: "User",
             // populate: {
-            //   path: "userID",
-            //   model: "User",
+            //   path: "rateID",
+            //   model: "Rate",
             // },
           },
         ])
@@ -58,15 +50,10 @@ export const home = async (req, res) => {
     const pageCount = Math.ceil(totalCount / limit);
     const pages = paginate.getArrayPages(req)(10, pageCount, page);
     const comments = await Comment.find().populate("userID");
-    let users;
+    let rates;
     if (req.user) {
-      users = await User.findById(req.user._id).populate([
-        { path: "choiceID", model: "Choice", populate: [{ path: "merchandiseID", model: "Merchandise" }] },
-        { path: "rateID", model: "Rate" },
-        { path: "commentID", model: "Comment" },
-      ]);
+      rates = await Rate.find({});
     }
-
     // merchandiseItem.forEach((x) => {
     //   if (req.user && x.choiceUserID === req.user._id) {
     //   }
@@ -81,9 +68,8 @@ export const home = async (req, res) => {
     //     }
     //   });
     // });
-
     const choices = await Choice.find().populate([{ path: "merchandiseID", model: "Merchandise" }]);
-    res.render("home", { comments, users, choices, merchandiseItem, totalCount, pageCount, pages, page, limit });
+    res.render("home", { comments, choices, rates, merchandiseItem, totalCount, pageCount, pages, page, limit });
   } catch (err) {
     console.log(err);
     res.send(

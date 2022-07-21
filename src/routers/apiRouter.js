@@ -1,5 +1,5 @@
 import express from "express";
-import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist, postDeleteCartlist, postBuyingCheck } from "../controllers/apiController";
+import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist, postDeleteCartlist, postBuyingCheck, postFindPW } from "../controllers/apiController";
 
 const apiRouter = express.Router();
 // choice true / fase
@@ -18,11 +18,13 @@ apiRouter.post("/join-check", postJoinCheck);
 apiRouter.post("/creat-comment", postCreatComment);
 apiRouter.delete("/delete-comment", postDeleteComment);
 
-// 비로그인 유저의 장바구니 cartList
+// 장바구니 cartList
 apiRouter.post("/post-cartlist", postPostCartlist);
 apiRouter.post("/delete-cartlist", postDeleteCartlist);
-
-// 비로그인 유저의 장바구니 구매 체크 post
+// 장바구니 cartList 구매 체크 post
 apiRouter.post("/post-buyingCheck", postBuyingCheck);
+
+// SendGrid 비밀번호 찾기 이메일 post
+apiRouter.post("/post-findPW", postFindPW);
 
 export default apiRouter;

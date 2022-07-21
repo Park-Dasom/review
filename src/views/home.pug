@@ -13,16 +13,20 @@ block content
         if loggedUser
           li.login__items-profile
             a=`${loggedUser.name} 의 Profile`
-          li.login__cartList 
-            a(href= `${routes.user}/wishiist/${loggedUser._id}`) 좋아요 목록
-          li.login__items-changePW 
-            a(href=`${routes.user}${routes.changePW}`) 비밀번호 변경
+          //- li.login__cartList 
+          //-   a(href= `${routes.user}/wishiist/${loggedUser._id}`) 좋아요 목록
+          //- TODO: Profile 페이지 안으로 넣은 후 페이지 새로 만들기 (mixins.pug 수정됨)
+          //- li.login__items-changePW 
+          //-   a(href=`${routes.user}${routes.changePW}`) 비밀번호 변경
+          //- TODO: Profile 페이지 안으로 넣은 후 페이지 새로 만들기 (비밀번호 재설정 페이지와 겹침.)
           li.login__items-logout
             a(href=`${routes.user}${routes.logout}`) 로그아웃
+          //- TODO: Profile 페이지 안으로 넣기
           li.login__items-delUser
             a(href=`${routes.user}${routes.delete}/${loggedUser._id}`) 회원탈퇴
     section.cartList__section.layout 
        a(href=`${routes.user}${routes.cartlist}`).carttList__title 장바구니
+       //- TODO: Profile 페이지 안으로 넣기
     //- 상품 정렬 링크 section
     section.sorting__section.layout 
       ul.sorting__items 

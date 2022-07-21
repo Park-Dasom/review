@@ -1,28 +1,23 @@
-.changePW__page#changePW__page {
-  section.changePW__wrap.layout {
-    h1.changePW__title {
+.findPW__page#find__page {
+  section.findPW__wrap.layout {
+    h1.findPW__title {
       font-size: 30px;
       font-weight: 600;
       margin-top: 40px;
       margin-left: 20px;
     }
-    form.changePW__form {
+    form.findPW__form {
       width: 400px;
       margin-top: 20px;
       border: solid 1px gray;
       border-radius: 5px;
       padding: 20px;
-
-      input.changePW__newPW,
-      input.changePW__newPWConfirm {
+      input.findPW__userID {
         border: solid 1px goldenrod;
         border-radius: 5px;
         padding-left: 10px;
         height: 30px;
         width: 300px;
-      }
-      input.changePW__newPWConfirm {
-        margin-top: 20px;
       }
       button {
         margin-top: 20px;

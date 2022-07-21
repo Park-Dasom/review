@@ -57,7 +57,7 @@ export const localsMiddleware = (req, res, next) => {
     return array;
   };
   // SendGrid Single Sender Email Address
-  res.locals.singleSenderEmail = "mw@millennialsworks.com";
+  res.locals.singleSenderEmail = "studiverum@naver.com";
   // 랜덤 이미지 URL
   res.locals.randomImg = "https://source.unsplash.com/random";
   // 이미지 파일 경로

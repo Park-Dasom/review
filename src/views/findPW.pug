@@ -1,0 +1,10 @@
+extends layouts/main
+
+block content
+  .findPW__page#find__page
+    section.findPW__wrap.layout
+      h1.findPW__title 이메일 주소(아이디)  
+      form.findPW__form(method="post")
+        input.findPW__userID(type="text", name=`userID`, required placeholder="이메일 주소(아이디)를 입력해주세요.")
+        br
+        button(type="submit").findPW__button 확인

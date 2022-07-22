@@ -3,7 +3,7 @@
     font-size: 50px;
     font-weight: 600;
   }
-  .cartlist__page-warp {
+  .cartlist__page-wrap {
     .cartlist__wrap {
       display: flex;
       align-items: center;
@@ -49,6 +49,10 @@
         color: white;
       }
     }
+  }
+  p.cartlist__none-text {
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
   .cartlist__payment-wrap {
     display: flex;

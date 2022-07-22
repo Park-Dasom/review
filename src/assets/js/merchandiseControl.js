@@ -15,12 +15,16 @@ const init = () => {
         data: { merchandiseID },
         success: (result) => {
           if (result.msg === "cookie sending") {
+            alert("해당 상품이 장바구니에 담겼습니다.");
           }
         },
         error: (err) => {
           alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
         },
       });
+    });
+    $(".extraDiscountPrice__explain-modal").on("click", () => {
+      alert("hi");
     });
   });
 };

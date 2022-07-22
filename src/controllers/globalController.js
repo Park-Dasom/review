@@ -36,10 +36,10 @@ export const home = async (req, res) => {
           {
             path: "rateUserID",
             model: "User",
-            // populate: {
-            //   path: "rateID",
-            //   model: "Rate",
-            // },
+            populate: {
+              path: "rateID",
+              model: "Rate",
+            },
           },
         ])
         .limit(limit)
@@ -52,8 +52,9 @@ export const home = async (req, res) => {
     const comments = await Comment.find().populate("userID");
     let rates;
     if (req.user) {
-      rates = await Rate.find({});
+      rates = await Rate.find({ userID: req.user._id });
     }
+    // console.log(rates[0]);
     // merchandiseItem.forEach((x) => {
     //   if (req.user && x.choiceUserID === req.user._id) {
     //   }

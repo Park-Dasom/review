@@ -1,11 +1,36 @@
-// .active {
-//   height: 25px;
-//   width: 25px;
-//   display: block;
-// }
-
 .home__page#home__page {
+  // 홈 화면 국기 사진 Swiper section
+  section.swiper__section.layout {
+    //- Slider main container
+    margin-top: 50px;
+    .swiper.nationalFlag {
+      //- Additional required wrapper
+      .swiper-wrapper {
+        //- Slides
+        .swiper-slide {
+          img {
+            display: block;
+            margin: auto;
+            height: 300px;
+          }
+        }
+      }
+      //- If we need pagination
+      .swiper-pagination {
+      }
+      //- If we need navigation buttons
+      .swiper-button-prev {
+      }
+      .swiper-button-next {
+      }
+      //- If we need scrollbar
+      .swiper-scrollbar {
+      }
+    }
+  }
+  // 홈 화면 상품 sorting section
   section.sorting__section.layout {
+    margin-top: 50px;
     ul.sorting__items {
       display: flex;
       align-items: center;
@@ -19,8 +44,10 @@
       }
     }
   }
+  // 홈 화면 상품 정렬 section
   section.merchandise__section {
     .container {
+      margin-top: 20px;
       .row {
         .col-sm-3 {
           .marchandise__wrap {

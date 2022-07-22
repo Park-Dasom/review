@@ -15,6 +15,7 @@ const init = () => {
         data: { userID },
         success: (result) => {
           if (result.msg === "E-mail sending") {
+            $("button.findPW__button").on("click");
             alert("입력해주신 이메일을 통해 비밀번호를 재설정해주세요.");
             window.location.href = `${routes.user}${routes.login}`;
           }

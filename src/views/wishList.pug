@@ -1,0 +1,13 @@
+extends layouts/main
+include partials/mixins
+
+block content
+  .wishList__page#wishList__page.layout
+    h1.cartList__pageTite #{user.name} 의 좋아요 목록
+    .merchandiseList__wrap 
+      //- merchandiseList mixin
+      +cartMerchandise(item)
+    hr
+    .payment__wrap 
+      .payment__title 총 개
+      .payment__price 

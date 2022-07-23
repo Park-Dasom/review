@@ -1,0 +1,17 @@
+mixin cartMerchandise(item)
+  .merchadiseList
+    .merchandise__thumbnail-wrap
+      img.merchandise__thumbnail(src=item.thumbnail1)
+    .merchandise__description-wrap
+      span.merchandise__title 상품명 : #{item.title}
+      br
+      span.merchandiese__price-text 가격 : 
+      span.merchandiese__price-price #{item.price}
+        if item.discountRate 
+          br
+          span.merchandise__discountPrice-text 할인 가격 : 
+          span.merchandise__discountPrice-price #{discountPrice(`${item.price}`, `${item.discountRate}`)} 
+        if item.extraDiscount
+          br
+          span.merchandise__extraDiscountPrice-text 특별 회원 가격 : 
+          span.merchandise__extraDiscountPrice-price #{discountPrice(`${item.price}`, `${item.discountRate}`) - `${item.extraDiscount}`}

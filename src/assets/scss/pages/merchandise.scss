@@ -1,0 +1,37 @@
+.merchandise__page#merchandise__page {
+  .merchandiseDetail__wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    .merchandise__thumbnail-wrap {
+      img.merchandise__thumbnail {
+        width: 800px;
+        height: 600px;
+      }
+    }
+    .merchandise__description-wrap {
+      p.merchandise__title {
+      }
+      p.merchandiese__price {
+      }
+      p.merchandise__discountPrice {
+      }
+      .merchandise__extraDiscountPrice {
+        display: flex;
+        align-items: center;
+        p.merchandise__extraDiscountPrice {
+        }
+        img.explain__question-mark {
+          margin-left: 5px;
+          height: 15px;
+          width: 15px;
+          cursor: pointer;
+        }
+      }
+    }
+    .merchandise__cartList-btn {
+    }
+    a {
+    }
+  }
+}

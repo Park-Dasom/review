@@ -10,7 +10,13 @@ const LOGOUT = "/logout";
 const FIND_ID = "/find-id";
 const FORGOT_PW = "/forgot-pw";
 const CHANGE_PW = "/change-pw";
+const RESET_PW = "/reset-pw";
 const DELETE = "/delete";
+const WISHLIST = "/wishlist";
+const CARTLIST = "/cartlist";
+
+// Merchandise
+const MERCHANDISE = "/merchandise";
 
 // Admin
 const ADMIN = "/admin";
@@ -40,7 +46,13 @@ const routes = {
   findID: FIND_ID,
   forgotPW: FORGOT_PW,
   changePW: CHANGE_PW,
+  resetPW: RESET_PW,
   delete: DELETE,
+  wishlist: WISHLIST,
+  cartlist: CARTLIST,
+
+  // Merchandise
+  merchandise: MERCHANDISE,
 
   // Admin
   admin: ADMIN,

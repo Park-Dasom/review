@@ -12,7 +12,7 @@ export const home = async (req, res) => {
   try {
     // 쿼리 조건에 따라 홈 화면 정렬
     const {
-      query: { sort, limit },
+      query: { sort, page, limit },
     } = req;
 
     let sortQuery = { createdAt: -1 };
@@ -25,7 +25,7 @@ export const home = async (req, res) => {
     } else if (sort === "highRate") {
       sortQuery = { rateID: -1 };
     } else if (sort === "choice") {
-      sortQuery = { choiceID: -1 };
+      sortQuery = { choiceUserID: -1 };
     }
 
     // pagenation 데이터
@@ -34,14 +34,13 @@ export const home = async (req, res) => {
         .sort(sortQuery)
         .populate([
           { path: "choiceID", model: "Choice" },
-          { path: "choiceUserID", model: "User" },
           {
-            path: "rateID",
-            model: "Rate",
-            // populate: {
-            //   path: "userID",
-            //   model: "User",
-            // },
+            path: "rateUserID",
+            model: "User",
+            populate: {
+              path: "rateID",
+              model: "Rate",
+            },
           },
         ])
         .limit(limit)
@@ -50,16 +49,19 @@ export const home = async (req, res) => {
       Merchandise.countDocuments({}),
     ]);
     const pageCount = Math.ceil(totalCount / limit);
-    const pages = paginate.getArrayPages(req)(10, pageCount, req.query.page);
+    const pages = paginate.getArrayPages(req)(10, pageCount, page);
     const comments = await Comment.find().populate("userID");
-    // let users;
-    // if (req.user) {
-    //   users = await User.findById(req.user._id).populate([
-    //     { path: "choiceID", model: "Choice", populate: [{ path: "merchandiseID", model: "Merchandise" }] },
-    //     { path: "rateID", model: "Rate" },
-    //     { path: "commentID", model: "Comment" },
-    //   ]);
-    // }
+    let rates;
+    let users;
+    if (req.user) {
+      rates = await Rate.find({ userID: req.user._id });
+      users = await User.findById(req.user._id);
+    }
+    // console.log(rates[0]);
+    // merchandiseItem.forEach((x) => {
+    //   if (req.user && x.choiceUserID === req.user._id) {
+    //   }
+    // });
 
     // merchandiseItem.forEach((x) => {
     //   x.rateID.forEach((y) => {
@@ -70,16 +72,8 @@ export const home = async (req, res) => {
     //     }
     //   });
     // });
-
-    const users = await User.find().populate([
-      { path: "choiceID", model: "Choice", populate: { path: "merchandiseID", model: "Merchandise" } },
-      { path: "rateID", model: "Rate" },
-      { path: "commentID", model: "Comment" },
-    ]);
     const choices = await Choice.find().populate([{ path: "merchandiseID", model: "Merchandise" }]);
-
-    console.log(moment().utcOffset(0, true).format());
-    res.render("home", { comments, users, choices, merchandiseItem, totalCount, pageCount, pages, limit });
+    res.render("home", { comments, choices, rates, users, merchandiseItem, totalCount, pageCount, pages, page, limit });
   } catch (err) {
     console.log(err);
     res.send(

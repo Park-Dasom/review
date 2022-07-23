@@ -1,0 +1,23 @@
+extends layouts/main
+include partials/mixins
+
+block content
+  .cartlist__page#cartlist__page.layout
+    h1.cartList__pageTite 장바구니
+    .cartlist__page-wrap(data-sk=merchandise)
+      if merchandiseID
+        each item in merchandiseID 
+          .cartlist__wrap 
+            +cartMerchandise(item)
+            .cartlist__checkBox-wrap
+              .checkBox__buying
+                p.checkBox__text 구매
+                input.checkBox__input#cartList(type="checkbox", name="cartList") 
+              button.checkBox__deletBtn(data-item=item._id) 삭제하기
+      else 
+        p.cartlist__none-text 장바구니에 상품이 없습니다.
+        hr
+    .cartlist__payment-wrap 
+      p.payment__totalNumber 총 개수 : 0 개
+      p.payment__totalPrice 총 금액 : 0 원
+    button.cartlist__payBtn 결제하기

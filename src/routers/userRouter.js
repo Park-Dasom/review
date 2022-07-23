@@ -1,6 +1,6 @@
 import express from "express";
 import routes from "../routes";
-import { getJoin, postJoin, getLogin, postLogin, getLogout, autoLogin, getChangePassword, postChangePassword, deleteUser } from "../controllers/userController";
+import { getJoin, postJoin, getLogin, postLogin, getLogout, autoLogin, getChangePassword, postChangePassword, getResetPassword, postResetPassword, deleteUser, getCartList, getwishList } from "../controllers/userController";
 
 const userRouter = express.Router();
 
@@ -15,11 +15,18 @@ userRouter.post(routes.login, postLogin);
 // 로그아웃 logout
 userRouter.get(routes.logout, getLogout);
 
-// 비밀번호 password
+// 비밀번호 재설정 reset password
+userRouter.get(routes.resetPW, getResetPassword);
 userRouter.get(routes.changePW, getChangePassword);
 userRouter.post(routes.changePW, postChangePassword);
 
 // 회원탈퇴
 userRouter.get(`${routes.delete}/:userID`, deleteUser);
+
+// 비로그인 유저의 장바구니 cartList
+userRouter.get(routes.cartlist, getCartList);
+
+// 좋아요 list
+userRouter.get(`${routes.wishlist}/:userID`, getwishList);
 
 export default userRouter;

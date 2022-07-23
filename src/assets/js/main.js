@@ -4,11 +4,14 @@ import "./headerControl";
 import "./homeControl";
 import "./joinControl";
 import "./loginControl";
-
+import "./merchandiseControl";
+import "./cartlistControl";
+import "./findPWControl";
 // 관리자
 import "./adminSidebarControl";
 import "./adminExcelDownloadControl";
 import "./adminControl";
+import "./adminMerchandiseForm";
 
 // ajax sample
 // import $ from "jquery";

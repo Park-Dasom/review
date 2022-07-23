@@ -24,7 +24,7 @@ const multerMerchandisePic = multer({
 });
 
 // 한 개의 input(type="file")일 경우
-export const uploadMerchandisePic = multerMerchandisePic.single("thumbnail");
+export const uploadMerchandisePic = multerMerchandisePic.fields([{ name: "thumbnail1" }, { name: "thumbnail2" }]);
 // 여러 input(type="file")일 경우
 // export const uploadSamplePic = multerSamplePic.fields([{ name: "thumbnail1" }, { name: "thumbnail2" }]);
 
@@ -61,6 +61,8 @@ export const localsMiddleware = async (req, res, next) => {
     }
     return array;
   };
+  // SendGrid Single Sender Email Address
+  res.locals.singleSenderEmail = "studiverum@naver.com";
   // 랜덤 이미지 URL
   res.locals.randomImg = "https://source.unsplash.com/random";
   // 이미지 파일 경로

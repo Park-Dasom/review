@@ -5,6 +5,22 @@ const homePage = document.getElementById("home__page");
 
 const init = () => {
   $(() => {
+    // 홈 화면 국기 사진 Swiper
+    const nationalFlagSwiper = new Swiper(".swiper", {
+      spaceBetween: 30,
+      loop: true,
+      autoplay: {
+        delay: 2000,
+        disableOninteraction: false,
+      },
+      autoHeight: true,
+      slideToClickedSlide: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
+
     // 추천 버튼 post
     $("img.heart__regular").each((i, elem) => {
       $(elem).on("click", () => {
@@ -50,7 +66,6 @@ const init = () => {
                   alert("로그인이 필요한 영역입니다.");
                   window.location.href = `${routes.user}${routes.login}`;
                 } else if (msg === "success rating") {
-                  // do it your code.
                   $(this).addClass("solid");
                   $(this).prevAll().addClass("solid");
                 }

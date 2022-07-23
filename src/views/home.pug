@@ -2,7 +2,7 @@ extends layouts/main
 
 block content
   .home__page#home__page
-    //- 회원가입, 로그인 section
+    //- 홈 화면 회원가입, 로그인 section
     section.login__section.layout
       ul.login__item
         if !loggedUser
@@ -13,27 +13,53 @@ block content
         if loggedUser
           li.login__items-profile
             a=`${loggedUser.name} 의 Profile`
-          li.login__items-changePW 
-            a(href=`${routes.user}${routes.changePW}`) 비밀번호 변경
+          //- li.login__cartList 
+          //-   a(href= `${routes.user}/wishiist/${loggedUser._id}`) 좋아요 목록
+          //- TODO: Profile 페이지 안으로 넣은 후 페이지 새로 만들기 (mixins.pug 수정됨)
+          //- li.login__items-changePW 
+          //-   a(href=`${routes.user}${routes.changePW}`) 비밀번호 변경
+          //- TODO: Profile 페이지 안으로 넣은 후 페이지 새로 만들기 (비밀번호 재설정 페이지와 겹침.)
           li.login__items-logout
             a(href=`${routes.user}${routes.logout}`) 로그아웃
           li.login__items-delUser
             a(href=`${routes.user}${routes.delete}/${loggedUser._id}`) 회원탈퇴
-    //- 상품 정렬 링크 section
+          //- TODO: Profile 페이지 안으로 넣기
+    //- 홈 화면 장바구니 cartlist section
+    section.cartList__section.layout 
+       a(href=`${routes.user}${routes.cartlist}`).carttList__title 장바구니
+    
+    //- 홈 화면 국기 사진 Swiper
+    section.swiper__section.layout 
+      //- Slider main container
+      .swiper.nationalFlag
+        //- Additional required wrapper
+        .swiper-wrapper
+          //- Slides
+          .swiper-slide 
+            img(src=`${imgPath}/public/germany-national-flag.png`)
+          .swiper-slide 
+            img(src=`${imgPath}/public/india-national-flag.png`)
+          .swiper-slide
+            img(src=`${imgPath}/public/spain-national-flag.png`)
+        //- If we need pagination
+        .swiper-pagination
+    
+    //- 홈 화면 상품 sorting section
     section.sorting__section.layout 
       ul.sorting__items 
         li.sorting__item
-          a.sorting__createdAt-btn(href="?sort=createdAt") 최신순
+          a.sorting__createdAt-btn(href=`?sort=createdAt&page=${page}&limit=${limit}`) 최신순
         li.sorting__item          
-          a.sorting__title-btn(href="?sort=title") 이름순
+          a.sorting__title-btn(href=`?sort=title&page=${page}&limit=${limit}`) 이름순
         li.sorting__item
-          a.sorting__lowPrice-btn(href="?sort=lowPrice") 낮은가격순  
+          a.sorting__lowPrice-btn(href=`?sort=lowPrice&page=${page}&limit=${limit}`) 낮은가격순  
         li.sorting__item
-          a.sorting__highPrice-btn(href="?sort=highPrice") 높은가격순
+          a.sorting__highPrice-btn(href=`?sort=highPrice&page=${page}&limit=${limit}`) 높은가격순
         li.sorting__item
-          a.sorting__highRate-btn(href="?sort=highRate") 높은별점순
+          a.sorting__highRate-btn(href=`?sort=highRate&page=${page}&limit=${limit}`) 높은별점순
         li.sorting__item
-          a.sorting__choice-btn(href="?sort=choice") 좋아요순
+          a.sorting__choice-btn(href=`?sort=choice&page=${page}&limit=${limit}`) 좋아요순
+
     //- 상품 내용 정렬 section
     section.merchandise__section.layout
       .container 
@@ -41,46 +67,72 @@ block content
           each item in merchandiseItem
             .col-sm-3
               .marchandise__wrap
+                
                 .merchandise__thumbnail-wrap
-                  img.merchandise__thumbnail(src=item.thumbnail)
+                  img.merchandise__thumbnail(src=item.thumbnail1 href=`${routes.merchandise}/${item._id}`)
                 .merchandise__description-wrap
-                  .merchandise__title=item.title
+                  a(href=`${routes.merchandise}/${item._id}`).merchandise__title=item.title
                   .merchandise__price 가격 : #{item.price}원
                     if item.discountRate
                       .merchandise__discountRate 할인율 #{item.discountRate} %
                       .merchandise__discountPrice 할인가 : #{discountPrice(`${item.price}`, `${item.discountRate}`)} 원
-                      .merchandise__extraDiscount 특별 회원 가격 : #{discountPrice(`${item.price}`, `${item.discountRate}`) - `${item.extraDiscount}`} 원
+                      .merchandise__extraDiscountPrice 특별 회원 가격 : #{discountPrice(`${item.price}`, `${item.discountRate}`) - `${item.extraDiscount}`} 원
                   .marchandise__icon(data-id=item._id)
                       .icon__heart
                         span 마음에 들어요!
-                        if item.choiceID.length === 0 || !loggedUser
+                        //- 로그인 유저가 없는 경우
+                        if !loggedUser 
                           img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-                        //- 유저가 존재 할 때
+                        //- 로그인 유저가 있는 경우
                         else
-                          each item2 in item.choiceID 
-                            if loggedUser._id.toString() === item2.userID.toString() && item2.choice
-                              img.heart__regular(src=`${imgPath}/public/heart-solid.svg` )
-                            else if loggedUser._id.toString() === item2.userID.toString() && !item2.choice
-                              img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-                            else if loggedUser._id.toString() !== item2.userID.toString() && item2.choice === null
-                              img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
+                          //- 상품을 좋아요 누른 유저가 없을 경우
+                          if item.choiceUserID.length === 0 
+                            img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
+                          //- 상품을 좋아요 누른 유저가 한 명 이상 존재하는 경우 
+                          else if item.choiceUserID.length >= 1 
+                            //- 상품을 좋아요 누른 유저들의 array에 현재 로그인 된 유저가 있을 경우
+                            if item.choiceUserID.includes(loggedUser._id.toString())
+                              img.heart__regular(src=`${imgPath}/public/heart-solid.svg`)
+                            else
+                              img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)    
                       .icon__stars
-                        if item.rateID.length === 0 || !loggedUser 
+                        //- 로그인 유저가 없는 경우
+                        if !loggedUser 
                           img.star__regular(src=`${imgPath}/public/star-regular.svg`)
                           img.star__regular(src=`${imgPath}/public/star-regular.svg`)
                           img.star__regular(src=`${imgPath}/public/star-regular.svg`)
                           img.star__regular(src=`${imgPath}/public/star-regular.svg`)
                           img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                        //-  로그인 유저가 있지만 별점을 누른 유저가 없는 경우
                         else
-                          each item3 in item.rateID
-                            if item3.userID.toString() === loggedUser._id.toString()
-                              img.star__regular(class=`${item3.rate >= 1 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 1 ? "solid" : "regular"}.svg`)
-                              img.star__regular(class=`${item3.rate >= 2 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 2 ? "solid" : "regular"}.svg`)
-                              img.star__regular(class=`${item3.rate >= 3 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 3 ? "solid" : "regular"}.svg`)
-                              img.star__regular(class=`${item3.rate >= 4 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 4 ? "solid" : "regular"}.svg`)
-                              img.star__regular(class=`${item3.rate >= 5 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 5 ? "solid" : "regular"}.svg`)
-                .merchandise__link-wrap 
-                  a.merchandise__detail-link(href=`${routes.merchadiseDetail}/${item._id}`) 상세보기
+                          if item.rateUserID.length === 0
+                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                          //- 별점을 누른 유저가 한 명 이상 존재하는 경우
+                          else if item.rateUserID.length >= 1 
+                            //- 현재 로그인되어있는 유저가 별점을 한 개 이상 눌렀을 경우
+                            if users.rateID.length > 1
+                              img.star__regular(src=`${imgPath}/public/star-solid.svg` data-dd=users.rateID)
+                              //- 로그인한 해당 상품에 준 별점 표시
+                              
+                            //- 현재 로그인되어있는 유저가 별점을 한 개도 누르지 않았을 경우
+                            else
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg` data-sh=rates)
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)                            
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                              //- if rates.merchandiseID.includes(item._id.toSring())
+                                
+                                //- 상품에 별점을 누른 유저들의 array에 현재 로그인 된 유저가 있을 경우
+                                img.star__regular(class=`${item.rateUserID.rateID.rate >= 1 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rateUserID.rateID.rate >= 1 ? "solid" : "regular"}.svg`)
+                                img.star__regular(class=`${item3.rate >= 2 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 2 ? "solid" : "regular"}.svg`)
+                                img.star__regular(class=`${item3.rate >= 3 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 3 ? "solid" : "regular"}.svg`)
+                                img.star__regular(class=`${item3.rate >= 4 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 4 ? "solid" : "regular"}.svg`)
+                                img.star__regular(class=`${item3.rate >= 5 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 5 ? "solid" : "regular"}.svg`)
     //- BEGIN: Pagination
     section.pagination__sectiion
       #pagination__flex

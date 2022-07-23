@@ -1,0 +1,74 @@
+.cartlist__page#cartlist__page {
+  h1.cartList__pageTite {
+    font-size: 50px;
+    font-weight: 600;
+  }
+  .cartlist__page-wrap {
+    .cartlist__wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .merchadiseList {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .merchandise__thumbnail-wrap {
+          img.merchandise__thumbnail {
+            height: 210px;
+            width: 210px;
+          }
+        }
+        .merchandise__description-wrap {
+          margin-left: 30px;
+          p.merchandise__title {
+          }
+          p.merchandiese__price {
+            p.merchandise__discountPrice {
+            }
+            p.merchandise__extraDiscountPrice {
+            }
+          }
+        }
+      }
+    }
+    .cartlist__checkBox-wrap {
+      .checkBox__buying {
+        display: flex;
+        align-content: center;
+        justify-content: space-evenly;
+        margin-bottom: 10px;
+        input.checkBox__input {
+        }
+      }
+      button.checkBox__deletBtn {
+        padding: 10px;
+        cursor: pointer;
+        border: solid 1px;
+        border-radius: 10px;
+        background-color: slategray;
+        color: white;
+      }
+    }
+  }
+  p.cartlist__none-text {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .cartlist__payment-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  button.cartlist__payBtn {
+    position: fixed;
+    right: 83px;
+    margin-top: 20px;
+    padding: 20px;
+    cursor: pointer;
+    border: solid 1px;
+    border-radius: 10px;
+    background-color: slategray;
+    font-size: 20px;
+    color: white;
+  }
+}

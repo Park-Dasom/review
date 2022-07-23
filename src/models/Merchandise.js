@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const MerchandiseSchema = new Schema({
-  thumbnail: String, // 상품 이미지
+  thumbnail1: String, // 상품 이미지1
+  thumbnail2: String, // 상품 이미지2
   title: String, // 상품 이름
   price: Number, // 상품 가격
   discountRate: Number, // 가격 할인율

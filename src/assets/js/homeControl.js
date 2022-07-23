@@ -160,6 +160,21 @@ const init = () => {
     // } else if (window.location.search === "?sort=choice") {
     //   $("a.sorting__choice-btn").css("color", "cornflowerblue");
     // }
+
+    const a = 4000000;
+    const testArr = [1, 2];
+    let sum = 0;
+    for (let i = 0; i <= a; i += 1) {
+      if (testArr[i] + testArr[i + 1] <= a) {
+        testArr.push(testArr[i] + testArr[i + 1]);
+      }
+    }
+    for (let i = 0; i < testArr.length; i += 1) {
+      if (testArr[i] % 2 === 0) {
+        sum += testArr[i];
+      }
+    }
+    console.log(sum);
   });
 };
 if (homePage) {

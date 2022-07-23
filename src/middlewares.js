@@ -3,6 +3,7 @@ import multer from "multer";
 import multerS3 from "multer-s3";
 import aws from "aws-sdk";
 import routes from "./routes";
+import User from "./models/User";
 
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_KEY,
@@ -27,7 +28,7 @@ export const uploadMerchandisePic = multerMerchandisePic.single("thumbnail");
 // 여러 input(type="file")일 경우
 // export const uploadSamplePic = multerSamplePic.fields([{ name: "thumbnail1" }, { name: "thumbnail2" }]);
 
-export const localsMiddleware = (req, res, next) => {
+export const localsMiddleware = async (req, res, next) => {
   res.locals.siteName = "Gooooooods";
   res.locals.routes = routes;
   res.locals.loggedUser = req.user || null;
@@ -39,6 +40,9 @@ export const localsMiddleware = (req, res, next) => {
   };
   res.locals.replaceAll = (str, searchStr, replaceStr) => str.split(searchStr).join(replaceStr);
 
+  // 회원 유형 체크
+  res.locals.latestUser = req.user ? await User.findById(req.user._id) : null;
+
   // 할인율 적용 후 가격 (할인가)
   res.locals.discountPrice = (price, discountRate) => Math.ceil(price * ((100 - discountRate) * 0.01), 1);
 
@@ -46,6 +50,7 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.dateFormatYMD = (date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD");
   res.locals.dateFormatYMDHm = (date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD HH:mm");
   res.locals.dateFormatYMDHms = (date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD HH:mm:ss");
+  console.log(moment.tz.guess());
   // 배열 Random 섞기
   res.locals.shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i -= 1) {

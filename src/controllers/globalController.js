@@ -1,4 +1,5 @@
 import routes from "../routes";
+import moment from "moment-timezone";
 import Choice from "../models/Choice";
 import Comment from "../models/Comment";
 import Merchandise from "../models/Merchandise";
@@ -51,14 +52,14 @@ export const home = async (req, res) => {
     const pageCount = Math.ceil(totalCount / limit);
     const pages = paginate.getArrayPages(req)(10, pageCount, req.query.page);
     const comments = await Comment.find().populate("userID");
-    let users;
-    if (req.user) {
-      users = await User.findById(req.user._id).populate([
-        { path: "choiceID", model: "Choice", populate: [{ path: "merchandiseID", model: "Merchandise" }] },
-        { path: "rateID", model: "Rate" },
-        { path: "commentID", model: "Comment" },
-      ]);
-    }
+    // let users;
+    // if (req.user) {
+    //   users = await User.findById(req.user._id).populate([
+    //     { path: "choiceID", model: "Choice", populate: [{ path: "merchandiseID", model: "Merchandise" }] },
+    //     { path: "rateID", model: "Rate" },
+    //     { path: "commentID", model: "Comment" },
+    //   ]);
+    // }
 
     // merchandiseItem.forEach((x) => {
     //   x.rateID.forEach((y) => {
@@ -76,6 +77,8 @@ export const home = async (req, res) => {
       { path: "commentID", model: "Comment" },
     ]);
     const choices = await Choice.find().populate([{ path: "merchandiseID", model: "Merchandise" }]);
+
+    console.log(moment().utcOffset(0, true).format());
     res.render("home", { comments, users, choices, merchandiseItem, totalCount, pageCount, pages, limit });
   } catch (err) {
     console.log(err);
@@ -83,6 +86,22 @@ export const home = async (req, res) => {
       `<script>alert("오류가 발생했습니다:\\r\\n${err}");\
       location.href="${routes.home}"</script>`
     );
+  }
+};
+
+export const getMerchadiseDetail = async (req, res) => {
+  try {
+    const {
+      params: { merchandiseID },
+    } = req;
+
+    const merchandise = await Merchandise.findById(merchandiseID);
+
+    res.render("merchandiseDetail", { merchandise });
+  } catch (err) {
+    console.log(err);
+    res.send(`<script>alert("오류가 발생했습니다:\\r\\n${err}");\
+location.href="${routes.home}"</script>`);
   }
 };
 

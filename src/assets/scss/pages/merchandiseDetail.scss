@@ -1,0 +1,58 @@
+.merchandiseDetail__page#merchandiseDetail__page {
+  .merchandiseDetail__wrap {
+    section.merchandiseDetail__info-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .merchandiseDetail__info-wrap {
+        ul.info__items {
+          li.info__item {
+            &:not(:first-child) {
+              margin-top: 10px;
+            }
+            text-align: center;
+            img.item__thumbnail {
+              width: 200px;
+            }
+          }
+        }
+      }
+    }
+    section.merchandiseDetail__purchase-section {
+      margin-top: 30px;
+      .merchandiseDetail__purchase-wrap {
+        ul.purchase__items {
+          li.purchase__item {
+            display: flex;
+            align-items: center;
+
+            &:not(:first-child) {
+              margin-top: 15px;
+            }
+            p.item__para {
+              width: 25%;
+            }
+            input.item__input {
+              width: 50%;
+              padding: 10px;
+              border: 1px solid #000;
+              border-radius: 5px;
+            }
+
+            button.item__payment-btn {
+              margin: 0 auto;
+              width: 200px;
+              padding: 10px;
+              font-size: 16px;
+              font-weight: 700;
+              margin-top: 30px;
+              border-radius: 10px;
+              background-color: #000;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+}

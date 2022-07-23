@@ -24,7 +24,7 @@ export const postChoice = async (req, res) => {
           userID,
           choice: true,
         });
-        user.choiceID.push(choice._id);
+        user.choiceID.unshift(choice._id);
         user.save();
         merchandises.choiceUserID.push(userID);
         merchandises.choiceID.push(choice._id);

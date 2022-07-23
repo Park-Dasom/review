@@ -79,6 +79,8 @@ block content
                               img.star__regular(class=`${item3.rate >= 3 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 3 ? "solid" : "regular"}.svg`)
                               img.star__regular(class=`${item3.rate >= 4 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 4 ? "solid" : "regular"}.svg`)
                               img.star__regular(class=`${item3.rate >= 5 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 5 ? "solid" : "regular"}.svg`)
+                .merchandise__link-wrap 
+                  a.merchandise__detail-link(href=`${routes.merchadiseDetail}/${item._id}`) 상세보기
     //- BEGIN: Pagination
     section.pagination__sectiion
       #pagination__flex

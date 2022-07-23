@@ -9,6 +9,6 @@ const globalRouter = express.Router();
 globalRouter.get(routes.home, paginate.middleware(10, 50), home);
 
 // 장바구니 Merchandise
-globalRouter.get("/:merchandiseID", getMerchandise);
+globalRouter.get(`${routes.merchandise}/:merchandiseID`, getMerchandise);
 
 export default globalRouter;

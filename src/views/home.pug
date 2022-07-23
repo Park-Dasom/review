@@ -27,7 +27,6 @@ block content
     //- 홈 화면 장바구니 cartlist section
     section.cartList__section.layout 
        a(href=`${routes.user}${routes.cartlist}`).carttList__title 장바구니
-       //- TODO: Profile 페이지 안으로 넣기
     
     //- 홈 화면 국기 사진 Swiper
     section.swiper__section.layout 
@@ -70,9 +69,9 @@ block content
               .marchandise__wrap
                 
                 .merchandise__thumbnail-wrap
-                  img.merchandise__thumbnail(src=item.thumbnail href=`${routes.merchandise}/${item._id}`)
+                  img.merchandise__thumbnail(src=item.thumbnail1 href=`${routes.merchandise}/${item._id}`)
                 .merchandise__description-wrap
-                  a(href=`${item._id}`).merchandise__title=item.title
+                  a(href=`${routes.merchandise}/${item._id}`).merchandise__title=item.title
                   .merchandise__price 가격 : #{item.price}원
                     if item.discountRate
                       .merchandise__discountRate 할인율 #{item.discountRate} %
@@ -115,14 +114,16 @@ block content
                           //- 별점을 누른 유저가 한 명 이상 존재하는 경우
                           else if item.rateUserID.length >= 1 
                             //- 현재 로그인되어있는 유저가 별점을 한 개 이상 눌렀을 경우
-
+                            if users.rateID.length > 1
+                              img.star__regular(src=`${imgPath}/public/star-solid.svg` data-dd=users.rateID)
+                              //- 로그인한 해당 상품에 준 별점 표시
+                              
                             //- 현재 로그인되어있는 유저가 별점을 한 개도 누르지 않았을 경우
-                            //- else
-                            //-   img.star__regular(src=`${imgPath}/public/star-regular.svg` data-sh=rates)
-                            //-   img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                            //-   img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                            //-   img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                            
+                            else
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg` data-sh=rates)
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)                            
                               img.star__regular(src=`${imgPath}/public/star-regular.svg`)
                               //- if rates.merchandiseID.includes(item._id.toSring())
                                 

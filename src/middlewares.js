@@ -23,7 +23,7 @@ const multerMerchandisePic = multer({
 });
 
 // 한 개의 input(type="file")일 경우
-export const uploadMerchandisePic = multerMerchandisePic.single("thumbnail");
+export const uploadMerchandisePic = multerMerchandisePic.fields([{ name: "thumbnail1" }, { name: "thumbnail2" }]);
 // 여러 input(type="file")일 경우
 // export const uploadSamplePic = multerSamplePic.fields([{ name: "thumbnail1" }, { name: "thumbnail2" }]);
 

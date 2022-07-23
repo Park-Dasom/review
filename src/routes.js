@@ -14,6 +14,9 @@ const DELETE = "/delete";
 const WISHLIST = "/wishlist";
 const CARTLIST = "/cartlist";
 
+// Merchandise
+const MERCHANDISE = "/merchandise";
+
 // Admin
 const ADMIN = "/admin";
 const ADMIN_REGISTER = "/register";
@@ -45,6 +48,9 @@ const routes = {
   delete: DELETE,
   wishlist: WISHLIST,
   cartlist: CARTLIST,
+
+  // Merchandise
+  merchandise: MERCHANDISE,
 
   // Admin
   admin: ADMIN,

@@ -240,3 +240,14 @@ export const postFindPW = async (req, res) => {
     );
   }
 };
+
+// adminMerchandiseForm 사진 업로드 미리보기 post
+export const postThumbnailPreview = async (req, res) => {
+  const { body } = req;
+  console.log(body.thumbnail1Image[0]);
+
+  // const { body, thumbnail1Image } = req;
+  // const location = files.thumbnail1[0].location;
+  // console.log(body, thumbnail1Image);
+  res.json({ msg: "success" });
+};

@@ -36,7 +36,8 @@ block content
                     thead
                       tr
                         th 번호
-                        th 사진
+                        th 사진1
+                        th 사진2
                         th 이름
                         th 가격(월)
                         th 할인율(%)
@@ -47,7 +48,8 @@ block content
                       each item, index in excelData
                         tr
                           td=index + 1
-                          td=item.thumbnail
+                          td=item.thumbnail1
+                          td=item.thumbnail2
                           td=item.title
                           td=item.price
                           td=item.discountRate
@@ -76,7 +78,8 @@ block content
                           tr
                             th(scope='col' style="width: 80px;") 번호
                             th(scope='col' style="width: 120px;") 수정/삭제
-                            th(scope='col' style="width: 200px;") 사진
+                            th(scope='col' style="width: 200px;") 사진1
+                            th(scope='col' style="width: 200px;") 사진2
                             th(scope='col' style="width: 200px;") 이름 [클릭 시 상세보기]
                             th(scope='col' style="width: 200px;") 가격(원)
                             th(scope='col' style="width: 200px;") 할인율(%)
@@ -98,7 +101,9 @@ block content
                                       polyline(points='3 6 5 6 21 6')
                                       path(d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2')
                               td(scope='col' style="width: 100px;")
-                                img(src=item.thumbnail width="100%")
+                                img(src=item.thumbnail1 width="100%")
+                              td(scope='col' style="width: 100px;")
+                                img(src=item.thumbnail2 width="100%")
                               td.ellipsis__td(scope='col' style="width: 200px;")
                                 a.td__link(href=`${routes.admin}${adminLink}/detail/${item._id}`)=item.title
                                   i.external-link__icon(data-feather='external-link')

@@ -1,5 +1,6 @@
 import express from "express";
-import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist, postDeleteCartlist, postBuyingCheck, postFindPW } from "../controllers/apiController";
+import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist, postDeleteCartlist, postBuyingCheck, postFindPW, postThumbnailPreview } from "../controllers/apiController";
+import { uploadMerchandisePic } from "../middlewares";
 
 const apiRouter = express.Router();
 // choice true / fase
@@ -27,4 +28,6 @@ apiRouter.post("/post-buyingCheck", postBuyingCheck);
 // SendGrid 비밀번호 찾기 이메일 post
 apiRouter.post("/post-findPW", postFindPW);
 
+// adminMerchandiseForm 사진 업로드 미리보기 post
+apiRouter.post("/admin-post-thumbnail-preview", uploadMerchandisePic, postThumbnailPreview);
 export default apiRouter;

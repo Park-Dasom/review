@@ -16,12 +16,15 @@
       }
       p.merchandise__discountPrice {
       }
-      p.merchandise__extraDiscountPrice {
-      }
-      .extraDiscountPrice__explain-modal {
-        height: 15px;
-        width: 15px;
+      .merchandise__extraDiscountPrice {
+        display: flex;
+        align-items: center;
+        p.merchandise__extraDiscountPrice {
+        }
         img.explain__question-mark {
+          margin-left: 5px;
+          height: 15px;
+          width: 15px;
           cursor: pointer;
         }
       }

@@ -3,7 +3,6 @@ import paginate from "express-paginate";
 import moment from "moment-timezone";
 import routes from "../routes";
 import User from "../models/User";
-import Sample from "../models/Sample";
 import Comment from "../models/Comment";
 import Choice from "../models/Choice";
 import Rate from "../models/Rate";
@@ -387,9 +386,11 @@ export const getCreateMerchandise = (_, res) => {
 };
 export const postCreateMerchandise = async (req, res) => {
   try {
-    const { body, file } = req;
-
-    body.thumbnail = file ? file.location : null;
+    const { body, files } = req;
+    console.log(body);
+    console.log(files.thumbnail1[0].location);
+    body.thumbnail1 = files ? files.thumbnail1[0].location : null;
+    body.thumbnail2 = files ? files.thumbnail2[0].location : null;
     body.createdAt = moment(new Date()).tz("Asia/Seoul");
     body.updatedAt = moment(new Date()).tz("Asia/Seoul");
     await Merchandise.create(body);
@@ -451,10 +452,11 @@ export const postUpdateMerchandise = async (req, res) => {
     const {
       params: { merchandiseID },
       body,
-      file,
+      files,
     } = req;
     const merchandises = await Merchandise.findById(merchandiseID);
-    body.thumbnail = file ? file.location : merchandises.picture;
+    body.thumbnail1 = files ? files.location : merchandises.thumbnail1;
+    body.thumbnail2 = files ? files.location : merchandises.thumbnail2;
     body.updatedAt = moment(new Date()).tz("Asia/Seoul");
     await Merchandise.findByIdAndUpdate(merchandiseID, body);
     res.send(

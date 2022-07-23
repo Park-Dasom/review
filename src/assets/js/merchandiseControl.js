@@ -6,7 +6,7 @@ const merchandisePage = document.getElementById("merchandise__page");
 const init = () => {
   $(() => {
     // 장바구니 cartlist 로 상품 넣기
-    $(".merchandise__cartList-btn").on("click", () => {
+    $("button.merchandise__cartList-btn").on("click", () => {
       const merchandiseID = $(".merchandise__cartList-btn").attr("data-merchandiseID");
       alert("해당 상품을 장바구니에 넣으시겠습니까?");
       $.ajax({
@@ -23,8 +23,10 @@ const init = () => {
         },
       });
     });
-    $(".extraDiscountPrice__explain-modal").on("click", () => {
-      alert("hi");
+
+    // 모달 창의 특별회원 가입하기 클릭 시 해당 화면으로 이동 (현재는 홈 화면으로 지정했음)
+    $("button.btn.btn-primary").on("click", () => {
+      window.location.href = `${routes.home}`;
     });
   });
 };

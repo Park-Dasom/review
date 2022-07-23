@@ -51,8 +51,10 @@ export const home = async (req, res) => {
     const pages = paginate.getArrayPages(req)(10, pageCount, page);
     const comments = await Comment.find().populate("userID");
     let rates;
+    let users;
     if (req.user) {
       rates = await Rate.find({ userID: req.user._id });
+      users = await User.findById(req.user._id);
     }
     // console.log(rates[0]);
     // merchandiseItem.forEach((x) => {
@@ -70,7 +72,7 @@ export const home = async (req, res) => {
     //   });
     // });
     const choices = await Choice.find().populate([{ path: "merchandiseID", model: "Merchandise" }]);
-    res.render("home", { comments, choices, rates, merchandiseItem, totalCount, pageCount, pages, page, limit });
+    res.render("home", { comments, choices, rates, users, merchandiseItem, totalCount, pageCount, pages, page, limit });
   } catch (err) {
     console.log(err);
     res.send(

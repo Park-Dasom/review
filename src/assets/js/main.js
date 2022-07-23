@@ -11,6 +11,7 @@ import "./findPWControl";
 import "./adminSidebarControl";
 import "./adminExcelDownloadControl";
 import "./adminControl";
+import "./adminMerchandiseForm";
 
 // ajax sample
 // import $ from "jquery";

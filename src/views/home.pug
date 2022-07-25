@@ -12,7 +12,7 @@ block content
             a(href=`${routes.user}${routes.login}`) Login
         if loggedUser
           li.login__items-profile
-            a=`${loggedUser.name} 의 Profile`
+            a(href=`${routes.user}/${loggedUser._id}`) #{loggedUser.name} 의 Profile
           //- li.login__cartList 
           //-   a(href= `${routes.user}/wishiist/${loggedUser._id}`) 좋아요 목록
           //- TODO: Profile 페이지 안으로 넣은 후 페이지 새로 만들기 (mixins.pug 수정됨)
@@ -111,20 +111,10 @@ block content
                             img.star__regular(src=`${imgPath}/public/star-regular.svg`)
                             img.star__regular(src=`${imgPath}/public/star-regular.svg`)
                             img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                          //- 별점을 누른 유저가 한 명 이상 존재하는 경우
-                          else if item.rateUserID.length >= 1 
+                          //-현재 로그인 유저가 해당 상품에 좋아요를 누른 경우
+                          else if item.rateUserID.includes(loggedUser._id.toString())
                             //- 현재 로그인되어있는 유저가 별점을 한 개 이상 눌렀을 경우
-                            if users.rateID.length > 1
-                              img.star__regular(src=`${imgPath}/public/star-solid.svg` data-dd=users.rateID)
-                              //- 로그인한 해당 상품에 준 별점 표시
-                              
-                            //- 현재 로그인되어있는 유저가 별점을 한 개도 누르지 않았을 경우
-                            else
-                              img.star__regular(src=`${imgPath}/public/star-regular.svg` data-sh=rates)
-                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)                            
-                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                            img.star__regular(src=`${imgPath}/public/star-solid.svg` data-sh=item.rateID)
                               //- if rates.merchandiseID.includes(item._id.toSring())
                                 
                                 //- 상품에 별점을 누른 유저들의 array에 현재 로그인 된 유저가 있을 경우

@@ -1,74 +1,118 @@
 .cartlist__page#cartlist__page {
-  h1.cartList__pageTite {
-    font-size: 50px;
-    font-weight: 600;
+  display: flex;
+  // 회원정보 my profile Navbar
+  nav.navbar.navbar-expand-lg.navbar-light.bg-light {
+    flex-direction: column;
+    width: 200px;
+    height: 100vh;
+    a.navbar-brand {
+    }
+    button.navbar-toggler {
+      span.navbar-toggler-icon {
+      }
+    }
+    #navbarNav.collapse.navbar-collapse {
+      flex-direction: column;
+      align-items: flex-start;
+      ul.navbar-nav {
+        flex-direction: column;
+        li.nav-item.active {
+          a.nav-link {
+            span.sr-only {
+            }
+          }
+        }
+        li.nav-item {
+          a.nav-link {
+          }
+        }
+        li.nav-item {
+          a.nav-link {
+          }
+        }
+        li.nav-item {
+          a.nav-link.disabled {
+          }
+        }
+      }
+    }
   }
+
+  // 장바구니 cartlist
   .cartlist__page-wrap {
-    .cartlist__wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      .merchadiseList {
+    width: 100%;
+    h1.cartList__pageTite {
+      font-size: 50px;
+      font-weight: 600;
+    }
+
+    .cartlist__page-flex {
+      .cartlist__wrap {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        .merchandise__thumbnail-wrap {
-          img.merchandise__thumbnail {
-            height: 210px;
-            width: 210px;
+        .merchadiseList {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          .merchandise__thumbnail-wrap {
+            img.merchandise__thumbnail {
+              height: 210px;
+              width: 210px;
+            }
+          }
+          .merchandise__description-wrap {
+            margin-left: 30px;
+            p.merchandise__title {
+            }
+            p.merchandiese__price {
+              p.merchandise__discountPrice {
+              }
+              p.merchandise__extraDiscountPrice {
+              }
+            }
           }
         }
-        .merchandise__description-wrap {
-          margin-left: 30px;
-          p.merchandise__title {
+      }
+      .cartlist__checkBox-wrap {
+        .checkBox__buying {
+          display: flex;
+          align-content: center;
+          justify-content: space-evenly;
+          margin-bottom: 10px;
+          input.checkBox__input {
           }
-          p.merchandiese__price {
-            p.merchandise__discountPrice {
-            }
-            p.merchandise__extraDiscountPrice {
-            }
-          }
+        }
+        button.checkBox__deletBtn {
+          padding: 10px;
+          cursor: pointer;
+          border: solid 1px;
+          border-radius: 10px;
+          background-color: slategray;
+          color: white;
         }
       }
     }
-    .cartlist__checkBox-wrap {
-      .checkBox__buying {
-        display: flex;
-        align-content: center;
-        justify-content: space-evenly;
-        margin-bottom: 10px;
-        input.checkBox__input {
-        }
-      }
-      button.checkBox__deletBtn {
-        padding: 10px;
-        cursor: pointer;
-        border: solid 1px;
-        border-radius: 10px;
-        background-color: slategray;
-        color: white;
-      }
+    p.cartlist__none-text {
+      margin-top: 50px;
+      margin-bottom: 50px;
     }
-  }
-  p.cartlist__none-text {
-    margin-top: 50px;
-    margin-bottom: 50px;
-  }
-  .cartlist__payment-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  button.cartlist__payBtn {
-    position: fixed;
-    right: 83px;
-    margin-top: 20px;
-    padding: 20px;
-    cursor: pointer;
-    border: solid 1px;
-    border-radius: 10px;
-    background-color: slategray;
-    font-size: 20px;
-    color: white;
+    .cartlist__payment-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    a.cartlist__payBtn {
+      position: fixed;
+      right: 83px;
+      margin-top: 20px;
+      padding: 20px;
+      cursor: pointer;
+      border: solid 1px;
+      border-radius: 10px;
+      background-color: slategray;
+      font-size: 20px;
+      color: white;
+    }
   }
 }

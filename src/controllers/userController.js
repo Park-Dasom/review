@@ -260,3 +260,36 @@ export const getwishList = async (req, res) => {
     );
   }
 };
+
+export const getMerchandisePayment = async (req, res) => {
+  try {
+    const {
+      params: { merchandiseID },
+    } = req;
+
+    const merchandise = await Merchandise.findById(merchandiseID);
+
+    res.render("merchandiseDetail", { merchandise });
+  } catch (err) {
+    console.log(err);
+    res.send(`<script>alert("오류가 발생했습니다:\\r\\n${err}");\
+location.href="${routes.home}"</script>`);
+  }
+};
+
+// 로그인 유저의 개인 profile
+export const getUserProfile = async (req, res) => {
+  try {
+    const {
+      params: { userID },
+    } = req;
+    const user = await User.findById(userID);
+    return res.render("myProfile", { user });
+  } catch (err) {
+    console.log(err);
+    res.send(
+      `<script>alert("오류가 발생했습니다:\\r\\n${err}");\
+      location.href="${routes.home}"</script>`
+    );
+  }
+};

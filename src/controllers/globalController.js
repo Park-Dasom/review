@@ -35,12 +35,12 @@ export const home = async (req, res) => {
         .populate([
           { path: "choiceID", model: "Choice" },
           {
-            path: "rateUserID",
-            model: "User",
-            populate: {
-              path: "rateID",
-              model: "Rate",
-            },
+            path: "rateID",
+            model: "Rate",
+            // populate: {
+            //   path: "rateID",
+            //   model: "Rate",
+            // },
           },
         ])
         .limit(limit)
@@ -91,7 +91,7 @@ export const getMerchadiseDetail = async (req, res) => {
 
     const merchandise = await Merchandise.findById(merchandiseID);
 
-    res.render("merchandiseDetail", { merchandise });
+    res.render("merchandise", { merchandise });
   } catch (err) {
     console.log(err);
     res.send(`<script>alert("오류가 발생했습니다:\\r\\n${err}");\

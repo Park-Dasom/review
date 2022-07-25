@@ -7,6 +7,7 @@ import "./loginControl";
 import "./merchandiseControl";
 import "./cartlistControl";
 import "./findPWControl";
+import "./myProfileControl";
 // 관리자
 import "./adminSidebarControl";
 import "./adminExcelDownloadControl";

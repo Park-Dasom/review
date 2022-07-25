@@ -1,5 +1,5 @@
 import express from "express";
-import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist, postDeleteCartlist, postBuyingCheck, postFindPW, postThumbnailPreview } from "../controllers/apiController";
+import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist, postDeleteCartlist, postBuyingCheck, postFindPW, postThumbnail1Preview, postThumbnail2Preview, postUpdateProfile } from "../controllers/apiController";
 import { uploadMerchandisePic } from "../middlewares";
 
 const apiRouter = express.Router();
@@ -29,5 +29,10 @@ apiRouter.post("/post-buyingCheck", postBuyingCheck);
 apiRouter.post("/post-findPW", postFindPW);
 
 // adminMerchandiseForm 사진 업로드 미리보기 post
-apiRouter.post("/admin-post-thumbnail-preview", uploadMerchandisePic, postThumbnailPreview);
+apiRouter.post("/admin-post-thumbnail1-preview", uploadMerchandisePic, postThumbnail1Preview);
+apiRouter.post("/admin-post-thumbnail2-preview", uploadMerchandisePic, postThumbnail2Preview);
+
+// 회원정보 변경 post
+apiRouter.post("/update-profile", postUpdateProfile);
+
 export default apiRouter;

@@ -14,7 +14,8 @@ const RESET_PW = "/reset-pw";
 const DELETE = "/delete";
 const WISHLIST = "/wishlist";
 const CARTLIST = "/cartlist";
-
+const PAYMENT = "/payment";
+const UPDATE_PRPFILE = "/updateProfie";
 // Merchandise
 const MERCHANDISE = "/merchandise";
 
@@ -50,7 +51,8 @@ const routes = {
   delete: DELETE,
   wishlist: WISHLIST,
   cartlist: CARTLIST,
-
+  payment: PAYMENT,
+  updateProfile: UPDATE_PRPFILE,
   // Merchandise
   merchandise: MERCHANDISE,
 

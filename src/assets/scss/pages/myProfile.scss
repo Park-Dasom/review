@@ -1,0 +1,46 @@
+.myProfile__page#myProfile__page {
+  display: flex;
+  // 회원정보 my profile Navbar
+  nav.navbar.navbar-expand-lg.navbar-light.bg-light {
+    flex-direction: column;
+    width: 200px;
+    height: 100vh;
+    a.navbar-brand {
+    }
+    button.navbar-toggler {
+      span.navbar-toggler-icon {
+      }
+    }
+    #navbarNav.collapse.navbar-collapse {
+      flex-direction: column;
+      align-items: flex-start;
+      ul.navbar-nav {
+        flex-direction: column;
+        li.nav-item.active {
+          a.nav-link {
+            span.sr-only {
+            }
+          }
+        }
+        li.nav-item {
+          a.nav-link {
+          }
+        }
+        li.nav-item {
+          a.nav-link {
+          }
+        }
+        li.nav-item {
+          a.nav-link.disabled {
+          }
+        }
+      }
+    }
+  }
+  .myProfile__passwordCheck-wrap {
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

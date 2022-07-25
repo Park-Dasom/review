@@ -15,3 +15,18 @@ mixin cartMerchandise(item)
           br
           span.merchandise__extraDiscountPrice-text 특별 회원 가격 : 
           span.merchandise__extraDiscountPrice-price #{discountPrice(`${item.price}`, `${item.discountRate}`) - `${item.extraDiscount}`}
+
+mixin profileNavbar(item)
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+      a.navbar-brand(href="#") MY Profile
+      button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbarNav", aria-controls="navbarNav", aria-expanded="false", aria-label="Toggle navigation")
+        span.navbar-toggler-icon
+      #navbarNav.collapse.navbar-collapse
+        ul.navbar-nav
+          li.nav-item.active
+            a.nav-link(href=`${routes.user}${routes.updateProfile}/${loggedUser._id}`) 회원정보 수정 
+              span.sr-only (current)
+          li.nav-item
+            a.nav-link(href=`${routes.user}${routes.cartlist}`) 장바구니
+          li.nav-item
+            a.nav-link(href="#") 좋아요 목록

@@ -1,0 +1,20 @@
+extends layouts/main
+include partials/mixins
+
+block content
+  .myProfile__page#myProfile__page.layout
+    +profileNavbar(item)
+    section.myProfile__passwordCheck-wrap
+      .form__group
+        label.form__label(for="userID")
+        h1.form__userID=user.userID
+      .form__group
+        label.form__label(for="name")
+        input.form__name(type="text", value=user.name required placeholder="이름")
+      .form__group
+        label.form__label(for="password")
+        input.form__password(type="password", required placeholder="비밀번호")
+      .form__group
+        label.form__label(for="passwordConfirm")
+        input.form__password-confirm(type="password", required placeholder="비밀번호 확인") 
+      button.form__button 확인

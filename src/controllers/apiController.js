@@ -39,7 +39,6 @@ export const postChoice = async (req, res) => {
       } else {
         const choiceID = choices._id;
         const userID = req.user._id;
-        console.log("hi");
         await Choice.findByIdAndDelete(choiceID);
         await Merchandise.findByIdAndUpdate(merchandiseID, { $pull: { choiceUserID: { $in: userID } } });
         await User.updateMany({}, { $pull: { choiceID: { $in: choiceID } } });
@@ -71,6 +70,7 @@ export const postRating = async (req, res) => {
           rate,
         });
         merchandises.rateUserID.push(userID);
+        merchandises.rateID.push(newRate._id);
         merchandises.save();
         users.rateID.push(newRate._id);
         users.save();
@@ -241,11 +241,33 @@ export const postFindPW = async (req, res) => {
   }
 };
 
-// adminMerchandiseForm 사진 업로드 미리보기 post
-export const postThumbnailPreview = async (req, res) => {
-  const { body } = req;
-  // const { body, thumbnail1Image } = req;
-  // const location = files.thumbnail1[0].location;
-  // console.log(body, thumbnail1Image);
-  res.json({ msg: "success" });
+// thumbnail1 사진 업로드 미리보기 post
+export const postThumbnail1Preview = async (req, res) => {
+  const { files } = req;
+  const location = files.thumbnail1[0].location;
+  res.json({ location });
+};
+
+// thumbnail2 사진 업로드 미리보기 post
+export const postThumbnail2Preview = async (req, res) => {
+  const { files } = req;
+  const location = files.thumbnail2[0].location;
+  res.json({ location });
+};
+
+// 회원정보 변경 post
+export const postUpdateProfile = async (req, res) => {
+  try {
+    const { body } = req;
+    const user = await User.findOneAndUpdate({ userID: body.userID }, { name: body.name });
+    await user.setPassword(body.password);
+    await user.save();
+    res.json({ msg: "user-update" });
+  } catch (err) {
+    console.log(err);
+    res.send(
+      `<script>alert("알 수 없는 오류가 발생하였습니다."); \
+      location.href="${routes.home}"</script>`
+    );
+  }
 };

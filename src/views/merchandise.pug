@@ -19,7 +19,6 @@ block content
     .merchandiseDetail__wrap 
         .merchandise__thumbnail-wrap
           img.merchandise__thumbnail(src=merchandise.thumbnail1)
-          img.merchandise__thumbnail(src=merchandise.thumbnail2)
         .merchandise__description-wrap
           p.merchandise__title 상품명 : #{merchandise.title}
           p.merchandiese__price 가격 : #{merchandise.price}
@@ -31,7 +30,5 @@ block content
               img.explain__question-mark(src=`${imgPath}/public/circle-question.svg` data-toggle="modal" data-target="#questionMarkModalCenter")
         .merchandise__btn-wrap
           button.merchandise__cartList-btn(data-merchandiseID=merchandise._id) 장바구니에 담기
-          br
-          button.merchandise__cartList-btn 구매하기
   //- TODO: header로 옮긴 후 이미지로 변경하기
-  a(href=`${routes.user}${routes.cartlist}`).carttList__title 장바구니
+  button(href=`${routes.user}${routes.cartlist}`).carttList__title 장바구니

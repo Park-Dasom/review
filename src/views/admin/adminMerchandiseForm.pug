@@ -26,7 +26,8 @@ block content
                             if updateBool
                               h6.text-primary 기존 이미지를 유지하려면 미선택
                                 a.text__primary-link(href=adminItem.thumbnail1 target="_blank") [기존 이미지 보기]
-                            .custom-file
+                            .form-group-thumbnail1-preview
+                            .custom-file.custom-file-thumbnail1
                               if updateBool
                                 input#thumbnail1.form-control.custom-file-input(type='file' name="thumbnail1" accept="image/*" )
                               else
@@ -38,7 +39,8 @@ block content
                             if updateBool
                               h6.text-primary 기존 이미지를 유지하려면 미선택
                                 a.text__primary-link(href=adminItem.thumbnail2 target="_blank") [기존 이미지 보기]
-                            .custom-file
+                            .form-group-thumbnail2-preview
+                            .custom-file.custom-file-thumbnail2
                               if updateBool
                                 input#thumbnail2.form-control.custom-file-input(type='file' name="thumbnail2" accept="image/*" )
                               else

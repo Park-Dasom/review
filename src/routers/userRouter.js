@@ -1,6 +1,6 @@
 import express from "express";
 import routes from "../routes";
-import { getJoin, postJoin, getLogin, postLogin, getLogout, autoLogin, getChangePassword, postChangePassword, getResetPassword, postResetPassword, deleteUser, getCartList, getwishList } from "../controllers/userController";
+import { getJoin, postJoin, getLogin, postLogin, getLogout, autoLogin, getChangePassword, postChangePassword, getResetPassword, postResetPassword, deleteUser, getCartList, getwishList, getMerchandisePayment, getUserProfile } from "../controllers/userController";
 
 const userRouter = express.Router();
 
@@ -28,5 +28,11 @@ userRouter.get(routes.cartlist, getCartList);
 
 // 좋아요 list
 userRouter.get(`${routes.wishlist}/:userID`, getwishList);
+
+// 상품 구매
+userRouter.get(`${routes.payment}/:userID`, getMerchandisePayment);
+
+// 로그인 유저의 profile
+userRouter.get(`${routes.updateProfile}/:userID`, getUserProfile);
 
 export default userRouter;

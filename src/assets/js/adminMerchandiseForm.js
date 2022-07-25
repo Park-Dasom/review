@@ -4,11 +4,11 @@ const adminMerchandiseForm = document.getElementById("admin__merchandiseForm-pag
 
 const init = () => {
   $(() => {
-    $("#thumbnail1").on("change", (e) => {
-      // e.preventDefault();
+    $("#thumbnail1").on("input", (event) => {
+      event.preventDefault();
       const data = new FormData();
-      data.append("thumbnail1Image", e.originalEvent.dataTransfer.files[0]);
-      // console.log(data);
+      data.append("thumbnail1Image", event.originalEvent.dataTransfer.files);
+      console.log(data);
       $.ajax({
         url: `/api/admin-post-thumbnail-preview`,
         enctype: "multipart/form-data",

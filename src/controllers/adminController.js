@@ -387,8 +387,6 @@ export const getCreateMerchandise = (_, res) => {
 export const postCreateMerchandise = async (req, res) => {
   try {
     const { body, files } = req;
-    console.log(body);
-    console.log(files.thumbnail1[0].location);
     body.thumbnail1 = files ? files.thumbnail1[0].location : null;
     body.thumbnail2 = files ? files.thumbnail2[0].location : null;
     body.createdAt = moment(new Date()).tz("Asia/Seoul");

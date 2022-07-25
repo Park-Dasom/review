@@ -1,0 +1,47 @@
+extends layouts/main
+
+block content
+  .merchandiseDetail__page#merchandiseDetail__page
+    .merchandiseDetail__wrap.layout
+      section.merchandiseDetail__info-section 
+        .merchandiseDetail__info-wrap
+          ul.info__items 
+            li.info__item 
+              img.item__thumbnail(src=merchandise.thumbnail)
+            li.info__item
+              p.item__title 상품명 : #{merchandise.title}
+            li.info__item
+              p.item__price 가격 : #{merchandise.price} 원
+            li.info__item
+              p.item__discountRate 일반 할인가 : #{merchandise.price - (merchandise.price * (merchandise.discountRate / 100))} 원
+            li.info__item
+              p.item__extraDiscount 와우회원가 #{merchandise.price - (merchandise.price * (merchandise.extraDiscount / 100))} 원
+      section.merchandiseDetail__purchase-section 
+        .merchandiseDetail__purchase-wrap 
+          if latestUser
+            if latestUser.role === "wow"
+              input(type="hidden" name="price" value=merchandise.price - (merchandise.price * (merchandise.extraDiscount / 100)))
+            else if latestUser.role === "normal"
+              input(type="hidden" name="price" value=merchandise.price - (merchandise.price * (merchandise.discountRate / 100)))
+              
+          ul.purchase__items 
+            //- li.purchase__item 
+            //-   p.item__para.item__cardNumber 카드번호
+            //-   input.item__input.item__cardNumber(type="text" name="card_number")
+            //- li.purchase__item 
+            //-   p.item__para.item__expiry 카드 유효기간
+            //-   input.item__input.item__expiry(type="text" name="expiry")
+            //- li.purchase__item 
+            //-   p.item__para.item__birth 생년월일
+            //-   input.item__input.item__birth(type="text" name="birth")
+            //- li.purchase__item 
+            //-   p.item__para.item__pwd-2digit 카드 비밀번호 앞 2자리
+            //-   input.item__input.item__pwd-2digit(type="password" name="pwd_2digit")
+            li.purchase__item
+              button.item__payment-btn 결제
+          //- <!-- iamport.payment.js -->
+          script(type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js")
+          script.
+            $(document).ready(function(e) {
+              
+            })

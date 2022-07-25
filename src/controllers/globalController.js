@@ -1,4 +1,5 @@
 import routes from "../routes";
+import moment from "moment-timezone";
 import Choice from "../models/Choice";
 import Comment from "../models/Comment";
 import Merchandise from "../models/Merchandise";
@@ -82,16 +83,19 @@ export const home = async (req, res) => {
   }
 };
 
-// 상품 정보 Detail
-export const getMerchandise = async (req, res) => {
+export const getMerchadiseDetail = async (req, res) => {
   try {
     const {
       params: { merchandiseID },
     } = req;
+
     const merchandise = await Merchandise.findById(merchandiseID);
-    return res.render("merchandise", { merchandise });
+
+    res.render("merchandiseDetail", { merchandise });
   } catch (err) {
     console.log(err);
+    res.send(`<script>alert("오류가 발생했습니다:\\r\\n${err}");\
+location.href="${routes.home}"</script>`);
   }
 };
 

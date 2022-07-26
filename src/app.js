@@ -67,7 +67,7 @@ app.use((_, res) => {
 });
 
 schedule.scheduleJob("* 0 * * * *", () => {
-  console.log("in every 0 minute");
+  // console.log("in every 0 minute");
 });
 
 export default app;

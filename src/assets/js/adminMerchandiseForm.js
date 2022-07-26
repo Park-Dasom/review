@@ -44,7 +44,7 @@ const init = () => {
           const location = result.location;
           const thumbnail1HTML = `
                 <div class="uploaded__thumbnail1-items">
-                  <input class="item__location" type="hidden" name="thumnail1" value=${location}>
+                  <input class="item__location" type="hidden" name="thumbnailUrl1" value=${location}>
                   <div class="item__flex">
                     <img class="item__img" src=${location}>
                     <img class="item__delete-img" src="/images/admin/delete.png">
@@ -72,7 +72,7 @@ const init = () => {
           const location = result.location;
           const thumbnail2HTML = `
                 <div class="uploaded__thumbnail2-items">
-                  <input class="item__location" type="hidden" name="thumnail2" value=${location}>
+                  <input class="item__location" type="hidden" name="thumbnailUrl2" value=${location}>
                   <div class="item__flex">
                     <img class="item__img" src=${location}>
                     <img class="item__delete-img" src="/images/admin/delete.png">

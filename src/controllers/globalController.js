@@ -42,6 +42,10 @@ export const home = async (req, res) => {
             //   model: "Rate",
             // },
           },
+          {
+            path: "rateUserID",
+            model: "User",
+          },
         ])
         .limit(limit)
         .skip(req.skip)
@@ -54,8 +58,8 @@ export const home = async (req, res) => {
     let rates;
     let users;
     if (req.user) {
-      rates = await Rate.find({ userID: req.user._id });
-      users = await User.findById(req.user._id);
+      rates = await Rate.find({ userID: req.user._id }).populate("userID").populate("merchandiseID");
+      users = await User.findById(req.user._id).populate([{ path: "rateID", model: "Rate", populate: [{ path: "merchandiseID", model: "Merchandise" }] }]);
     }
     // console.log(rates[0]);
     // merchandiseItem.forEach((x) => {
@@ -88,10 +92,9 @@ export const getMerchadiseDetail = async (req, res) => {
     const {
       params: { merchandiseID },
     } = req;
-
     const merchandise = await Merchandise.findById(merchandiseID);
-
-    res.render("merchandise", { merchandise });
+    const comments = await Comment.find().populate("userID");
+    res.render("merchandise", { merchandise, comments });
   } catch (err) {
     console.log(err);
     res.send(`<script>alert("오류가 발생했습니다:\\r\\n${err}");\

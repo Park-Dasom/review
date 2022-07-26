@@ -386,9 +386,9 @@ export const getCreateMerchandise = (_, res) => {
 };
 export const postCreateMerchandise = async (req, res) => {
   try {
-    const { body, files } = req;
-    body.thumbnail1 = files ? files.thumbnail1[0].location : null;
-    body.thumbnail2 = files ? files.thumbnail2[0].location : null;
+    const { body } = req;
+    body.thumbnail1 = body.thumbnailUrl1 ? body.thumbnailUrl1 : null;
+    body.thumbnail2 = body.thumbnailUrl2 ? body.thumbnailUrl2 : null;
     body.createdAt = moment(new Date()).tz("Asia/Seoul");
     body.updatedAt = moment(new Date()).tz("Asia/Seoul");
     await Merchandise.create(body);
@@ -450,11 +450,10 @@ export const postUpdateMerchandise = async (req, res) => {
     const {
       params: { merchandiseID },
       body,
-      files,
     } = req;
     const merchandises = await Merchandise.findById(merchandiseID);
-    body.thumbnail1 = files ? files.location : merchandises.thumbnail1;
-    body.thumbnail2 = files ? files.location : merchandises.thumbnail2;
+    body.thumbnail1 = body.thumbnailUrl1 ? body.thumbnailUrl1 : merchandises.thumbnail1;
+    body.thumbnail2 = body.thumbnailUrl2 ? body.thumbnailUrl2 : merchandises.thumbnail2;
     body.updatedAt = moment(new Date()).tz("Asia/Seoul");
     await Merchandise.findByIdAndUpdate(merchandiseID, body);
     res.send(

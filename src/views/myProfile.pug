@@ -3,18 +3,23 @@ include partials/mixins
 
 block content
   .myProfile__page#myProfile__page.layout
+    //- 회원정보 Navbar
     +profileNavbar(item)
-    section.myProfile__passwordCheck-wrap
+    //- 회원정보 수정 Form
+    section.myProfile__wrap
+      h1.myProfile__title 회원정보 수정
       .form__group
         label.form__label(for="userID")
         h1.form__userID=user.userID
       .form__group
-        label.form__label(for="name")
+        label.form__label(for="name") 이름
         input.form__name(type="text", value=user.name required placeholder="이름")
       .form__group
-        label.form__label(for="password")
+        label.form__label(for="password") 비밀번호
         input.form__password(type="password", required placeholder="비밀번호")
       .form__group
-        label.form__label(for="passwordConfirm")
+        label.form__label(for="passwordConfirm") 비밀번호 확인
         input.form__password-confirm(type="password", required placeholder="비밀번호 확인") 
       button.form__button 확인
+      button.form__userDeleteBtn
+        a.form__button(href=`${routes.user}${routes.delete}/${loggedUser._id}`) 회원 탈퇴하기

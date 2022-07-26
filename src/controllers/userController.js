@@ -251,7 +251,7 @@ export const getwishList = async (req, res) => {
     const user = await User.findById(userID);
     const merchandise = await Merchandise.find({ choiceUserID: userID }).populate([{ path: "choiceID", model: "Choice" }]);
     const choices = await Choice.findOne({ userID });
-    return res.render("wishList", { user, merchandise, choices });
+    return res.render("wishlist", { user, merchandise, choices });
   } catch (err) {
     console.log(err);
     res.send(

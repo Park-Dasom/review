@@ -9,6 +9,7 @@ import session from "express-session";
 import path from "path";
 import MongoStore from "connect-mongo";
 import morgan from "morgan";
+import schedule from "node-schedule";
 import csp from "./csp";
 import routes from "./routes";
 import globalRouter from "./routers/globalRouter";
@@ -63,6 +64,10 @@ app.use(routes.api, apiRouter);
 app.use((_, res) => {
   // 404 처리 부분
   res.status(404).render("error/404");
+});
+
+schedule.scheduleJob("* 0 * * * *", () => {
+  console.log("in every 0 minute");
 });
 
 export default app;

@@ -1,10 +1,10 @@
 .myProfile__page#myProfile__page {
   display: flex;
-  // 회원정보 my profile Navbar
+  // 회원정보 Navbar
   nav.navbar.navbar-expand-lg.navbar-light.bg-light {
     flex-direction: column;
     width: 200px;
-    height: 100vh;
+    margin-right: 50px;
     a.navbar-brand {
     }
     button.navbar-toggler {
@@ -37,10 +37,50 @@
       }
     }
   }
-  .myProfile__passwordCheck-wrap {
-    form {
-      display: flex;
-      flex-direction: column;
+  // 회원정보 수정 Form
+  section.myProfile__wrap {
+    width: 100%;
+    h1.myProfile__title {
+      font-size: 50px;
+      font-weight: 600;
+    }
+
+    .form__group {
+      margin-bottom: 20px;
+      margin-left: 20px;
+      label.form__label {
+        margin-right: 10px;
+      }
+      h1.form__userID {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      input.form__name,
+      input.form__password,
+      input.form__password-confirm {
+        border: solid 1px gainsboro;
+        height: 30px;
+        padding: 10px;
+        border-radius: 10px;
+      }
+    }
+    button.form__button,
+    button.form__userDeleteBtn {
+      margin-left: 20px;
+      width: 150px;
+      height: 40px;
+      background-color: black;
+      border-radius: 10px;
+      color: white;
+    }
+    a.form__button {
+      &:hover {
+        color: white;
+      }
+      display: block;
+      width: 150px;
+      text-decoration: none;
     }
   }
 }

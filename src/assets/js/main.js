@@ -8,6 +8,7 @@ import "./merchandiseControl";
 import "./cartlistControl";
 import "./findPWControl";
 import "./myProfileControl";
+import "./navbarControl";
 // 관리자
 import "./adminSidebarControl";
 import "./adminExcelDownloadControl";

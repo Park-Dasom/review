@@ -1,0 +1,82 @@
+.wishlist__page#wishlist__page.layout {
+  display: flex;
+  // 회원정보 Navbar
+  nav.navbar.navbar-expand-lg.navbar-light.bg-light {
+    flex-direction: column;
+    width: 200px;
+    margin-right: 50px;
+    a.navbar-brand {
+    }
+    button.navbar-toggler {
+      span.navbar-toggler-icon {
+      }
+    }
+    #navbarNav.collapse.navbar-collapse {
+      flex-direction: column;
+      align-items: flex-start;
+      ul.navbar-nav {
+        flex-direction: column;
+        li.nav-item.active {
+          span.sr-only {
+          }
+        }
+      }
+      li.nav-item {
+        li.nav-item {
+          a.nav-link {
+          }
+        }
+      }
+    }
+  }
+  .wishlist__wrap {
+    width: 100%;
+    h1.cartList__pageTite {
+      font-size: 50px;
+      font-weight: 600;
+    }
+    .merchandiseList__wrap {
+      .merchadiseList {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .merchandise__thumbnail-wrap {
+          img.merchandise__thumbnail {
+            height: 210px;
+            width: 210px;
+          }
+        }
+        .merchandise__description-wrap {
+          margin-left: 30px;
+          span.merchandise__title {
+          }
+          br {
+          }
+          span.merchandiese__price-text {
+          }
+          span.merchandiese__price-price {
+            br {
+            }
+            span.merchandise__discountPrice-text {
+            }
+            span.merchandise__discountPrice-price {
+            }
+            br {
+            }
+            span.merchandise__extraDiscountPrice-text {
+            }
+            span.merchandise__extraDiscountPrice-price {
+            }
+          }
+        }
+      }
+
+      .payment__wrap {
+        .payment__title {
+        }
+        .payment__price {
+        }
+      }
+    }
+  }
+}

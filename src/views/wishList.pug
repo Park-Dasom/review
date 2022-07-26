@@ -2,12 +2,16 @@ extends layouts/main
 include partials/mixins
 
 block content
-  .wishList__page#wishList__page.layout
-    h1.cartList__pageTite #{user.name} 의 좋아요 목록
-    .merchandiseList__wrap 
-      //- merchandiseList mixin
-      +cartMerchandise(item)
-    hr
-    .payment__wrap 
-      .payment__title 총 개
-      .payment__price 
+  .wishlist__page#wishlist__page.layout
+    //- 회원정보 Navbar
+    +profileNavbar(item)
+    .wishlist__wrap
+      h1.cartList__pageTite #{user.name} 의 좋아요
+      //- 로그인 유저의 좋아요 목록
+      .merchandiseList__wrap 
+        each item in merchandise
+          +cartMerchandise(item)
+      hr
+      .payment__wrap 
+        .payment__title 총 개
+        .payment__price 

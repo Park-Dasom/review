@@ -58,7 +58,6 @@ block content
           each item in merchandiseItem
             .col-sm-3
               .marchandise__wrap
-                
                 .merchandise__thumbnail-wrap
                   img.merchandise__thumbnail(src=item.thumbnail1 href=`${routes.merchandise}/${item._id}`)
                 .merchandise__description-wrap
@@ -68,89 +67,15 @@ block content
                       .merchandise__discountRate 할인율 #{item.discountRate} %
                       .merchandise__discountPrice 할인가 : #{discountPrice(`${item.price}`, `${item.discountRate}`)} 원
                       .merchandise__extraDiscountPrice 특별 회원 가격 : #{discountPrice(`${item.price}`, `${item.discountRate}`) - `${item.extraDiscount}`} 원
-                  .marchandise__icon(data-id=item._id)
-                      .icon__heart
-                        span 마음에 들어요!
-                        //- 로그인 유저가 없는 경우
-                        if !loggedUser 
-                          img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-                        //- 로그인 유저가 있는 경우
-                        else
-                          //- 상품을 좋아요 누른 유저가 없을 경우
-                          if item.choiceUserID.length === 0 
-                            img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
-                          //- 상품을 좋아요 누른 유저가 한 명 이상 존재하는 경우 
-                          else if item.choiceUserID.length >= 1 
-                            //- 상품을 좋아요 누른 유저들의 array에 현재 로그인 된 유저가 있을 경우
-                            if item.choiceUserID.includes(loggedUser._id.toString())
-                              img.heart__regular(src=`${imgPath}/public/heart-solid.svg`)
-                            else
-                              img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)    
-                      .icon__stars
-                        //- 로그인 유저가 없는 경우
-                        if !loggedUser 
-                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                          img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                        //-  로그인 유저가 있지만 별점을 누른 유저가 없는 경우
-                        else
-                          if item.rateUserID.length === 0
-                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                          //-해당 상품에 좋아요를 누른 유저가 한 명 이상 존재하고 현재 로그인 유저가 해당 상품에 좋아요를 누른 경우
-                          else if item.rateUserID.length >= 1
-                            if rates.length === 0
-                              img.star__regular(src=`${imgPath}/public/star-regular.svg` data-sg=rates.merchandise)
-                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                              img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                            else
-                              each item2 in rates
-                                if item2.userID[0]._id.toString() === loggedUser._id.toString() && item2.merchandiseID._id.toString() === item._id.toString()
-                                  img.star__regular(src=`${imgPath}/public/star-${item2.rate >= 1 ? "solid" : "regular"}.svg`)
-                                  img.star__regular(src=`${imgPath}/public/star-${item2.rate >= 2 ? "solid" : "regular"}.svg`)
-                                  img.star__regular(src=`${imgPath}/public/star-${item2.rate >= 3 ? "solid" : "regular"}.svg`)
-                                  img.star__regular(src=`${imgPath}/public/star-${item2.rate >= 4 ? "solid" : "regular"}.svg`)
-                                  img.star__regular(src=`${imgPath}/public/star-${item2.rate >= 5 ? "solid" : "regular"}.svg`)
-                                else if item2.userID[0]._id.toString() !== loggedUser._id.toString()
-                                  img.star__regular(src=`${imgPath}/public/star-regular.svg` data-sg=rates.merchandise)
-                                  img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                                  img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                                  img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                                  img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                                //- else
-                                //-   img.star__regular(src=`${imgPath}/public/star-regular.svg` data-sg=rates.merchandise)
-                                //-   img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                                //-   img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                                //-   img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                                //-   img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                            //- img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                            //- img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                            //- img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                            //- img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                            //- 현재 로그인되어있는 유저가 별점을 한 개 이상 눌렀을 경우
-                          //- else if rates.merchandiseID.toString() === item._id.toString()
-                          //-   img.star__regular(src=`${imgPath}/public/star-solid.svg` data-sh=item.rateID)
-                              //- if rates.merchandiseID.includes(item._id.toSring())
-                          //-현재 로그인 유저가 해당 상품에 좋아요를 누르지 않은 경우
-                          //- else 
-                          //-   img.star__regular(src=`${imgPath}/public/star-regular.svg` data-sg=rates.merchandise)
-                          //-   img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                          //-   img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                          //-   img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                          //-   img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                                //- 상품에 별점을 누른 유저들의 array에 현재 로그인 된 유저가 있을 경우
-                                //- img.star__regular(class=`${item.rateUserID.rateID.rate >= 1 ? "solid" : ""}` src=`${imgPath}/public/star-${item.rateUserID.rateID.rate >= 1 ? "solid" : "regular"}.svg`)
-                                //- img.star__regular(class=`${item3.rate >= 2 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 2 ? "solid" : "regular"}.svg`)
-                                //- img.star__regular(class=`${item3.rate >= 3 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 3 ? "solid" : "regular"}.svg`)
-                                //- img.star__regular(class=`${item3.rate >= 4 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 4 ? "solid" : "regular"}.svg`)
-                                //- img.star__regular(class=`${item3.rate >= 5 ? "solid" : ""}` src=`${imgPath}/public/star-${item3.rate >= 5 ? "solid" : "regular"}.svg`)
+                  //- 상품의 평균 별점 
+                if item.rate.length >= 1
+                  .icon__stars(data-rate=item.rate)
+                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 1 ? "solid" : "regular"}.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 2 ? "solid" : "regular"}.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 3 ? "solid" : "regular"}.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 4 ? "solid" : "regular"}.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 5 ? "solid" : "regular"}.svg`)
+                    p (#{item.rate.reduce((a, b) => a + b) / item.rate.length})
     //- BEGIN: Pagination
     section.pagination__sectiion
       #pagination__flex

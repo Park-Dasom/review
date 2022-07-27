@@ -17,16 +17,51 @@ block content
             button.btn.btn-primary(type="button") 특별회원 가입하기
     //- 해당 상품 정보란
     section.merchandiseDetail__wrap 
-        .merchandise__thumbnail-wrap
-          img.merchandise__thumbnail(src=merchandise.thumbnail1)
-        .merchandise__description-wrap
-          p.merchandise__title 상품명 : #{merchandise.title}
-          p.merchandiese__price 가격 : #{merchandise.price}
-          if merchandise.discountRate
-            p.merchandise__discountPrice 할인 가격 : #{discountPrice(`${merchandise.price}`, `${merchandise.discountRate}`)} 원
-          if merchandise.extraDiscount
-            .merchandise__extraDiscountPrice
-              p.merchandise__extraDiscountPrice 특별 회원 가격 : #{discountPrice(`${merchandise.price}`, `${merchandise.discountRate}`) - `${merchandise.extraDiscount}`} 원
-              img.explain__question-mark(src=`${imgPath}/public/circle-question.svg` data-toggle="modal" data-target="#questionMarkModalCenter")
-        .merchandise__btn-wrap
-          button.merchandise__cartList-btn(data-merchandiseID=merchandise._id) 장바구니에 담기
+      .merchandise__thumbnail-wrap
+        img.merchandise__thumbnail(src=merchandise.thumbnail1)
+      .merchandise__description-wrap
+        p.merchandise__title 상품명 : #{merchandise.title}
+        p.merchandiese__price 가격 : #{merchandise.price}
+        if merchandise.discountRate
+          p.merchandise__discountPrice 할인 가격 : #{discountPrice(`${merchandise.price}`, `${merchandise.discountRate}`)} 원
+        if merchandise.extraDiscount
+          .merchandise__extraDiscountPrice
+            p.merchandise__extraDiscountPrice 특별 회원 가격 : #{discountPrice(`${merchandise.price}`, `${merchandise.discountRate}`) - `${merchandise.extraDiscount}`} 원
+            img.explain__question-mark(src=`${imgPath}/public/circle-question.svg` data-toggle="modal" data-target="#questionMarkModalCenter")
+    if loggedUser
+      section.merchandise__icon(data-id=merchandise._id)
+        //- 좋아요 버튼
+        .icon__heart
+          span 마음에 들어요!
+            //- 상품을 좋아요 누른 유저가 없을 경우
+            if merchandise.choiceUserID.length === 0 
+              img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
+            //- 상품을 좋아요 누른 유저가 한 명 이상 존재하는 경우 
+            else if merchandise.choiceUserID.length >= 1 
+              //- 상품을 좋아요 누른 유저들의 array에 현재 로그인 된 유저가 있을 경우
+              if merchandise.choiceUserID.includes(loggedUser._id.toString())
+                img.heart__regular(src=`${imgPath}/public/heart-solid.svg`)
+              else
+                img.heart__regular(src=`${imgPath}/public/heart-regular.svg`)
+          .merchandise__btn-wrap 
+        //- 별점 데이터 입력
+        .icon__stars
+          if merchandise.rateUserID.length === 0 || rates === null
+            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+          else if merchandise.rateUserID.length >= 1 && rates.rate
+            img.star__regular(src=`${imgPath}/public/star-${rates.rate >= 1 ? "solid" : "regular"}.svg` data-se=rates)
+            img.star__regular(src=`${imgPath}/public/star-${rates.rate >= 2 ? "solid" : "regular"}.svg`)
+            img.star__regular(src=`${imgPath}/public/star-${rates.rate >= 3 ? "solid" : "regular"}.svg`)
+            img.star__regular(src=`${imgPath}/public/star-${rates.rate >= 4 ? "solid" : "regular"}.svg`)
+            img.star__regular(src=`${imgPath}/public/star-${rates.rate >= 5 ? "solid" : "regular"}.svg`)
+          else 
+            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+            img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+    button.merchandise__cartList-btn(data-merchandiseID=merchandise._id) 장바구니에 담기

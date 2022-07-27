@@ -3,7 +3,7 @@ import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComm
 import { uploadMerchandisePic } from "../middlewares";
 
 const apiRouter = express.Router();
-// choice true / fase
+// 좋아요 버튼 post
 apiRouter.post("/check-heart", postChoice);
 
 // rating

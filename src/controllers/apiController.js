@@ -1,49 +1,45 @@
 /* eslint-disable import/prefer-default-export */
+import sgMail from "@sendgrid/mail";
+import crypto from "crypto";
+import dotenv from "dotenv";
 import Choice from "../models/Choice";
 import User from "../models/User";
 import Comment from "../models/Comment";
 import Rate from "../models/Rate";
 import Merchandise from "../models/Merchandise";
-import sgMail from "@sendgrid/mail";
-import crypto from "crypto";
-import dotenv from "dotenv";
 import routes from "../routes";
 
 dotenv.config();
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// 마음에 들어요 데이터 입력
+// 좋아요 버튼 post 좋아요 활성화
 export const postChoice = async (req, res) => {
   try {
     const {
       body: { merchandiseID },
     } = req;
-    if (!req.user) {
-      res.json({ msg: "not login" });
+    const userID = req.user._id;
+    const user = await User.findById(userID);
+    const merchandises = await Merchandise.findById(merchandiseID);
+    const choices = await Choice.findOne({ merchandiseID, userID });
+    if (!choices) {
+      const choice = await Choice.create({
+        merchandiseID,
+        userID,
+        status: true,
+      });
+      user.choiceID.push(choice._id);
+      merchandises.choiceUserID.push(userID);
+      user.save();
+      merchandises.save();
+      res.json({ msg: "fill heart" });
     } else {
+      const choiceID = choices._id;
       const userID = req.user._id;
-      const user = await User.findById(userID);
-      const merchandises = await Merchandise.findById(merchandiseID);
-      const choices = await Choice.findOne({ merchandiseID, userID });
-      if (!choices) {
-        const choice = await Choice.create({
-          merchandiseID,
-          userID,
-          status: true,
-        });
-        user.choiceID.push(choice._id);
-        merchandises.choiceUserID.push(userID);
-        user.save();
-        merchandises.save();
-        res.json({ msg: "fill heart" });
-      } else {
-        const choiceID = choices._id;
-        const userID = req.user._id;
-        await Choice.findByIdAndDelete(choiceID);
-        await Merchandise.findByIdAndUpdate(merchandiseID, { $pull: { choiceUserID: { $in: userID } } });
-        await User.updateMany({}, { $pull: { choiceID: { $in: choiceID } } });
-        res.json({ msg: "empty heart" });
-      }
+      await Choice.findByIdAndDelete(choiceID);
+      await Merchandise.findByIdAndUpdate(merchandiseID, { $pull: { choiceUserID: { $in: userID } } });
+      await User.updateMany({}, { $pull: { choiceID: { $in: choiceID } } });
+      res.json({ msg: "empty heart" });
     }
   } catch (err) {
     console.log(err);
@@ -71,6 +67,7 @@ export const postRating = async (req, res) => {
         });
         merchandises.rateUserID.push(userID);
         merchandises.rateID.push(newRate._id);
+        merchandises.rate.push(newRate.rate);
         merchandises.save();
         users.rateID.push(newRate._id);
         users.save();

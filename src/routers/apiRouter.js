@@ -1,5 +1,5 @@
 import express from "express";
-import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist, postDeleteCartlist, postBuyingCheck, postFindPW, postThumbnail1Preview, postThumbnail2Preview, postUpdateProfile } from "../controllers/apiController";
+import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist, postDeleteCartlist, postBuyingCheck, postFindPW, postThumbnail1Preview, postThumbnail2Preview, postUpdateProfile, postBuyingCheckOff } from "../controllers/apiController";
 import { uploadMerchandisePic } from "../middlewares";
 
 const apiRouter = express.Router();
@@ -24,6 +24,7 @@ apiRouter.post("/post-cartlist", postPostCartlist);
 apiRouter.post("/delete-cartlist", postDeleteCartlist);
 // 장바구니 cartList 구매 체크 post
 apiRouter.post("/post-buyingCheck", postBuyingCheck);
+apiRouter.post("/post-buyingCheck-off", postBuyingCheckOff);
 
 // SendGrid 비밀번호 찾기 이메일 post
 apiRouter.post("/post-findPW", postFindPW);

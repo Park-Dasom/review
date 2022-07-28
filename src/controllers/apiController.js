@@ -198,6 +198,24 @@ export const postBuyingCheck = async (req, res) => {
   }
 };
 
+export const postBuyingCheckOff = async (req, res) => {
+  try {
+    const {
+      body: { merchandiseID },
+    } = req;
+    const merchandise = await Merchandise.findById(merchandiseID);
+    if (merchandise.extraDiscount !== 0) {
+      res.json({ msg: "extraDiscount price" });
+    } else if (merchandise.discountRate !== 0) {
+      res.json({ msg: "discountRate price" });
+    } else if (merchandise.price) {
+      res.json({ msg: "nomal price" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 // SendGrid 비밀번호 찾기 이메일 post
 export const postFindPW = async (req, res) => {
   try {

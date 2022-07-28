@@ -28,6 +28,9 @@ block content
           .merchandise__extraDiscountPrice
             p.merchandise__extraDiscountPrice 특별 회원 가격 : #{discountPrice(`${merchandise.price}`, `${merchandise.discountRate}`) - `${merchandise.extraDiscount}`} 원
             img.explain__question-mark(src=`${imgPath}/public/circle-question.svg` data-toggle="modal" data-target="#questionMarkModalCenter")
+        button.merchandise__cartList-btn(data-merchandiseID=merchandise._id) 장바구니에 담기
+        button
+          a.merchandise__cartList-btn(href=`${routes.user}${routes.cartlist}`) 장바구니
     if loggedUser
       section.merchandise__icon(data-id=merchandise._id)
         //- 좋아요 버튼
@@ -64,4 +67,4 @@ block content
             img.star__regular(src=`${imgPath}/public/star-regular.svg`)
             img.star__regular(src=`${imgPath}/public/star-regular.svg`)
             img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-    button.merchandise__cartList-btn(data-merchandiseID=merchandise._id) 장바구니에 담기
+    

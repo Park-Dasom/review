@@ -34,7 +34,10 @@ block content
             img(src=`${imgPath}/public/spain-national-flag.png`)
         //- If we need pagination
         .swiper-pagination
-    
+    section.search__section.layout 
+      form(action="/search" method="GET")
+        input.search__section-input(type="text", name="keyword", placeholder="검색어를 입력하세요.")
+        button.search__section-button 검색
     //- 홈 화면 상품 sorting section
     section.sorting__section.layout 
       ul.sorting__items 
@@ -75,7 +78,7 @@ block content
                     img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 3 ? "solid" : "regular"}.svg`)
                     img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 4 ? "solid" : "regular"}.svg`)
                     img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 5 ? "solid" : "regular"}.svg`)
-                    p (#{item.rate.reduce((a, b) => a + b) / item.rate.length})
+                    p (#{Math.floor(item.rate.reduce((a, b) => a + b) / item.rate.length)})
     //- BEGIN: Pagination
     section.pagination__sectiion
       #pagination__flex

@@ -95,4 +95,27 @@ location.href="${routes.home}"</script>`);
   }
 };
 
+export const getSearch = async (req, res) => {
+  try {
+    const { keyword, minPrice, maxPrice, rate } = req.query;
+    console.log(rate);
+    let merchandiseItems = [];
+    if ((keyword, rate)) {
+      const findQuery = { title: { $regex: keyword, $options: "i" }, avgRate: { $gte: rate } };
+      merchandiseItems = await Merchandise.find(findQuery);
+      console.log(merchandiseItems);
+    } else if ((keyword, minPrice, maxPrice)) {
+      const findQuery = { title: { $regex: keyword, $options: "i" }, price: { $lte: maxPrice, $gte: minPrice } };
+      merchandiseItems = await Merchandise.find(findQuery);
+    } else if (keyword) {
+      const findQuery = { title: { $regex: keyword, $options: "i" } };
+      merchandiseItems = await Merchandise.find(findQuery);
+    }
+    res.render("search", { merchandiseItems, keyword });
+  } catch (err) {
+    console.log(err);
+    res.send(`<script>alert("오류가 발생했습니다:\\r\\n${err}");\
+location.href="${routes.home}"</script>`);
+  }
+};
 export const anotherController = () => {};

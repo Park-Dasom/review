@@ -10,6 +10,7 @@ const MerchandiseSchema = new Schema({
   discountRate: Number, // 가격 할인율
   extraDiscount: Number, // 특별 회원의 추가 할인가격
   rate: [],
+  avgRate: { type: Number, default: 0 },
   rateID: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Rate" }], // 해상 상품의 평점 ID
   choiceUserID: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User" }], // 해당 상품에 좋아요를 누른 유저의 ID
   rateUserID: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User" }], // 해당 상품에 별점을 누른 유저의 ID

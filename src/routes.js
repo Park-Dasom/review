@@ -16,6 +16,7 @@ const WISHLIST = "/wishlist";
 const CARTLIST = "/cartlist";
 const PAYMENT = "/payment";
 const UPDATE_PRPFILE = "/update-profile";
+const SEARCH = "/search";
 // Merchandise
 const MERCHANDISE = "/merchandise";
 
@@ -53,6 +54,7 @@ const routes = {
   cartlist: CARTLIST,
   payment: PAYMENT,
   updateProfile: UPDATE_PRPFILE,
+  search: SEARCH,
 
   // Merchandise
   merchandise: MERCHANDISE,

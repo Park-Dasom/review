@@ -1,0 +1,61 @@
+extends layouts/main
+
+block content
+  .search__page#search__page
+    section.search__section.layout 
+      form(action="" method="GET")
+        input.search__section-input(type="text", name="search", placeholder="검색어를 입력하세요.")
+        button.search__section-button 검색
+    section.filter__section 
+      p 가격
+      .saerch__filterPrice
+        ul 
+          li 
+            a(href=`/search?keyword=${keyword}`) 가격전체
+          li 
+            a(href=`/search?keyword=${keyword}&minPrice=0&maxPrice=20000`) 2만원 이하
+          li 
+            a(href=`/search?keyword=${keyword}&minPrice=20000&maxPrice=40000`) 2만원~4만원
+          li 
+            a(href=`/search?keyword=${keyword}&minPrice=40000&maxPrice=40000000`) 4만원 이상
+      hr
+      p 별점
+      .search__filterRating
+        ul
+          li 
+            a(href=`/search?keyword=${keyword}`) 별점 전체
+          li 
+            a(href=`/search?keyword=${keyword}&rate=4`) 4점 이상
+          li 
+            a(href=`/search?keyword=${keyword}&rate=3`) 3점 이상
+          li 
+            a(href=`/search?keyword=${keyword}&rate=2`) 2점 이상
+          li 
+            a(href=`/search?keyword=${keyword}&rate=1`) 1점 이상
+
+    if merchandiseItems 
+      .container 
+        .row
+          each item in merchandiseItems
+            .col-sm-3
+              .marchandise__wrap
+                .merchandise__thumbnail-wrap
+                  img.merchandise__thumbnail(src=item.thumbnail1 href=`${routes.merchandise}/${item._id}`)
+                .merchandise__description-wrap
+                  a(href=`${routes.merchandise}/${item._id}`).merchandise__title=item.title
+                  .merchandise__price 가격 : #{item.price}원
+                    if item.discountRate
+                      .merchandise__discountRate 할인율 #{item.discountRate} %
+                      .merchandise__discountPrice 할인가 : #{discountPrice(`${item.price}`, `${item.discountRate}`)} 원
+                      .merchandise__extraDiscountPrice 특별 회원 가격 : #{discountPrice(`${item.price}`, `${item.discountRate}`) - `${item.extraDiscount}`} 원
+                  //- 상품의 평균 별점 
+                if item.rate.length >= 1
+                  .icon__stars(data-rate=item.rate)
+                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 1 ? "solid" : "regular"}.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 2 ? "solid" : "regular"}.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 3 ? "solid" : "regular"}.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 4 ? "solid" : "regular"}.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 5 ? "solid" : "regular"}.svg`)
+                    p (#{Math.floor(item.rate.reduce((a, b) => a + b) / item.rate.length)})
+    else 
+      p 검색 결과가 없습니다.

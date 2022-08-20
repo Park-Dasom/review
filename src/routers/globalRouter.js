@@ -1,7 +1,7 @@
 import paginate from "express-paginate";
 import express from "express";
 import routes from "../routes";
-import { home, getMerchadiseDetail } from "../controllers/globalController";
+import { home, getMerchadiseDetail, getSearch } from "../controllers/globalController";
 
 const globalRouter = express.Router();
 
@@ -14,4 +14,6 @@ globalRouter.get(`${routes.merchandise}/:merchandiseID`, getMerchadiseDetail);
 // 상품 상세페이지 Merchadise Detail
 globalRouter.get(`${routes.merchadiseDetail}/:merchandiseID`, getMerchadiseDetail);
 
+// 상품 검색 search
+globalRouter.get(routes.search, getSearch);
 export default globalRouter;

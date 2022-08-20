@@ -98,7 +98,6 @@ location.href="${routes.home}"</script>`);
 export const getSearch = async (req, res) => {
   try {
     const { keyword, minPrice, maxPrice, rate } = req.query;
-    console.log(rate);
     let merchandiseItems = [];
     if ((keyword, rate)) {
       const findQuery = { title: { $regex: keyword, $options: "i" }, avgRate: { $gte: rate } };

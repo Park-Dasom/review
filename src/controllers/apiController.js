@@ -70,7 +70,6 @@ export const postRating = async (req, res) => {
         merchandises.rate.push(newRate.rate);
         merchandises.avgRate = Math.floor(merchandises.rate.reduce((a, b) => a + b) / merchandises.rate.length);
         merchandises.save();
-        console.log(merchandises.avgRate);
         users.rateID.push(newRate._id);
         users.save();
         res.json({ msg: "success rating" });

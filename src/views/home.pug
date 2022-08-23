@@ -71,14 +71,22 @@ block content
                       .merchandise__discountPrice 할인가 : #{discountPrice(`${item.price}`, `${item.discountRate}`)} 원
                       .merchandise__extraDiscountPrice 특별 회원 가격 : #{discountPrice(`${item.price}`, `${item.discountRate}`) - `${item.extraDiscount}`} 원
                   //- 상품의 평균 별점 
-                if item.rate.length >= 1
-                  .icon__stars(data-rate=item.rate)
-                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 1 ? "solid" : "regular"}.svg`)
-                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 2 ? "solid" : "regular"}.svg`)
-                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 3 ? "solid" : "regular"}.svg`)
-                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 4 ? "solid" : "regular"}.svg`)
-                    img.star__regular(src=`${imgPath}/public/star-${item.rate.reduce((a, b) => a + b) / item.rate.length >= 5 ? "solid" : "regular"}.svg`)
-                    p (#{Math.floor(item.rate.reduce((a, b) => a + b) / item.rate.length)})
+                if item.rateID  === undefined || item.rateID.length === 0
+                  .icon__stars(data-sh=item)
+                    img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-regular.svg`)
+                    p (0)                  
+                else if item.rateID.length >= 1
+                  .icon__stars(data-rate=item.rateID)
+                    img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=1 ? "solid" : "regular"}.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=2 ? "solid" : "regular"}.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=3 ? "solid" : "regular"}.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=4 ? "solid" : "regular"}.svg`)
+                    img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=5 ? "solid" : "regular"}.svg`)
+                    p (#{item.avgRate})
     //- BEGIN: Pagination
     section.pagination__sectiion
       #pagination__flex

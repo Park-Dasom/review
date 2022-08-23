@@ -56,10 +56,18 @@ export const postRating = async (req, res) => {
       res.json({ msg: "not login" });
     } else {
       const userID = req.user._id;
-      const merchandises = await Merchandise.findById(merchandiseID);
       const users = await User.findById(userID);
       const rates = await Rate.findOne({ merchandiseID, userID });
+      let rateArrayField = [];
       if (!rates) {
+        const merchandises = await Merchandise.findById(merchandiseID).populate("rateID");
+        // 새로운 별점이 추가되기 전 기존의 별점을 rateArrayField에 push
+        const rateArray = merchandises.rateID;
+        rateArray.forEach((elem) => {
+          const arrayRates = elem.rate;
+          rateArrayField.push(arrayRates);
+        });
+        // 새로운 별점 추가
         const newRate = await Rate.create({
           merchandiseID,
           userID,
@@ -67,14 +75,27 @@ export const postRating = async (req, res) => {
         });
         merchandises.rateUserID.push(userID);
         merchandises.rateID.push(newRate._id);
-        merchandises.rate.push(newRate.rate);
-        merchandises.avgRate = Math.floor(merchandises.rate.reduce((a, b) => a + b) / merchandises.rate.length);
-        merchandises.save();
         users.rateID.push(newRate._id);
         users.save();
+        // 평균 별점을 구하기 위한 array에 push
+        rateArrayField.push(newRate.rate);
+        // 평균 별점 계산식
+        merchandises.avgRate = Math.floor(rateArrayField.reduce((a, b) => a + b) / rateArrayField.length);
+        merchandises.save();
         res.json({ msg: "success rating" });
       } else {
-        await Rate.findOneAndUpdate({ merchandiseID, userID }, { rate });
+        // 기존의 별점을 수정하고 바로 새로운 수정 값이 return 되도록 설정 '{new : true}
+        await Rate.findOneAndUpdate({ merchandiseID, userID }, { rate }, { new: true });
+        // 별점이 수정된 이후에 merchandise를 새롭게 불러와야 수정된 별점을 찾을 수 있음.
+        const merRate = await Merchandise.findById(merchandiseID).populate("rateID");
+        // 수정된 별점 값이 있는 array 를 rateArrayField에 push
+        const rateArray = merRate.rateID;
+        rateArray.forEach((elem) => {
+          rateArrayField.push(elem.rate);
+        });
+        // 별점 평균 계산식
+        merRate.avgRate = Math.floor(rateArrayField.reduce((a, b) => a + b) / rateArrayField.length);
+        merRate.save();
         res.json({ msg: "success rating" });
       }
     }

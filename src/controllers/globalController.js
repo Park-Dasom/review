@@ -97,19 +97,19 @@ location.href="${routes.home}"</script>`);
 
 export const getSearch = async (req, res) => {
   try {
-    const { keyword, minPrice, maxPrice, rate } = req.query;
-    let merchandiseItems = [];
-    if ((keyword, rate)) {
-      const findQuery = { title: { $regex: keyword, $options: "i" }, avgRate: { $gte: rate } };
-      merchandiseItems = await Merchandise.find(findQuery);
-      console.log(merchandiseItems);
-    } else if ((keyword, minPrice, maxPrice)) {
-      const findQuery = { title: { $regex: keyword, $options: "i" }, price: { $lte: maxPrice, $gte: minPrice } };
-      merchandiseItems = await Merchandise.find(findQuery);
-    } else if (keyword) {
-      const findQuery = { title: { $regex: keyword, $options: "i" } };
-      merchandiseItems = await Merchandise.find(findQuery);
+    const {
+      query: { keyword, minPrice, maxPrice, rate },
+    } = req;
+    const findQuery = { title: { $regex: keyword, $options: "i" } };
+    if (minPrice && maxPrice) {
+      // 가격 sorting query 있을 시
+      findQuery.price = { $lte: maxPrice, $gte: minPrice };
+    } else if (rate) {
+      // 별점 sorting query 있을 시
+      findQuery.avgRate = { $gte: rate };
     }
+    const merchandiseItems = await Merchandise.find(findQuery);
+
     res.render("search", { merchandiseItems, keyword });
   } catch (err) {
     console.log(err);

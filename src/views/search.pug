@@ -50,7 +50,8 @@ block content
                       .merchandise__extraDiscountPrice 특별 회원 가격 : #{discountPrice(`${item.price}`, `${item.discountRate}`) - `${item.extraDiscount}`} 원
                   //- 상품의 평균 별점 
                 if item.rateID  === undefined || item.rateID.length === 0
-                  .icon__stars(data-sh=item)
+                //- 조건문 수정.
+                  .icon__stars
                     img.star__regular(src=`${imgPath}/public/star-regular.svg`)
                     img.star__regular(src=`${imgPath}/public/star-regular.svg`)
                     img.star__regular(src=`${imgPath}/public/star-regular.svg`)
@@ -64,6 +65,6 @@ block content
                     img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=3 ? "solid" : "regular"}.svg`)
                     img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=4 ? "solid" : "regular"}.svg`)
                     img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=5 ? "solid" : "regular"}.svg`)
-                    p (#{item.avgRate})
+                    p (#{item.rateID.length})
     else 
       p 검색 결과가 없습니다.

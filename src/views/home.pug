@@ -86,7 +86,7 @@ block content
                     img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=3 ? "solid" : "regular"}.svg`)
                     img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=4 ? "solid" : "regular"}.svg`)
                     img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=5 ? "solid" : "regular"}.svg`)
-                    p (#{item.avgRate})
+                    p (#{item.rateID.length})
     //- BEGIN: Pagination
     section.pagination__sectiion
       #pagination__flex

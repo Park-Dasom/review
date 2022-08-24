@@ -58,9 +58,9 @@ export const postRating = async (req, res) => {
       const userID = req.user._id;
       const users = await User.findById(userID);
       const rates = await Rate.findOne({ merchandiseID, userID });
+      const merchandises = await Merchandise.findById(merchandiseID).populate("rateID");
       let rateArrayField = [];
       if (!rates) {
-        const merchandises = await Merchandise.findById(merchandiseID).populate("rateID");
         // 새로운 별점이 추가되기 전 기존의 별점을 rateArrayField에 push
         const rateArray = merchandises.rateID;
         rateArray.forEach((elem) => {
@@ -80,22 +80,21 @@ export const postRating = async (req, res) => {
         // 평균 별점을 구하기 위한 array에 push
         rateArrayField.push(newRate.rate);
         // 평균 별점 계산식
-        merchandises.avgRate = Math.floor(rateArrayField.reduce((a, b) => a + b) / rateArrayField.length);
+        merchandises.totalRate += newRate.rate;
+        merchandises.totalRateCount += 1;
+        merchandises.avgRate = Math.round(merchandises.totalRate / merchandises.totalRateCount);
         merchandises.save();
         res.json({ msg: "success rating" });
       } else {
+        // 업데이트 이전의 별점 값 찾기, 그 값을 기존의 totalRate에서 뺌.
+        const oldRate = await Rate.findOneAndUpdate({ merchandiseID, userID }, { rate });
+        merchandises.totalRate -= oldRate.rate;
         // 기존의 별점을 수정하고 바로 새로운 수정 값이 return 되도록 설정 '{new : true}
-        await Rate.findOneAndUpdate({ merchandiseID, userID }, { rate }, { new: true });
-        // 별점이 수정된 이후에 merchandise를 새롭게 불러와야 수정된 별점을 찾을 수 있음.
-        const merRate = await Merchandise.findById(merchandiseID).populate("rateID");
-        // 수정된 별점 값이 있는 array 를 rateArrayField에 push
-        const rateArray = merRate.rateID;
-        rateArray.forEach((elem) => {
-          rateArrayField.push(elem.rate);
-        });
-        // 별점 평균 계산식
-        merRate.avgRate = Math.floor(rateArrayField.reduce((a, b) => a + b) / rateArrayField.length);
-        merRate.save();
+        // 새로운 값을 totalRate에 더함.
+        const newRate = await Rate.findOneAndUpdate({ merchandiseID, userID }, { rate }, { new: true });
+        merchandises.totalRate += newRate.rate;
+        merchandises.avgRate = Math.round(merchandises.totalRate / merchandises.totalRateCount);
+        merchandises.save();
         res.json({ msg: "success rating" });
       }
     }

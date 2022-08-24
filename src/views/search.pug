@@ -2,39 +2,39 @@ extends layouts/main
 
 block content
   .search__page#search__page
-    section.search__section.layout 
-      form(action="" method="GET")
-        input.search__section-input(type="text", name="search", placeholder="검색어를 입력하세요.")
+    section.search__section.layout
+      form(method="GET")
+        input.search__section-input(type="text" name="keyword" value=keyword placeholder="검색어를 입력하세요." required)
         button.search__section-button 검색
-    section.filter__section 
+    section.filter__section
       p 가격
       .saerch__filterPrice
-        ul 
-          li 
+        ul
+          li
             a(href=`/search?keyword=${keyword}`) 가격전체
-          li 
+          li
             a(href=`/search?keyword=${keyword}&minPrice=0&maxPrice=20000`) 2만원 이하
-          li 
+          li
             a(href=`/search?keyword=${keyword}&minPrice=20000&maxPrice=40000`) 2만원~4만원
-          li 
+          li
             a(href=`/search?keyword=${keyword}&minPrice=40000&maxPrice=40000000`) 4만원 이상
       hr
       p 별점
       .search__filterRating
         ul
-          li 
+          li
             a(href=`/search?keyword=${keyword}`) 별점 전체
-          li 
+          li
             a(href=`/search?keyword=${keyword}&rate=4`) 4점 이상
-          li 
+          li
             a(href=`/search?keyword=${keyword}&rate=3`) 3점 이상
-          li 
+          li
             a(href=`/search?keyword=${keyword}&rate=2`) 2점 이상
-          li 
+          li
             a(href=`/search?keyword=${keyword}&rate=1`) 1점 이상
 
-    if merchandiseItems 
-      .container 
+    if merchandiseItems
+      .container
         .row
           each item in merchandiseItems
             .col-sm-3
@@ -48,22 +48,13 @@ block content
                       .merchandise__discountRate 할인율 #{item.discountRate} %
                       .merchandise__discountPrice 할인가 : #{discountPrice(`${item.price}`, `${item.discountRate}`)} 원
                       .merchandise__extraDiscountPrice 특별 회원 가격 : #{discountPrice(`${item.price}`, `${item.discountRate}`) - `${item.extraDiscount}`} 원
-                  //- 상품의 평균 별점 
-                if item.rateID  === undefined || item.rateID.length === 0
-                  .icon__stars(data-sh=item)
-                    img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                    img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                    img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                    img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                    img.star__regular(src=`${imgPath}/public/star-regular.svg`)
-                    p (0)                  
-                else if item.rateID.length >= 1
-                  .icon__stars(data-rate=item.rateID)
-                    img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=1 ? "solid" : "regular"}.svg`)
-                    img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=2 ? "solid" : "regular"}.svg`)
-                    img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=3 ? "solid" : "regular"}.svg`)
-                    img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=4 ? "solid" : "regular"}.svg`)
-                    img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=5 ? "solid" : "regular"}.svg`)
-                    p (#{item.avgRate})
-    else 
+                //- 상품의 평균 별점
+                .icon__stars
+                  img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=1 ? "solid" : "regular"}.svg`)
+                  img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=2 ? "solid" : "regular"}.svg`)
+                  img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=3 ? "solid" : "regular"}.svg`)
+                  img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=4 ? "solid" : "regular"}.svg`)
+                  img.star__regular(src=`${imgPath}/public/star-${item.avgRate >=5 ? "solid" : "regular"}.svg`)
+                  p (#{item.rateID.length})
+    else
       p 검색 결과가 없습니다.

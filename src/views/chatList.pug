@@ -1,0 +1,20 @@
+extends layouts/noPartialMain
+
+block content
+  .chatList__page#chatList__page
+    .chatList__page-wrap
+      section.chatList__title-section.layout
+        .chat__header-wrap
+          img.header__img(src=`${imgPath}/public/chevronLeftBlack.png` onClick=`history.go(-1)`)
+          h1.headaer__name 채팅 리스트
+          a.header__link
+      section.chatList__list-section.layout
+        .chatList__list-wrap 
+          each chat in allChats 
+            a.chatList__list-item(href=`${routes.user}${routes.chat}/detail/${chat._id}`)
+              if chat.userID[0]._id === loggedUser._id 
+                p.chat__name=chat.userID[1].name
+              else 
+                p.chat__name=chat.userID[0].name
+              ul.chat__messge !{chat.talk}
+              p.unread__count 안 읽은 메세지 수 #{chat.unread.count}

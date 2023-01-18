@@ -57,7 +57,10 @@ export const home = async (req, res) => {
     ]);
     const pageCount = Math.ceil(totalCount / limit);
     const pages = paginate.getArrayPages(req)(10, pageCount, page);
-    res.render("home", { comments, choices, rates, users, merchandiseItem, totalCount, pageCount, pages, page, limit });
+
+    const admin = await User.find({ role: "master" });
+
+    res.render("home", { comments, choices, rates, users, merchandiseItem, totalCount, pageCount, pages, page, limit, admin });
   } catch (err) {
     console.log(err);
     res.send(

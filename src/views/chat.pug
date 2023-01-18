@@ -1,0 +1,140 @@
+extends layouts/noPartialMain
+
+block content
+  .chat__page#chat__page
+    .chat__page-wrap
+      section.section__chat-header.layout
+        .chat__header-wrap
+          img.header__img(src=`${imgPath}/public/chevronLeftBlack.png` onClick=`history.go(-1)`)
+          h1.headaer__name=admin.name
+          button.header__link(type="button") 나가기
+          //- else 
+          //-   a.header__link(href=`${routes.user}${routes.chat}/delete/${chats._id}`) 나가기
+      section.section__chat-main.layout
+        ul.chat__items#chatBody(data-chatID=chats._id data-userID=chats.fromUser._id) !{chats.finalTalk}
+        p.chat__delete-msg(class=`${!chats.status && loggedUser.role === "master" ? "active" : ""}`) 상대방이 대화를 나갔습니다.
+      section.section__chat-form.layout 
+        form.chat__form(method="POST")
+          .chat__form-wrap
+            textarea.chat__input(type="text", name="talk", placeholder="내용을 입력해주세요." required)
+            button.chat__submit-btn(type="button") 전송
+    script(src="/socket.io/socket.io.js")
+    script.
+      var hostURL = window.location.protocol + "//" + window.location.host+ "/"
+      var io = io.connect(hostURL);
+      window.scrollTo(0, document.body.scrollHeight);
+      // 대화가 진행될 때 마다 서버에 대화내용 저장
+      function saveChat(memberNumber) {
+        const chatID = $("ul#chatBody").attr("data-chatID");
+        const talk = $("ul#chatBody").html().replaceAll(" left", "").replaceAll(" right", "");
+        $.ajax({
+          url: `/api/chat-submit`,
+          type: "POST",
+          data: {
+            chatID: chatID,
+            talk: talk,
+            memberNumber: memberNumber,
+          },
+          success: function (result) {},
+          error: function (err) {
+            alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
+          },
+        });
+      }
+      //- 서버에서 메세지 받아옴.
+      io.on('server message', function(message, userID, time, memberNumber) {
+        let direction = "left";
+        if ($("ul#chatBody").attr("data-userID") === userID) {
+          direction = "right";
+        }
+        const talkHTML = "";
+        if ($('ul#chatBody').html().includes(`<p class="chat__time ${userID} ${direction}">${time}</p>`)) {
+          $('ul#chatBody').html($('ul#chatBody').html().replace(`<p class="chat__time ${userID} ${direction}">${time}</p>`, ""));
+        }
+        $('ul#chatBody').append(`<li class="chat__item ${userID} ${direction}"><p class="chat__desc">${message}</p><p class="chat__time ${userID} ${direction}">${time}</p></li>`);
+        window.scrollTo(0, document.body.scrollHeight);
+        saveChat(memberNumber);
+      });
+      io.on('server leave message', function(message, userID, time, memberNumber){
+        const direction = "center";
+        const talkHTML = "";
+        $('ul#chatBody').append(`<li class="chat__item ${userID} ${direction}"><p class="chat__desc">${message}</p></li>`);
+        window.scrollTo(0, document.body.scrollHeight);
+        saveChat(memberNumber);
+      });
+      $(document).ready(function() {
+        //- form submit 시 메세지 전달.
+        let pressShift = false;
+        $("textarea.chat__input").keydown(function (e) {
+          if (e.originalEvent.key === "Shift") {
+            pressShift = true;
+          } else if (pressShift && e.originalEvent.key === "Enter") {
+            pressShift = true;
+          } else if (!pressShift && e.originalEvent.key === "Enter"){
+            if (e.originalEvent.isComposing) return
+            const message = $('textarea.chat__input');
+            const userID = $("ul#chatBody").attr("data-userID");
+            const today = new Date();
+            io.on('socket_evt_chat_user', function (data) {
+              data = JSON.parse(data);
+              cnt = data.length;
+            });
+            io.emit('client message', { message : message.val() }, { userID: userID }, { time: today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate() + " " + today.getHours() + ":" + today.getMinutes() });
+            message.val('');
+            return false;
+          } else {
+            pressShift = false;
+          }
+        });
+
+        $('textarea.chat__input').keyup(function (e) {
+          if (e.originalEvent.key === "Shift") {
+            pressShift = false;
+          }
+        })
+        $('button.chat__submit-btn').click(function () {
+            const message = $('textarea.chat__input');
+            const userID = $("ul#chatBody").attr("data-userID");
+            const today = new Date();
+            io.on('socket_evt_chat_user', function (data) {
+              data = JSON.parse(data);
+              cnt = data.length;
+            });
+            io.emit('client message', { message : message.val() }, { userID: userID }, { time: today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate() + " " + today.getHours() + ":" + today.getMinutes() });
+            message.val('');
+            return false;
+            
+          }
+        )
+        $('button.header__link').click(function () {
+          const chatID = $("ul.chat__items#chatBody").attr("data-chatID");
+          $.ajax({
+            url: `/api/chat-delete`,
+            type: "POST",
+            data: { chatID: chatID },
+            success: function (result) {
+              if (result.msg === "success") {
+              // do it your code.
+                const message = `상대방이 대화를 나갔습니다.`;
+                const userID = $("ul#chatBody").attr("data-userID");
+                const today = new Date();
+                io.on('socket_evt_chat_user', function (data) {
+                  data = JSON.parse(data);
+                  cnt = data.length;
+                });
+                io.emit('client leave message', { message : message }, { userID: userID }, { time: today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate() + " " + today.getHours() + ":" + today.getMinutes() });
+                window.location.href = `/`;
+                return false;
+              }
+            },
+            error: function (err) {
+            alert(`오류가 발생했습니다:\r\n${JSON.stringify(err)}`);
+          },
+          });
+        });
+        
+      });
+      
+
+
+

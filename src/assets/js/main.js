@@ -10,6 +10,7 @@ import "./findPWControl";
 import "./myProfileControl";
 import "./navbarControl";
 import "./searchControl";
+import "./chatControl";
 // 관리자
 import "./adminSidebarControl";
 import "./adminExcelDownloadControl";

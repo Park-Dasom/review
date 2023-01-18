@@ -1,5 +1,5 @@
 import express from "express";
-import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist, postDeleteCartlist, postBuyingCheck, postFindPW, postThumbnail1Preview, postThumbnail2Preview, postUpdateProfile, postBuyingCheckOff } from "../controllers/apiController";
+import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist, postDeleteCartlist, postBuyingCheck, postFindPW, postThumbnail1Preview, postThumbnail2Preview, postUpdateProfile, postBuyingCheckOff, postChatSubmit, postChatDelete } from "../controllers/apiController";
 import { uploadMerchandisePic } from "../middlewares";
 
 const apiRouter = express.Router();
@@ -36,4 +36,8 @@ apiRouter.post("/admin-post-thumbnail2-preview", uploadMerchandisePic, postThumb
 // 회원정보 변경 post
 apiRouter.post("/update-profile", postUpdateProfile);
 
+// 채팅 내용 저장
+apiRouter.post("/chat-submit", postChatSubmit);
+// // 채팅 나가기
+apiRouter.post("/chat-delete", postChatDelete);
 export default apiRouter;

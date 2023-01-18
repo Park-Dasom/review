@@ -1,6 +1,6 @@
 import express from "express";
 import routes from "../routes";
-import { getJoin, postJoin, getLogin, postLogin, getLogout, autoLogin, getChangePassword, postChangePassword, getResetPassword, postResetPassword, deleteUser, getCartList, getwishList, getMerchandisePayment, getUserProfile } from "../controllers/userController";
+import { getJoin, postJoin, getLogin, postLogin, getLogout, autoLogin, getChangePassword, postChangePassword, getResetPassword, postResetPassword, deleteUser, getCartList, getwishList, getMerchandisePayment, getUserProfile, getChatList, getCheckChat, getChatDetail } from "../controllers/userController";
 
 const userRouter = express.Router();
 
@@ -34,5 +34,12 @@ userRouter.get(`${routes.payment}/:userID`, getMerchandisePayment);
 
 // 로그인 유저의 profile
 userRouter.get(`${routes.updateProfile}/:userID`, getUserProfile);
+
+// 채팅 리스트
+userRouter.get(`${routes.chat}/list`, getChatList);
+// 채팅 존재 여부 확인
+userRouter.get(`${routes.chat}/check/:userOneID/:userTwoID`, getCheckChat);
+// 채팅 상세
+userRouter.get(`${routes.chat}/detail/:chatID`, getChatDetail);
 
 export default userRouter;

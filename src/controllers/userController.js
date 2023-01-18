@@ -8,6 +8,7 @@ import Comment from "../models/Comment";
 import Choice from "../models/Choice";
 import Rate from "../models/Rate";
 import Merchandise from "../models/Merchandise";
+import Chat from "../models/Chat";
 
 dotenv.config();
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -285,6 +286,89 @@ export const getUserProfile = async (req, res) => {
     } = req;
     const user = await User.findById(userID);
     return res.render("myProfile", { user });
+  } catch (err) {
+    console.log(err);
+    res.send(
+      `<script>alert("오류가 발생했습니다:\\r\\n${err}");\
+      location.href="${routes.home}"</script>`
+    );
+  }
+};
+
+export const getChatList = async (req, res) => {
+  try {
+    const userID = req.user._id;
+    let normalUserID;
+    const allChats = await Chat.find({ userID: { $in: userID } })
+      .sort({ createdAt: -1 })
+      .populate([{ path: "userID", model: "User" }]);
+    res.render("chatList", { allChats });
+  } catch (err) {
+    res.send(
+      `<script>alert("오류가 발생했습니다:\\r\\n${err}");\
+      location.href="${routes.home}"</script>`
+    );
+  }
+};
+export const getCheckChat = async (req, res) => {
+  try {
+    const {
+      params: { userOneID, userTwoID },
+    } = req;
+    const chats = await Chat.findOne({ $and: [{ userID: userOneID }, { userID: userTwoID }, { status: true }] });
+    // 기존 채팅이 존재할 때
+    if (chats) {
+      res.send(`<script>location.href="${routes.user}${routes.chat}/detail/${chats._id}"</script>`);
+    } else {
+      // 채팅이 존재하지 않을 때
+      const newChats = await Chat.create({
+        userID: [userOneID, userTwoID],
+        createdAt: moment(new Date()).tz("Asia/Seoul"),
+      });
+      res.send(`<script>location.href="${routes.user}${routes.chat}/detail/${newChats._id}"</script>`);
+    }
+  } catch (err) {
+    console.log(err);
+    res.send(
+      `<script>alert("오류가 발생했습니다:\\r\\n${err}");\
+      location.href="${routes.home}"</script>`
+    );
+  }
+};
+export const getChatDetail = async (req, res) => {
+  try {
+    const { chatID } = req.params;
+    let adminID;
+    const chats = await Chat.findById(chatID);
+
+    if (chats) {
+      chats.userID.forEach((x) => {
+        if (req.user._id !== x) {
+          adminID = x;
+        }
+      });
+      console.log(chats.unread.userID);
+      console.log(req.user._id);
+      if (String(chats.unread.userID) !== String(req.user._id)) {
+        chats.unread.count = 0;
+      }
+      chats.toUser = chats.userID[0];
+      chats.fromUser = chats.userID[1];
+      if (chats.userID[0].toString() === req.user._id.toString()) {
+        chats.toUser = chats.userID[1];
+        chats.fromUser = chats.userID[0];
+      }
+      const tempTalk = chats.talk.replaceAll(chats.toUser.toString(), `${chats.toUser.toString()} left`);
+      chats.finalTalk = tempTalk.replaceAll(chats.fromUser.toString(), `${chats.fromUser.toString()} right`);
+      chats.save();
+      const admin = await User.findById(adminID);
+      res.render("chat", { chats, admin });
+    } else {
+      res.send(
+        `<script>alert("존재하지 않는 채팅방입니다.");\
+        location.href="${routes.home}"</script>`
+      );
+    }
   } catch (err) {
     console.log(err);
     res.send(

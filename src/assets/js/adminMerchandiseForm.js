@@ -1,4 +1,8 @@
 import $ from "jquery";
+import Quill from "quill";
+import { ImageResize } from "quill-image-resize";
+
+// Quill.register("modules/imageResize", ImageResize);
 
 const adminMerchandiseForm = document.getElementById("admin__merchandiseForm-page");
 

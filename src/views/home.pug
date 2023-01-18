@@ -13,6 +13,11 @@ block content
         if loggedUser
           li.login__items-profile
             a(href=`${routes.user}${routes.updateProfile}/${loggedUser._id}`) #{loggedUser.name} 의 Profile
+          li.login__items 
+            if loggedUser.role === "master"
+              a(href=`${routes.user}${routes.chat}/list`) 채팅보기
+            else 
+              a(href=`${routes.user}${routes.chat}/check/${loggedUser._id}/${admin[0]._id}`) 관리자와 채팅하기
           li.login__items-logout
             a(href=`${routes.user}${routes.logout}`) 로그아웃
     //- //- 홈 화면 장바구니 cartlist section

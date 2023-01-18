@@ -1,0 +1,51 @@
+.chatList__page#chatList__page {
+  .chatList__page-wrap {
+    section.chatList__title-section {
+      .chat__header-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        img.header__img {
+          display: block;
+          width: 24px;
+          height: 24px;
+        }
+        h1.headaer__name {
+        }
+        a.header__link {
+          display: block;
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+    section.chatList__list-section {
+      margin: 20px auto;
+      width: 500px;
+      .chatList__list-wrap {
+        a.chatList__list-item {
+          display: block;
+          text-decoration: none;
+          &:hover {
+            text-decoration: none;
+          }
+          &:not(:first-child) {
+            margin-top: 15px;
+          }
+          p.chat__name {
+          }
+          ul.chat__messge {
+            margin-top: 5px;
+            li.chat__item {
+              &:last-child {
+                display: flex;
+                justify-content: space-between;
+              }
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}

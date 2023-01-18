@@ -50,6 +50,8 @@ module.exports = csp({
       `https://*.s3.ap-northeast-2.amazonaws.com`,
       `https://*.channel.io`,
       `https://*.google-analytics.com/`,
+      `https://*.tinymce.com/`,
+      `blob:`,
     ],
 
     mediaSrc: [`'self'`, `blob:`, `data:`, `https://*.wistia.com`, `https://*.wistia.net`, `https://embedwistia-a.akamaihd.net`, `https://*.channel.io`, `https://*.s3.ap-northeast-2.amazonaws.com`],
@@ -73,6 +75,8 @@ module.exports = csp({
       `https://*.sentry-cdn.com`,
       `https://*.googletagmanager.com/`,
       `https://*.google-analytics.com/`,
+      `https://*.tiny.cloud/`,
+      `https://*.quilljs.com/`,
     ],
     // object - src 'self';
 
@@ -89,6 +93,8 @@ module.exports = csp({
       `https://*.googleapis.com`,
       `https://*.cloudflare.com`,
       `https://*.bootstrapcdn.com`,
+      `https://*.tiny.cloud/`,
+      `https://*.quilljs.com/`,
     ],
 
     workerSrc: [`'self'`, `blob:`],

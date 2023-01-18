@@ -62,6 +62,15 @@ block content
                             label.form-label(for='#extraDiscount') 추가할인(원)
                             input#extraDiscount.form-control(type='text' name="extraDiscount" value=`${updateBool ? adminItem.extraDiscount : ""}` placeholder="추가할인가를 입력하세요" required)
                             .invalid-feedback 이 영역은 필수값입니다.
+                          .form-group
+                            label.form-label(for='#discription') 상품설명
+                            textarea#discription.form-control(type='text' name="discription" placeholder="상품설명을 입력하세요" required)=`${updateBool ? adminItem.discription : ""}`
+                            .invalid-feedback 이 영역은 필수값입니다.
+                          .form-group#editor
+                            //- label.form-label(for='#editor') 에디터
+                            //- textarea#editor.form-control(type='text' name="editor" placeholder="에디터를 입력하세요" required)=`${updateBool ? adminItem.editor : ""}`
+                            //- .invalid-feedback 이 영역은 필수값입니다.
+                            
                           .row
                             .col-12
                               button.btn.btn-primary.waves-effect.waves-float.waves-light(type="submit")=`${formType}하기`
@@ -74,7 +83,135 @@ block content
     script(src='/app-assets/vendors/js/forms/select/select2.full.min.js')
     script(src='/app-assets/vendors/js/forms/validation/jquery.validate.min.js')
     script(src='/app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js')
+    //- script(src='/node_modules/quill-image-resize-module/image-resize.min.js')
     //- END: Page Vendor JS
     //- BEGIN: Page JS
     script(src='/app-assets/js/scripts/forms/form-validation.js')
     //- END: Page JS
+    script.
+      $(document).ready(function() {
+        //- tinymce.init({
+        //-   selector: 'textarea'
+        //- });
+        var plugins = [
+        "advlist", "autolink", "lists", "link", "image", "charmap", "print", "preview", "anchor",
+        "searchreplace", "visualblocks", "code", "fullscreen", "insertdatetime", "media", "table",
+        "paste", "code", "help", "wordcount", "save"
+        ];
+        var edit_toolbar = 'formatselect fontselect fontsizeselect |'
+                  + ' forecolor backcolor |'
+                  + ' bold italic underline strikethrough |'
+                  + ' alignjustify alignleft aligncenter alignright |'
+                  + ' bullist numlist |'
+                  + ' table tabledelete |'
+                  + ' link image';
+
+        tinymce.init({
+          language: "ko_KR", //한글판으로 변경
+            selector: 'textarea',
+            height: 500,
+            menubar: false,
+            plugins: plugins,
+            toolbar: edit_toolbar,
+            
+            /*** image upload ***/
+            image_title: true,
+            /* enable automatic uploads of images represented by blob or data URIs*/
+            automatic_uploads: true,
+            /*
+                URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
+                images_upload_url: 'postAcceptor.php',
+                here we add custom filepicker only to Image dialog
+            */
+            file_picker_types: 'image',
+            /* and here's our custom image picker*/
+            file_picker_callback: function (cb, value, meta) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+
+                /*
+                Note: In modern browsers input[type="file"] is functional without
+                even adding it to the DOM, but that might not be the case in some older
+                or quirky browsers like IE, so you might want to add it to the DOM
+                just in case, and visually hide it. And do not forget do remove it
+                once you do not need it anymore.
+                */
+                input.onchange = function () {
+                    var file = this.files[0];
+
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        /*
+                        Note: Now we need to register the blob in TinyMCEs image blob
+                        registry. In the next release this part hopefully won't be
+                        necessary, as we are looking to handle it internally.
+                        */
+                        var id = 'blobid' + (new Date()).getTime();
+                        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                        var base64 = reader.result.split(',')[1];
+                        var blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+
+                        /* call the callback and populate the Title field with the file name */
+                        cb(blobInfo.blobUri(), { title: file.name });
+                    };
+                    reader.readAsDataURL(file);
+                };
+                input.click();
+            },
+            /*** image upload ***/
+            
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        });
+
+
+        $("#save").on("click", function(){
+            var content = tinymce.activeEditor.getContent();
+            console.log(content);
+        });
+
+        var toolbarOptions = [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'code-block'],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'indent': '-1'}, { 'indent': '+1' }],
+          [{ 'size': ['small', false, 'large', 'huge'] }],
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          [{ 'color': [] }, { 'background': [] }],
+          [{ 'font': [] }],
+          [{ 'align': [] }],
+          ['link', 'image', 'video'],
+          ['clean']                                         
+        ];
+
+        var quill = new Quill('.form-group#editor', {
+          modules: {
+            imageResize: {
+              displaySize: true
+            },
+            toolbar: toolbarOptions,
+          },
+          placeholder: '에디터 내용을 입력하세요.',
+          theme: 'snow'
+        });
+
+        function sendFileDesc(file, editor, welEditable) {
+          data = new FormData();
+          data.append("editor", file);
+          $.ajax({
+            data: data,
+            type: "POST",
+            url: '/admin/notice-desc-img/ajax_summernote',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:  async function(url) {
+                await $('#editor').summernote("insertImage", url, function ($image) {
+                  $image.css('width', "100%");
+                });
+                $(`input[name="files"]`).val("");
+            }
+          });
+        }
+      });

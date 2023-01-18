@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import sgMail from "@sendgrid/mail";
+import moment from "moment-timezone";
 import crypto from "crypto";
 import dotenv from "dotenv";
 import Choice from "../models/Choice";
@@ -8,6 +9,7 @@ import Comment from "../models/Comment";
 import Rate from "../models/Rate";
 import Merchandise from "../models/Merchandise";
 import routes from "../routes";
+import Chat from "../models/Chat";
 
 dotenv.config();
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -301,6 +303,46 @@ export const postUpdateProfile = async (req, res) => {
     res.json({ msg: "user-update" });
   } catch (err) {
     console.log(err);
+    res.send(
+      `<script>alert("알 수 없는 오류가 발생하였습니다."); \
+      location.href="${routes.home}"</script>`
+    );
+  }
+};
+
+export const postChatSubmit = async (req, res) => {
+  try {
+    const { talk, chatID, memberNumber } = req.body;
+    const chats = await Chat.findById(chatID);
+    if (memberNumber === "1") {
+      chats.unread.count += 1;
+      chats.unread.userID = req.user._id;
+    }
+    chats.talk = talk;
+    chats.updatedAt = moment(new Date()).tz("Asia/Seoul");
+    chats.save();
+    res.json({ msg: "success" });
+  } catch (err) {
+    console.log(err);
+    res.send(
+      `<script>alert("알 수 없는 오류가 발생하였습니다."); \
+      location.href="${routes.home}"</script>`
+    );
+  }
+};
+
+export const postChatDelete = async (req, res) => {
+  try {
+    const { chatID } = req.body;
+    const chats = await Chat.findById(chatID);
+    if (chats.status) {
+      await Chat.findByIdAndUpdate(chatID, { status: false });
+      res.json({ msg: "success" });
+    } else {
+      await Chat.findByIdAndDelete(chatID);
+      res.json({ msg: "success" });
+    }
+  } catch (err) {
     res.send(
       `<script>alert("알 수 없는 오류가 발생하였습니다."); \
       location.href="${routes.home}"</script>`

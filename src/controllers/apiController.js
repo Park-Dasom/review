@@ -349,3 +349,30 @@ export const postChatDelete = async (req, res) => {
     );
   }
 };
+
+// home 상품 스크롤 시 추가로 상품 load
+export const postLoadMerchandise = async (req, res) => {
+  try {
+    const { body } = req;
+
+    let sortQuery;
+    if (body.sorting === "high-price") {
+      sortQuery = { price: -1 };
+    } else if (body.sorting === "low-price") {
+      sortQuery = { price: 1 };
+    } else if (body.sorting === "title") {
+      sortQuery = { title: 1 };
+    } else if (body.sorting === "createdAt") {
+      sortQuery = { createdAt: -1 };
+    }
+
+    const merchandises = await Merchandise.find().sort(sortQuery).limit(8).skip(body.skip);
+
+    res.json({ msg: "success", merchandises });
+  } catch (err) {
+    res.send(
+      `<script>alert("알 수 없는 오류가 발생하였습니다."); \
+      location.href="${routes.home}"</script>`
+    );
+  }
+};

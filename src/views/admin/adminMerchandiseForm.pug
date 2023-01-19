@@ -62,11 +62,11 @@ block content
                             label.form-label(for='#extraDiscount') 추가할인(원)
                             input#extraDiscount.form-control(type='text' name="extraDiscount" value=`${updateBool ? adminItem.extraDiscount : ""}` placeholder="추가할인가를 입력하세요" required)
                             .invalid-feedback 이 영역은 필수값입니다.
-                          .form-group
-                            label.form-label(for='#discription') 상품설명
-                            textarea#discription.form-control(type='text' name="discription" placeholder="상품설명을 입력하세요" required)=`${updateBool ? adminItem.discription : ""}`
-                            .invalid-feedback 이 영역은 필수값입니다.
-                          .form-group#editor
+                          //- .form-group
+                          //-   label.form-label(for='#discription') 상품설명
+                          //-   textarea#discription.form-control(type='text' name="discription" placeholder="상품설명을 입력하세요" required)=`${updateBool ? adminItem.discription : ""}`
+                          //-   .invalid-feedback 이 영역은 필수값입니다.
+                          //- .form-group#editor
                             //- label.form-label(for='#editor') 에디터
                             //- textarea#editor.form-control(type='text' name="editor" placeholder="에디터를 입력하세요" required)=`${updateBool ? adminItem.editor : ""}`
                             //- .invalid-feedback 이 영역은 필수값입니다.

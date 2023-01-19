@@ -6,7 +6,8 @@ import { home, getMerchadiseDetail, getSearch } from "../controllers/globalContr
 const globalRouter = express.Router();
 
 // 홈 Home
-globalRouter.get(routes.home, paginate.middleware(10, 50), home);
+// globalRouter.get(routes.home, paginate.middleware(10, 50), home);
+globalRouter.get(routes.home, home);
 
 // 장바구니 Merchandise
 globalRouter.get(`${routes.merchandise}/:merchandiseID`, getMerchadiseDetail);

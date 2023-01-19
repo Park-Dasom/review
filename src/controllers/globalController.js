@@ -12,7 +12,7 @@ export const home = async (req, res) => {
   try {
     // 쿼리 조건에 따라 홈 화면 정렬
     const {
-      query: { sort, page, limit },
+      query: { sort },
     } = req;
 
     let sortQuery = { createdAt: -1 };
@@ -50,17 +50,16 @@ export const home = async (req, res) => {
             model: "User",
           },
         ])
-        .limit(limit)
-        .skip(req.skip)
+        .limit(8)
         .exec(),
       Merchandise.countDocuments({}),
     ]);
-    const pageCount = Math.ceil(totalCount / limit);
-    const pages = paginate.getArrayPages(req)(10, pageCount, page);
+    // const pageCount = Math.ceil(totalCount / limit);
+    // const pages = paginate.getArrayPages(req)(10, pageCount, page);
 
     const admin = await User.find({ role: "master" });
 
-    res.render("home", { comments, choices, rates, users, merchandiseItem, totalCount, pageCount, pages, page, limit, admin });
+    res.render("home", { comments, choices, rates, users, merchandiseItem, totalCount, admin });
   } catch (err) {
     console.log(err);
     res.send(

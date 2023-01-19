@@ -1,5 +1,5 @@
 import express from "express";
-import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist, postDeleteCartlist, postBuyingCheck, postFindPW, postThumbnail1Preview, postThumbnail2Preview, postUpdateProfile, postBuyingCheckOff, postChatSubmit, postChatDelete } from "../controllers/apiController";
+import { postChoice, postRating, postIdDoubleCheck, postJoinCheck, postCreatComment, postDeleteComment, postPostCartlist, postDeleteCartlist, postBuyingCheck, postFindPW, postThumbnail1Preview, postThumbnail2Preview, postUpdateProfile, postBuyingCheckOff, postChatSubmit, postChatDelete, postLoadMerchandise } from "../controllers/apiController";
 import { uploadMerchandisePic } from "../middlewares";
 
 const apiRouter = express.Router();
@@ -38,6 +38,9 @@ apiRouter.post("/update-profile", postUpdateProfile);
 
 // 채팅 내용 저장
 apiRouter.post("/chat-submit", postChatSubmit);
-// // 채팅 나가기
+// 채팅 나가기
 apiRouter.post("/chat-delete", postChatDelete);
+
+// home 상품 스크롤 시 추가로 상품 load
+apiRouter.post("/load-merchandise", postLoadMerchandise);
 export default apiRouter;

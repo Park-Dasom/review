@@ -69,6 +69,22 @@ export const localsMiddleware = async (req, res, next) => {
   res.locals.imgPath = "/images";
   // 캐시 삭제 방지용 Date Query
   res.locals.versionDateQuery = new Date().getTime();
+  // map site picture array
+  res.locals.mapSite = [
+    { location: "경복궁", image: "/images/swiper/gbg.jpeg" },
+    { location: "창경궁", image: "/images/swiper/cgg2.webp" },
+    { location: "덕수궁", image: "/images/swiper/dsg.jpeg" },
+    { location: "남산타워", image: "/images/swiper/namsantower.jpeg" },
+    { location: "DDP", image: "/images/swiper/ddp.jpeg" },
+    { location: "정릉", image: "/images/swiper/jr.jpeg" },
+    { location: "현충원", image: "/images/swiper/hcw.jpeg" },
+    { location: "반포 한강공원", image: "/images/swiper/hggw.jpeg" },
+    { location: "예술의 전당", image: "/images/swiper/artcenter.jpeg" },
+    { location: "코드스페이스", image: "/images/swiper/cos.png" },
+    { location: "마음의 고향", image: "/images/swiper/ikk.JPG" },
+    { location: "곤지암 리조트", image: "/images/swiper/gja.jpeg" },
+  ];
+
   next();
 };
 

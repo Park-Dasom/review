@@ -18,6 +18,7 @@ const PAYMENT = "/payment";
 const UPDATE_PRPFILE = "/update-profile";
 const SEARCH = "/search";
 const CHAT = "/chat";
+const MAP = "/map";
 // Merchandise
 const MERCHANDISE = "/merchandise";
 
@@ -57,7 +58,7 @@ const routes = {
   updateProfile: UPDATE_PRPFILE,
   search: SEARCH,
   chat: CHAT,
-
+  map: MAP,
   // Merchandise
   merchandise: MERCHANDISE,
 

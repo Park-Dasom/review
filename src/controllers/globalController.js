@@ -119,4 +119,14 @@ export const getSearch = async (req, res) => {
 location.href="${routes.home}"</script>`);
   }
 };
+
+export const getMap = async (req, res) => {
+  try {
+    res.render("map");
+  } catch (err) {
+    console.log(err);
+    res.send(`<script>alert("오류가 발생했습니다:\\r\\n${err}");\
+      location.href="${routes.home}"</script>`);
+  }
+};
 export const anotherController = () => {};

@@ -1,0 +1,25 @@
+extends layouts/noPartialMain
+
+block content
+  .map__page#map__page
+    .map__wrap 
+      section.map__section 
+        .map#map
+      section.map__swiper-section 
+        .swiper__wrap
+          //- Slider main container
+          .swiper.map__site-picture
+            //- Additional required wrapper
+            .swiper-wrapper
+              //- Slides
+              each site in mapSite
+                .swiper-slide(data-site=site.location)
+                  img.swiper__site(src=`${site.image}`)
+            //- If we need pagination
+            .swiper-pagination
+            .swiper-button-prev
+            .swiper-button-next
+            
+    script(defer src=`https://maps.googleapis.com/maps/api/js?key=AIzaSyCQ3Sc1g_vr96A4yjVqnECPZG-rGxTNTGU&callback=initMap&v=weekly`)
+    script.
+      function initMap() {}

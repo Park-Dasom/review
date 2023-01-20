@@ -18,6 +18,7 @@ module.exports = csp({
       `wss://*.channel.io`,
       `https://*.googletagmanager.com/`,
       `https://*.google-analytics.com/`,
+      `https://*.googleapis.com/`,
     ],
 
     defaultSrc: [`'self'`, `https://*.wistia.com`, `https://*.wistia.net`],
@@ -52,6 +53,8 @@ module.exports = csp({
       `https://*.google-analytics.com/`,
       `https://*.tinymce.com/`,
       `blob:`,
+      `https://*.gstatic.com/`,
+      `https://*.googleapis.com/`,
     ],
 
     mediaSrc: [`'self'`, `blob:`, `data:`, `https://*.wistia.com`, `https://*.wistia.net`, `https://embedwistia-a.akamaihd.net`, `https://*.channel.io`, `https://*.s3.ap-northeast-2.amazonaws.com`],

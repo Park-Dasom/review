@@ -11,6 +11,7 @@ import "./myProfileControl";
 import "./navbarControl";
 import "./searchControl";
 import "./chatControl";
+import "./mapControl";
 // 관리자
 import "./adminSidebarControl";
 import "./adminExcelDownloadControl";

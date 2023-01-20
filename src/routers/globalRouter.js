@@ -1,7 +1,7 @@
 import paginate from "express-paginate";
 import express from "express";
 import routes from "../routes";
-import { home, getMerchadiseDetail, getSearch } from "../controllers/globalController";
+import { home, getMerchadiseDetail, getSearch, getMap } from "../controllers/globalController";
 
 const globalRouter = express.Router();
 
@@ -17,4 +17,7 @@ globalRouter.get(`${routes.merchadiseDetail}/:merchandiseID`, getMerchadiseDetai
 
 // 상품 검색 search
 globalRouter.get(routes.search, getSearch);
+
+// 구글 지도 API
+globalRouter.get(routes.map, getMap);
 export default globalRouter;

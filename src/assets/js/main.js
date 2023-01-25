@@ -16,7 +16,7 @@ import "./mapControl";
 import "./adminSidebarControl";
 import "./adminExcelDownloadControl";
 import "./adminControl";
-import "./adminMerchandiseForm";
+import "./adminMerchandiseFormControl";
 
 // ajax sample
 // import $ from "jquery";

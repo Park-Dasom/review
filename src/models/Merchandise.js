@@ -10,6 +10,7 @@ const MerchandiseSchema = new Schema({
   discountRate: Number, // 가격 할인율
   extraDiscount: Number, // 특별 회원의 추가 할인가격
   discription: String, // 상품 설명
+  quillDesc: String, // quill description
   avgRate: { type: Number, default: 0 },
   totalRate: { type: Number, default: 0 }, // 총 평점의 합산
   totalRateCount: { type: Number, default: 0 }, // 평점을 매긴 총 유저수

@@ -121,19 +121,14 @@ const init = () => {
       sortListing("createdAt");
     } else if (window.location.search.includes("title")) {
       sortListing("title");
-      // $("a.sorting__title-btn").css("color", "cornflowerblue");
     } else if (window.location.search.includes("lowPrice")) {
       sortListing("lowPrice");
-      // $("a.sorting__lowPrice-btn").css("color", "cornflowerblue");
     } else if (window.location.search.includes("highPrice")) {
       sortListing("highPrice");
-      // $("a.sorting__highPrice-btn").css("color", "cornflowerblue");
     } else if (window.location.search.includes("highRate")) {
       sortListing("highRate");
-      // $("a.sorting__highRate-btn").css("color", "cornflowerblue");
     } else if (window.location.search.includes("choice")) {
       sortListing("choice");
-      // $("a.sorting__choice-btn").css("color", "cornflowerblue");
     }
 
     const a = 4000000;

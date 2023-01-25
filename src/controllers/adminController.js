@@ -387,16 +387,17 @@ export const getCreateMerchandise = (_, res) => {
 export const postCreateMerchandise = async (req, res) => {
   try {
     const { body } = req;
-    body.thumbnail1 = body.thumbnailUrl1 ? body.thumbnailUrl1 : null;
-    body.thumbnail2 = body.thumbnailUrl2 ? body.thumbnailUrl2 : null;
-    body.createdAt = moment(new Date()).tz("Asia/Seoul");
-    body.updatedAt = moment(new Date()).tz("Asia/Seoul");
-    await Merchandise.create(body);
+    console.log(body);
+    // body.thumbnail1 = body.thumbnailUrl1 ? body.thumbnailUrl1 : null;
+    // body.thumbnail2 = body.thumbnailUrl2 ? body.thumbnailUrl2 : null;
+    // body.createdAt = moment(new Date()).tz("Asia/Seoul");
+    // body.updatedAt = moment(new Date()).tz("Asia/Seoul");
+    // await Merchandise.create(body);
 
-    res.send(`\
-      <script>alert("상품이 등록되었습니다.");\
-      location.href="${routes.admin}${routes.adminMerchandise}";</script>\
-    `);
+    // res.send(`\
+    //   <script>alert("상품이 등록되었습니다.");\
+    //   location.href="${routes.admin}${routes.adminMerchandise}";</script>\
+    // `);
   } catch (err) {
     console.log(err);
     res.send(
@@ -451,15 +452,16 @@ export const postUpdateMerchandise = async (req, res) => {
       params: { merchandiseID },
       body,
     } = req;
+    console.log(body);
     const merchandises = await Merchandise.findById(merchandiseID);
-    body.thumbnail1 = body.thumbnailUrl1 ? body.thumbnailUrl1 : merchandises.thumbnail1;
-    body.thumbnail2 = body.thumbnailUrl2 ? body.thumbnailUrl2 : merchandises.thumbnail2;
-    body.updatedAt = moment(new Date()).tz("Asia/Seoul");
-    await Merchandise.findByIdAndUpdate(merchandiseID, body);
-    res.send(
-      `<script>alert("상품이 수정되었습니다.");\
-      location.href="${routes.admin}${routes.adminMerchandise}"</script>`
-    );
+    // body.thumbnail1 = body.thumbnailUrl1 ? body.thumbnailUrl1 : merchandises.thumbnail1;
+    // body.thumbnail2 = body.thumbnailUrl2 ? body.thumbnailUrl2 : merchandises.thumbnail2;
+    // body.updatedAt = moment(new Date()).tz("Asia/Seoul");
+    // await Merchandise.findByIdAndUpdate(merchandiseID, body);
+    // res.send(
+    //   `<script>alert("상품이 수정되었습니다.");\
+    //   location.href="${routes.admin}${routes.adminMerchandise}"</script>`
+    // );
   } catch (err) {
     console.log(err);
     res.send(

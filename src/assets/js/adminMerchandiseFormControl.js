@@ -1,6 +1,7 @@
 import $ from "jquery";
 import Quill from "quill";
 import { ImageResize } from "quill-image-resize";
+// import ImageUploader from "quill.imageUploader.js";
 
 // Quill.register("modules/imageResize", ImageResize);
 
@@ -8,6 +9,14 @@ const adminMerchandiseForm = document.getElementById("admin__merchandiseForm-pag
 
 const init = () => {
   $(() => {
+    $("button").on("click", (e) => {
+      e.preventDefault();
+      const value = $(".form-group#editor").children().first().html();
+      $("textarea#textEditor").html(value);
+      // console.log($("textarea#textEditor").val());
+      // console.log(value);
+      $("#merchandiseForm").trigger("submit");
+    });
     // thumbnail1 사진 미리보기 delete 함수
     const deleteThumbnail1 = () => {
       $(".item__delete-img").on("click", () => {

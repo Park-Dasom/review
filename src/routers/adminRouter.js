@@ -2,7 +2,7 @@ import paginate from "express-paginate";
 import express from "express";
 import routes from "../routes";
 import { getAdminLogin, postAdminLogin, getAdminRegister, postAdminRegister, adminLogout, getAdminChangePW, postAdminChangePW, adminUser, adminUserApprove, adminUserDelete, adminMerchandise, getCreateMerchandise, postCreateMerchandise, getMerchandiseDetail, getUpdateMerchandise, postUpdateMerchandise, getDeleteMerchandise, adminNormalUser, adminNormalUserDelete } from "../controllers/adminController";
-import { onlyAdmin } from "../middlewares";
+import { onlyAdmin, uploadQuillDescPics } from "../middlewares";
 
 const adminRouter = express.Router();
 
@@ -38,5 +38,7 @@ adminRouter.get(`${routes.adminMerchandise}/detail/:merchandiseID`, onlyAdmin, g
 adminRouter.get(`${routes.adminMerchandise}/update/:merchandiseID`, onlyAdmin, getUpdateMerchandise);
 adminRouter.post(`${routes.adminMerchandise}/update/:merchandiseID`, onlyAdmin, postUpdateMerchandise);
 adminRouter.get(`${routes.adminMerchandise}/delete/:merchandiseID`, onlyAdmin, getDeleteMerchandise);
-
+adminRouter.post("/merchandise-desc-img/ajax_quill", uploadQuillDescPics, (req, res) => {
+  res.send(req.file.location);
+});
 export default adminRouter;

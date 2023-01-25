@@ -22,9 +22,31 @@ const multerMerchandisePic = multer({
     contentType: multerS3.AUTO_CONTENT_TYPE,
   }),
 });
+// 이미지 등록
+const multerQuillUpload = multer({
+  // // 이미지 파일이 아니면 짜른다
+  // fileFilter(_, file, callback) {
+  //   const ext = path.extname(file.originalname);
+  //   const extArr = [".png", ".jpg", ".gif", ".jpeg", ".webp", ".PNG", ".JPG", ".GIF", ".JPEG", ".WEBP"];
+  //   if (!extArr.includes(ext)) {
+  //     return callback(new Error("허용되지 않는 파일형식 저장"));
+  //   }
+  //   callback(null, true);
+  // },
 
+  storage: multerS3({
+    s3,
+    bucket: "gooooooods/quillImg",
+    // 저장되는 방식 : org/단체 ID/날짜명 group명
+    key(req, file, cb) {
+      cb(null, Date.now() + file.originalname);
+    },
+    acl: "public-read",
+  }),
+});
 // 한 개의 input(type="file")일 경우
 export const uploadMerchandisePic = multerMerchandisePic.fields([{ name: "thumbnail1" }, { name: "thumbnail2" }]);
+export const uploadQuillDescPics = multerQuillUpload.single("img");
 // 여러 input(type="file")일 경우
 // export const uploadSamplePic = multerSamplePic.fields([{ name: "thumbnail1" }, { name: "thumbnail2" }]);
 

@@ -164,6 +164,63 @@ main.admin__main {
           }
         }
       }
+      .form-group#editor {
+        // default font-family
+        font-family: "Montserrat";
+        font-size: 18px;
+        textarea#textEditor {
+          display: none;
+        }
+      }
+      // toolbar font-size setting
+      .ql-picker.ql-size .ql-picker-label[data-value="1px"]::before,
+      .ql-picker.ql-size .ql-picker-item[data-value="1px"]::before {
+        font-size: "1px";
+        content: "1px" !important;
+      }
+      .ql-picker.ql-size .ql-picker-label[data-value="10px"]::before,
+      .ql-picker.ql-size .ql-picker-item[data-value="10px"]::before {
+        font-size: "10px";
+        content: "10px" !important;
+      }
+      .ql-picker.ql-size .ql-picker-label[data-value="15px"]::before,
+      .ql-picker.ql-size .ql-picker-item[data-value="15px"]::before {
+        font-size: "15px";
+        content: "15px" !important;
+      }
+      .ql-picker.ql-size .ql-picker-label[data-value="21px"]::before,
+      .ql-picker.ql-size .ql-picker-item[data-value="21px"]::before {
+        font-size: "21px";
+        content: "21px" !important;
+      }
+      .ql-picker.ql-size .ql-picker-label[data-value="25px"]::before,
+      .ql-picker.ql-size .ql-picker-item[data-value="25px"]::before {
+        font-size: "25px";
+        content: "25px" !important;
+      }
+
+      // toolbar font-family setting
+      .ql-picker.ql-font .ql-picker-label[data-value="Montserrat"]::before,
+      .ql-picker.ql-font .ql-picker-item[data-value="Montserrat"]::before {
+        font-family: "Montserrat";
+        content: "Montserrat" !important;
+      }
+
+      .ql-font-Montserrat {
+        font-family: "Montserrat";
+      }
+      .ql-picker.ql-font .ql-picker-label[data-value="NotoSansKR"]::before,
+      .ql-picker.ql-font .ql-picker-item[data-value="NotoSansKR"]::before {
+        font-family: "Noto Sans KR";
+        content: "Noto Sans KR" !important;
+      }
+
+      .ql-font-NotoSansKR {
+        font-family: "Noto Sans KR";
+      }
+      em {
+        font-style: italic;
+      }
     }
   }
   // Detail page

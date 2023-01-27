@@ -55,6 +55,7 @@ module.exports = csp({
       `blob:`,
       `https://*.gstatic.com/`,
       `https://*.googleapis.com/`,
+      `https://*.ytimg.com/`,
     ],
 
     mediaSrc: [`'self'`, `blob:`, `data:`, `https://*.wistia.com`, `https://*.wistia.net`, `https://embedwistia-a.akamaihd.net`, `https://*.channel.io`, `https://*.s3.ap-northeast-2.amazonaws.com`],

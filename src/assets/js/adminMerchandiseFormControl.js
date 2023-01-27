@@ -1,22 +1,26 @@
 import $ from "jquery";
 import Quill from "quill";
 import { ImageResize } from "quill-image-resize";
-// import ImageUploader from "quill.imageUploader.js";
-
-// Quill.register("modules/imageResize", ImageResize);
 
 const adminMerchandiseForm = document.getElementById("admin__merchandiseForm-page");
 
 const init = () => {
   $(() => {
-    $("button").on("click", (e) => {
+    // 페이지 로드 시 quill editor 값 불러오기
+    const value = $("input#textEditor").val();
+    $(".form-group#editor").children().first().html(value);
+    // if ($("input#textEditor").val() !== "") {
+    // }
+    // form submit시 에디터의 내용을 input 값에 넣고 저장
+    $("button#formSubmitBtn").on("click", (e) => {
       e.preventDefault();
       const value = $(".form-group#editor").children().first().html();
-      $("textarea#textEditor").html(value);
-      // console.log($("textarea#textEditor").val());
-      // console.log(value);
-      $("#merchandiseForm").trigger("submit");
+      $("input#textEditor").val(value);
+      if ($("input#textEditor").val() !== "") {
+        $("form#merchandiseForm").trigger("submit");
+      }
     });
+
     // thumbnail1 사진 미리보기 delete 함수
     const deleteThumbnail1 = () => {
       $(".item__delete-img").on("click", () => {
@@ -98,6 +102,37 @@ const init = () => {
         },
       });
     });
+    let scrollHeight;
+    $("body").on("scroll", () => {
+      scrollHeight = $("body").scrollTop();
+      // console.log(scrollHeight);
+    });
+
+    let menuHeight;
+    // console.log($(".tox-editor-header"));
+    $(".tox-editor-header").on("click", () => {
+      console.log("hi");
+      menuHeight = $(".tox-menu.tox-collection.tox-collection--list").css("top");
+      menuHeight = menuHeight.split("-")[1];
+      menuHeight = Number(menuHeight.split("px")[0]);
+      console.log(menuHeight);
+    });
+    // // if ($(".tox.tox-silver-sink.tox-tinymce-aux").children("div")) {
+    // //   console.log("hi");
+    // // }
+    // // $(".tox-editor-header").on("click", () => {
+    // //   console.log("hi");
+    // //   let menuHeight = 0;
+    // //   menuHeight = $(".tox-menu.tox-collection.tox-collection--list").css("top");
+    // //   menuHeight = menuHeight.split("-")[1];
+    // //   const totalHeight = Number(menuHeight.split("px")[0]);
+    // //   // $(".tox-menu.tox-collection.tox-collection--list").css("top", scrollHeight);
+    // //   // console.log(menuHeight, scrollHeight);
+    // //   // console.log(menuHeight + scrollHeight);
+    // //   const currentHeight = -(totalHeight + scrollHeight);
+    // //   console.log(menuHeight);
+    // //   $(".tox-menu.tox-collection.tox-collection--list").css("top", `${currentHeight}px`);
+    // });
   });
 };
 if (adminMerchandiseForm) {

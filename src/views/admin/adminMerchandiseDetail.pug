@@ -53,6 +53,12 @@ block content
                               h4.mb-50 추가 할인(원)
                               p.card-text=adminItem.extraDiscount
                             li.card-body__item
+                              h4.mb-50 tinyMCE 에디터
+                              p.card-text !{adminItem.discription}
+                            li.card-body__item
+                              h4.mb-50 퀼 에디터
+                              p.card-text !{adminItem.quillDesc}
+                            li.card-body__item
                               h4.mb-50 생성일
                               p.card-text=dateFormatYMDHms(adminItem.createdAt)
                             li.card-body__item

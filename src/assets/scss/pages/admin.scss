@@ -163,14 +163,25 @@ main.admin__main {
             font-weight: 600;
           }
         }
+        textarea#discription {
+        }
+        body#tinymce {
+          // font-family: "Noto Sans KR";
+          p {
+            span[data-mce-style="font-family: Montserrat;"] {
+              font-family: "Montserrat";
+            }
+          }
+        }
       }
       .form-group#editor {
+        height: 500px;
         // default font-family
         font-family: "Montserrat";
         font-size: 18px;
-        textarea#textEditor {
-          display: none;
-        }
+      }
+      input#textEditor {
+        display: none;
       }
       // toolbar font-size setting
       .ql-picker.ql-size .ql-picker-label[data-value="1px"]::before,
@@ -270,6 +281,24 @@ main.admin__main {
                 }
                 img.card-img-top {
                   width: 200px;
+                }
+                .ql-font-Montserrat {
+                  font-family: "Montserrat";
+                }
+                .ql-font-NotoSansKR {
+                  font-family: "Noto Sans KR";
+                }
+                em {
+                  font-style: italic;
+                }
+                .ql-align-right {
+                  text-align: right;
+                }
+                .ql-align-center {
+                  text-align: center;
+                }
+                .ql-align-left {
+                  text-align: left;
                 }
               }
             }
